@@ -1,0 +1,21 @@
+.container {
+  width: 100%;
+  box-shadow: 0px 5px 15px rgb(216, 216, 216);
+
+  .content {
+    height: 100px;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+
+    h1 {
+      margin-right: 2rem;
+    }
+
+    a {
+      margin: 0 0.5rem 0 0.5rem;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+@import "styles/mixins.scss";
+
+.logoutBtn {
+  @include button;
+  background-color: rgb(180, 36, 36);
+}
