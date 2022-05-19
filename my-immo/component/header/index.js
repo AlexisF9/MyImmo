@@ -2,7 +2,7 @@ import css from "./index.module.scss";
 import Link from "next/link";
 import { useSession } from "../../contexte/session";
 
-export default function header() {
+export default function Header() {
   const session = useSession();
 
   return (
@@ -13,7 +13,9 @@ export default function header() {
           <Link href={"/"}>
             <a>Accueil</a>
           </Link>
-          {session ? null : (
+          {session === true ? (
+            <p>Logout</p>
+          ) : (
             <Link href={"/auth"}>
               <a>Connexion</a>
             </Link>

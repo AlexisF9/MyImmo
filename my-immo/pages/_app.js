@@ -25,12 +25,14 @@ export default MyApp;
 
 MyApp.getInitialProps = async (appContext) => {
   const cookies = parseCookies(appContext.ctx);
+
   const pageProps = await App.getInitialProps(appContext);
 
   if (cookies.authToken) {
     return {
       pageProps: { ...pageProps.pageProps, user: true },
     };
+  } else {
+    return pageProps;
   }
-  return pageProps;
 };

@@ -1,7 +1,7 @@
 import Login from "../component/login";
 import css from "../styles/auth.module.scss";
 
-export default function Auth({ user }) {
+export default function Auth() {
   return <Login />;
 }
 
@@ -14,9 +14,5 @@ export function getServerSideProps({ req }) {
       },
     };
   }
-  return {
-    props: {
-      user: true,
-    },
-  };
+  return { props: {} };
 }
