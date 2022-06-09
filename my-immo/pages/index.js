@@ -23,7 +23,7 @@ export default function Home() {
 
 // Si PAS d'user connecter = redirige vers login
 export function getServerSideProps({ req }) {
-  if (!req.cookies.authToken) {
+  if (!req.cookies.username) {
     return {
       redirect: {
         destination: "/login",

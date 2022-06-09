@@ -1,7 +1,7 @@
 import { useState } from "react";
 import css from "../styles/auth.module.scss";
 import { useRouter } from "next/router";
-import { setCookie } from "nookies";
+import { destroyCookie, setCookie } from "nookies";
 
 export default function Login() {
   const router = useRouter();
@@ -49,6 +49,7 @@ export default function Login() {
 
       router.push("/");
     } catch (e) {
+      destroyCookie(null, "authToken");
       //error.current.classList.add(css.alertError);
       console.log(e);
     }
@@ -63,6 +64,7 @@ export default function Login() {
       <input
         type="email"
         name="identifier"
+        placeholder="Email"
         value={identifier}
         onChange={(e) => {
           setIdentifier(e.currentTarget.value);
@@ -71,6 +73,7 @@ export default function Login() {
       <input
         type="password"
         name="password"
+        placeholder="Mot de passe"
         value={password}
         onChange={(e) => {
           setPassword(e.currentTarget.value);
@@ -82,7 +85,7 @@ export default function Login() {
 }
 
 export function getServerSideProps({ req }) {
-  if (req.cookies.authToken) {
+  if (req.cookies.username) {
     return {
       redirect: {
         destination: "/",

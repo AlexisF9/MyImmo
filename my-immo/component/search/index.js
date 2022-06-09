@@ -1,4 +1,5 @@
 import { useState } from "react";
+import CardProperty from "../cardProperty";
 import css from "./index.module.scss";
 
 export default function Search() {
@@ -11,11 +12,14 @@ export default function Search() {
     event.preventDefault();
 
     try {
+      setProperty("");
       const rep = await fetch(
-        `http://localhost:1337/api/locations?[filters][title][$eq]=${city}&[populate][properties][sort][0]=id%3Adesc`
+        `http://localhost:1337/api/locations?[filters][title][$eq]=${city}&[populate][properties][sort][0]=id%3Adesc&populate=*`
       );
       const response = await rep.json();
+
       setProperty(response.data[0]);
+
       setLoading(false);
     } catch (e) {
       console.log(e);
@@ -26,9 +30,10 @@ export default function Search() {
     <div className={css.containerSearch}>
       <form onSubmit={handleSearch} action={handleSearch}>
         <input
+          placeholder="Taper une ville"
           type="text"
           onChange={(e) => {
-            setCity(e.currentTarget.value);
+            setCity(e.currentTarget.value.toLowerCase());
           }}
           name="location"
           value={city}
@@ -36,14 +41,13 @@ export default function Search() {
         <button type="submit">Rechercher</button>
       </form>
       {!loading && property ? (
-        <div>
+        <div className={css.listProperty}>
+          <p>{property.attributes.properties.data.length} annonce(s)</p>
           {property.attributes.properties.data.map((item, i) => {
-            return <p>{item.attributes.title}</p>;
+            return <CardProperty key={i} data={item.attributes.title} />;
           })}
         </div>
-      ) : (
-        <p>Taper la ville de votre recherche</p>
-      )}
+      ) : null}
     </div>
   );
 }

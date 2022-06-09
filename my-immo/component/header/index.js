@@ -26,9 +26,14 @@ export default function Header() {
 
         <div className={css.links}>
           {session === true ? (
-            <a className={css.logoutBtn} onClick={logout}>
-              Logout
-            </a>
+            <>
+              <Link href={"/"}>
+                <a>Profil</a>
+              </Link>
+              <a className={css.logoutBtn} onClick={logout}>
+                Déconnexion
+              </a>
+            </>
           ) : (
             <Link href={"/login"}>
               <a>Connexion</a>

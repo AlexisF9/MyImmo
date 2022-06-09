@@ -1,0 +1,31 @@
+.cardImage {
+  position: relative;
+
+  .arrows {
+    display: flex;
+    position: absolute;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 9;
+
+    img {
+      border: 0;
+      cursor: pointer;
+      background: transparent;
+      height: max-content;
+    }
+  }
+
+  div {
+    width: 500px;
+    height: 400px;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+
+    img {
+      height: 100%;
+      transition: all 0.5s;
+    }
+  }
+}

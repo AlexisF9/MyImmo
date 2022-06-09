@@ -38,11 +38,17 @@
 // FONTS
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
+$animationTime: 0.4s;
+
+$white: #fff;
+$primary: #008dcf;
+$secondary: #ff6f61;
+
 @mixin button() {
   color: white;
   cursor: pointer;
   border: 0;
   padding: 1rem;
-  background-color: #008dcf;
+  background-color: $primary;
   border-radius: 5px;
 }

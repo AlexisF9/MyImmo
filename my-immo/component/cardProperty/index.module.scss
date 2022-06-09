@@ -1,0 +1,10 @@
+.card {
+  box-shadow: 0px 0px 15px rgb(230, 230, 230);
+  display: flex;
+  margin: 1rem 0;
+
+  .cardInfo {
+    width: 300px;
+    padding: 1rem;
+  }
+}
