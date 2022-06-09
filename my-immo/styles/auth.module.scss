@@ -1,23 +1,36 @@
 @import "styles/mixins.scss";
 
 .formLogin {
-  margin-top: 3rem;
+  background-color: rgb(236, 236, 236);
+  padding: 4rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  input,
-  button {
-    margin: 0.5rem 0;
-  }
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
-  input {
-    width: 400px;
-    padding: 1rem;
-  }
+  form {
+    display: flex;
+    flex-direction: column;
 
-  button {
-    @include button;
+    input,
+    button {
+      margin: 0.5rem 0;
+    }
+
+    input {
+      width: 400px;
+      padding: 1rem;
+      border: 0;
+    }
+
+    button {
+      @include button;
+      width: max-content;
+    }
   }
 }

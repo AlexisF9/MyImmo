@@ -56,31 +56,30 @@ export default function Login() {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      action={handleSubmit}
-      className={css.formLogin}
-    >
-      <input
-        type="email"
-        name="identifier"
-        placeholder="Email"
-        value={identifier}
-        onChange={(e) => {
-          setIdentifier(e.currentTarget.value);
-        }}
-      />
-      <input
-        type="password"
-        name="password"
-        placeholder="Mot de passe"
-        value={password}
-        onChange={(e) => {
-          setPassword(e.currentTarget.value);
-        }}
-      />
-      <button type="submit">Se connecter</button>
-    </form>
+    <div className={css.formLogin}>
+      <h2>Se connecter</h2>
+      <form onSubmit={handleSubmit} action={handleSubmit}>
+        <input
+          type="email"
+          name="identifier"
+          placeholder="Email"
+          value={identifier}
+          onChange={(e) => {
+            setIdentifier(e.currentTarget.value);
+          }}
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Mot de passe"
+          value={password}
+          onChange={(e) => {
+            setPassword(e.currentTarget.value);
+          }}
+        />
+        <button type="submit">Se connecter</button>
+      </form>
+    </div>
   );
 }
 

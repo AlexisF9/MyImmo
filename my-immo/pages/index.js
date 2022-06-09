@@ -15,7 +15,7 @@ export default function Home() {
 
   return (
     <div className={css.container}>
-      {session && <p>Bienvenue {user}</p>}
+      {/* {session && <p>Bienvenue {user}</p>} */}
       <Search />
     </div>
   );
