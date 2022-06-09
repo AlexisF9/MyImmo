@@ -61,38 +61,41 @@ export default function Register() {
   };
 
   return (
-    <div className={css.formLogin}>
-      <h2>S'inscrire</h2>
-      <form onSubmit={handleSubmit} action={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          placeholder="Nom d'utilisateur"
-          value={username}
-          onChange={(e) => {
-            setUsername(e.currentTarget.value);
-          }}
-        />
-        <input
-          type="email"
-          name="identifier"
-          placeholder="Email"
-          value={identifier}
-          onChange={(e) => {
-            setIdentifier(e.currentTarget.value);
-          }}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Mot de passe"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.currentTarget.value);
-          }}
-        />
-        <button type="submit">S'inscrire</button>
-      </form>
+    <div className={css.login}>
+      <div className={css.formLogin}>
+        <h2>S'inscrire</h2>
+        <form onSubmit={handleSubmit} action={handleSubmit}>
+          <input
+            type="text"
+            name="username"
+            placeholder="Nom d'utilisateur"
+            value={username}
+            onChange={(e) => {
+              setUsername(e.currentTarget.value);
+            }}
+          />
+          <input
+            type="email"
+            name="identifier"
+            placeholder="Email"
+            value={identifier}
+            onChange={(e) => {
+              setIdentifier(e.currentTarget.value);
+            }}
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Mot de passe"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.currentTarget.value);
+            }}
+          />
+          <button type="submit">S'inscrire</button>
+        </form>
+      </div>
+      <div className={css.overlay}></div>
     </div>
   );
 }

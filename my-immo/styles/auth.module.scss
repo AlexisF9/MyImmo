@@ -1,5 +1,17 @@
 @import "styles/mixins.scss";
 
+.login {
+  .overlay {
+    z-index: -1;
+    position: absolute;
+    bottom: 0;
+    height: 50%;
+    width: 100%;
+    background-color: $primary;
+    clip-path: polygon(0 29%, 100% 0, 100% 100%, 0% 100%);
+  }
+}
+
 .formLogin {
   background-color: rgb(236, 236, 236);
   padding: 4rem;
@@ -7,6 +19,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-radius: 10px;
 
   position: absolute;
   top: 50%;
@@ -30,6 +43,7 @@
 
     button {
       @include button;
+      background-color: $secondary;
       width: max-content;
     }
   }
