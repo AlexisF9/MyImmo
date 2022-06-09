@@ -6,6 +6,9 @@ export default function Search() {
   const [loading, setLoading] = useState(true);
 
   const [city, setCity] = useState();
+  const [type, setType] = useState();
+  const [dispo, setDispo] = useState();
+
   const [property, setProperty] = useState();
 
   const handleSearch = async (event) => {
@@ -13,12 +16,20 @@ export default function Search() {
 
     try {
       setProperty("");
-      const rep = await fetch(
-        `http://localhost:1337/api/locations?[filters][title][$eq]=${city}&[populate][properties][sort][0]=id%3Adesc&populate=*`
-      );
-      const response = await rep.json();
 
-      setProperty(response.data[0]);
+      if (dispo === "all") {
+        const rep = await fetch(
+          `http://localhost:1337/api/properties?[filters][type][title][$eq]=${type}&[filters][location][title][$eq]=${city}&[filters][free][$eq]=true&[filters][free][$eq]=false&[sort][0]=id%3Adesc&populate=*`
+        );
+        const response = await rep.json();
+        setProperty(response);
+      } else {
+        const rep = await fetch(
+          `http://localhost:1337/api/properties?[filters][type][title][$eq]=${type}&[filters][location][title][$eq]=${city}&[filters][free][$eq]=${free}&[sort][0]=id%3Adesc&populate=*`
+        );
+        const response = await rep.json();
+        setProperty(response);
+      }
 
       setLoading(false);
     } catch (e) {
@@ -38,12 +49,43 @@ export default function Search() {
           name="location"
           value={city}
         />
+        <select
+          onChange={(e) => {
+            setType(e.currentTarget.value);
+          }}
+        >
+          <option selected disabled value="">
+            Choisir un type
+          </option>
+          <option value="Acheter">Acheter</option>
+          <option value="Louer">Louer</option>
+        </select>
+
+        <select
+          onChange={(e) => {
+            setDispo(e.currentTarget.value);
+          }}
+        >
+          <option selected disabled value="">
+            Choisir une disponibilité
+          </option>
+          <option value="true">Disponible tout de suite</option>
+          <option value="false">Pas encore disponible</option>
+          <option value="all">Disponible ou non</option>
+        </select>
+
         <button type="submit">Rechercher</button>
       </form>
+
       {!loading && property ? (
         <div className={css.listProperty}>
-          <p>{property.attributes.properties.data.length} annonce(s)</p>
-          {property.attributes.properties.data.map((item, i) => {
+          {property.data.length > 1 ? (
+            <p>{property.data.length} annonces</p>
+          ) : (
+            <p>{property.data.length} annonce</p>
+          )}
+
+          {property.data.map((item, i) => {
             return <CardProperty key={i} data={item.attributes.title} />;
           })}
         </div>

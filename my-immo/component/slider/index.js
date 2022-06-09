@@ -29,6 +29,7 @@ export default function Slider({ pictures }) {
         {pictures.map((item, i) => {
           return (
             <img
+              key={i}
               style={{
                 transform: `translateX(-${indexPicture * 100}%)`,
               }}

@@ -28,6 +28,8 @@ export default function CardProperty({ data }) {
       {loading
         ? null
         : propertyInfos.data.map((item, i) => {
+            const maDate = new Date(item.attributes.publishedAt);
+            const date = maDate.toLocaleString("fr");
             return (
               <div className={css.card} key={i}>
                 <Slider pictures={item.attributes.pictures.data} />
@@ -52,6 +54,7 @@ export default function CardProperty({ data }) {
                       return <li key={i}>{item.attributes.title}</li>;
                     })}
                   </ul>
+                  <p>Publié le {date}</p>
                 </div>
               </div>
             );
