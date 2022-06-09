@@ -1,3 +1,5 @@
+@import "../../styles/mixins.scss";
+
 .container {
   width: 100%;
   box-shadow: 0px 5px 15px rgb(216, 216, 216);
@@ -18,4 +20,22 @@
       margin: 0 0.5rem 0 0.5rem;
     }
   }
+}
+
+.registerBtn {
+  @include button;
+  padding: 0.5rem;
+  background-color: transparent;
+  border: 1px solid rgb(37, 37, 37);
+  color: black;
+  transition: color 0.4s, background-color 0.4s;
+
+  &:hover {
+    background-color: rgb(37, 37, 37);
+    color: white;
+  }
+}
+
+.logoutBtn {
+  cursor: pointer;
 }

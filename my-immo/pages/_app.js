@@ -24,15 +24,17 @@ function MyApp({ Component, pageProps }) {
 export default MyApp;
 
 MyApp.getInitialProps = async (appContext) => {
+  // dire a tout le site si l'user est co ou pas
   const cookies = parseCookies(appContext.ctx);
-
   const pageProps = await App.getInitialProps(appContext);
 
   if (cookies.authToken) {
+    // user connecter sur tout le site
     return {
       pageProps: { ...pageProps.pageProps, user: true },
     };
   } else {
+    // user pas connecter
     return pageProps;
   }
 };

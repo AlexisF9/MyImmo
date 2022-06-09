@@ -1,23 +1,42 @@
 import css from "./index.module.scss";
 import Link from "next/link";
 import { useSession } from "../../contexte/session";
+import { useRouter } from "next/router";
+import { destroyCookie } from "nookies";
 
 export default function Header() {
+  const router = useRouter();
   const session = useSession();
+
+  const logout = () => {
+    destroyCookie(null, "authToken");
+    destroyCookie(null, "username");
+    destroyCookie(null, "idUser");
+    router.push("/");
+  };
 
   return (
     <header className={css.container}>
       <div className={css.content}>
-        <h1>My Immo</h1>
+        <Link href={"/"}>
+          <a>
+            <h1>My Immo</h1>
+          </a>
+        </Link>
+
         <div className={css.links}>
-          <Link href={"/"}>
-            <a>Accueil</a>
-          </Link>
           {session === true ? (
-            <p>Logout</p>
+            <a className={css.logoutBtn} onClick={logout}>
+              Logout
+            </a>
           ) : (
-            <Link href={"/auth"}>
+            <Link href={"/login"}>
               <a>Connexion</a>
+            </Link>
+          )}
+          {!session && (
+            <Link href={"/register"}>
+              <a className={css.registerBtn}>Inscription</a>
             </Link>
           )}
         </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
-import css from "./index.module.scss";
-import Cookies from "js-cookie";
+import css from "../styles/auth.module.scss";
 import { useRouter } from "next/router";
+import { setCookie } from "nookies";
 
 export default function Login() {
   const router = useRouter();
@@ -33,11 +33,20 @@ export default function Login() {
       );
 
       const response = await rep.json();
-      Cookies.set("authToken", response.jwt, { expires: 5 });
-      Cookies.set("username", response.user.username, { expires: 5 });
-      Cookies.set("idUser", response.user.id, { expires: 5 });
+
+      setCookie(null, "authToken", response.jwt, {
+        maxAge: 30 * 24 * 60 * 60,
+      });
+      setCookie(null, "username", response.user.username, {
+        maxAge: 30 * 24 * 60 * 60,
+      });
+      setCookie(null, "idUser", response.user.id, {
+        maxAge: 30 * 24 * 60 * 60,
+      });
+
       setIdentifier("");
       setPassword("");
+
       router.push("/");
     } catch (e) {
       //error.current.classList.add(css.alertError);
@@ -70,4 +79,16 @@ export default function Login() {
       <button type="submit">Se connecter</button>
     </form>
   );
+}
+
+export function getServerSideProps({ req }) {
+  if (req.cookies.authToken) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+  return { props: {} };
 }

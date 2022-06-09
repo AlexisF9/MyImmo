@@ -1,8 +1,8 @@
-import Login from "../component/login";
-import css from "../styles/auth.module.scss";
+//import Login from "../component/login";
+//import css from "../styles/auth.module.scss";
 
-export default function Auth() {
-  return <Login />;
+export default function Register() {
+  return <p>Register</p>;
 }
 
 export function getServerSideProps({ req }) {
