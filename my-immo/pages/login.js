@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { createRef, useState } from "react";
 import css from "../styles/auth.module.scss";
 import { useRouter } from "next/router";
 import { destroyCookie, setCookie } from "nookies";
 
-export default function Login() {
+export default function Login({ urlLogin }) {
   const router = useRouter();
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
+
+  const error = createRef();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -27,10 +29,7 @@ export default function Login() {
     };
 
     try {
-      const rep = await fetch(
-        `http://localhost:1337/api/auth/local`,
-        requestOptions
-      );
+      const rep = await fetch(urlLogin, requestOptions);
 
       const response = await rep.json();
 
@@ -50,8 +49,7 @@ export default function Login() {
       router.push("/");
     } catch (e) {
       destroyCookie(null, "authToken");
-      //error.current.classList.add(css.alertError);
-      console.log(e);
+      error.current.classList.add(css.activeError);
     }
   };
 
@@ -60,6 +58,9 @@ export default function Login() {
       <div className={css.formLogin}>
         <h2>Se connecter</h2>
         <form onSubmit={handleSubmit} action={handleSubmit}>
+          <p ref={error} className={css.error}>
+            Identifiants de connexion incorrect
+          </p>
           <input
             type="email"
             name="identifier"
@@ -78,6 +79,7 @@ export default function Login() {
               setPassword(e.currentTarget.value);
             }}
           />
+
           <button type="submit">Se connecter</button>
         </form>
       </div>
@@ -87,6 +89,7 @@ export default function Login() {
 }
 
 export function getServerSideProps({ req }) {
+  const urlLogin = process.env.API_LOGIN;
   if (req.cookies.username) {
     return {
       redirect: {
@@ -95,5 +98,5 @@ export function getServerSideProps({ req }) {
       },
     };
   }
-  return { props: {} };
+  return { props: { urlLogin } };
 }

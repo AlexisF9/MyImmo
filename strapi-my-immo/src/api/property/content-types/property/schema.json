@@ -73,6 +73,12 @@
       "relation": "manyToOne",
       "target": "api::location.location",
       "inversedBy": "properties"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "properties"
     }
   }
 }

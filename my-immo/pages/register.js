@@ -4,7 +4,7 @@ import { destroyCookie, setCookie } from "nookies";
 import { useState } from "react";
 import css from "../styles/auth.module.scss";
 
-export default function Register() {
+export default function Register({ urlRegister }) {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [identifier, setIdentifier] = useState("");
@@ -31,10 +31,7 @@ export default function Register() {
     };
 
     try {
-      const rep = await fetch(
-        `http://localhost:1337/api/auth/local/register`,
-        requestOptions
-      );
+      const rep = await fetch(urlRegister, requestOptions);
 
       const response = await rep.json();
 
@@ -101,6 +98,8 @@ export default function Register() {
 }
 
 export function getServerSideProps({ req }) {
+  const urlRegister = process.env.API_REGISTER;
+
   if (req.cookies.authToken) {
     return {
       redirect: {
@@ -109,5 +108,5 @@ export function getServerSideProps({ req }) {
       },
     };
   }
-  return { props: {} };
+  return { props: { urlRegister } };
 }

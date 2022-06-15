@@ -39,6 +39,10 @@
       width: 400px;
       padding: 1rem;
       border: 0;
+
+      &:focus {
+        outline: none;
+      }
     }
 
     button {
@@ -46,5 +50,18 @@
       background-color: $secondary;
       width: max-content;
     }
+  }
+
+  .error {
+    display: none;
+    text-align: center;
+    padding: 1rem;
+    color: rgb(201, 37, 37);
+    border: 1px solid rgb(201, 37, 37);
+    border-radius: 5px;
+  }
+
+  .activeError {
+    display: block;
   }
 }
