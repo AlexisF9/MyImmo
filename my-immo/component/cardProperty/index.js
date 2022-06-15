@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Slider from "../slider";
 import css from "./index.module.scss";
+import Link from "next/link";
 
 export default function CardProperty({ data }) {
   const [propertyInfos, setPropertyInfos] = useState();
@@ -33,6 +34,7 @@ export default function CardProperty({ data }) {
             return (
               <div className={css.card} key={i}>
                 <Slider pictures={item.attributes.pictures.data} />
+
                 <div className={css.cardInfo}>
                   <h3>{item.attributes.title}</h3>
                   <p>{item.attributes.price} €</p>
@@ -55,6 +57,9 @@ export default function CardProperty({ data }) {
                     })}
                   </ul>
                   <p>Publié le {date}</p>
+                  <Link href={`/annonce/${item.id}`}>
+                    <a>En savoir plus</a>
+                  </Link>
                 </div>
               </div>
             );
