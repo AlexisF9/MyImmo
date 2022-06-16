@@ -20,11 +20,16 @@
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+
+  @include mobile {
+    align-items: inherit;
+    padding: 3rem;
+    width: 90%;
+  }
 
   form {
     display: flex;
@@ -39,6 +44,10 @@
       width: 400px;
       padding: 1rem;
       border: 0;
+
+      @include mobile {
+        width: 100%;
+      }
 
       &:focus {
         outline: none;

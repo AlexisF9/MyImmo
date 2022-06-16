@@ -12,8 +12,14 @@
     display: flex;
     align-items: center;
 
+    @include mobile {
+      max-width: 100%;
+      justify-content: space-around;
+    }
+
     h1 {
       margin-right: 2rem;
+      width: max-content;
     }
 
     a {

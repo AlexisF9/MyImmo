@@ -30,12 +30,12 @@ function MyApp({ Component, pageProps }) {
 
 export default MyApp;
 
-// Info de la page actuel
+// AppContext de Next = Info de la page actuel != context React
 MyApp.getInitialProps = async (appContext) => {
-  // dire a tout le site si l'user est co ou pas
+  // On reccup les cookies enregisté le context Next (page actuel)
   const cookies = parseCookies(appContext.ctx);
 
-  // APP de next
+  // On reccup l'app de Next
   const pageProps = await App.getInitialProps(appContext);
 
   if (cookies.authToken) {

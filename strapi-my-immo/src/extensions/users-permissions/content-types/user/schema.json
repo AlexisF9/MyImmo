@@ -68,6 +68,12 @@
       "relation": "oneToMany",
       "target": "api::property.property",
       "mappedBy": "users_permissions_user"
+    },
+    "property": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::property.property",
+      "inversedBy": "users"
     }
   }
 }

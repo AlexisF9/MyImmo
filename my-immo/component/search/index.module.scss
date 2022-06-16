@@ -6,17 +6,32 @@
   align-items: center;
 
   .formSearch {
-    background-color: rgb(223, 223, 223);
+    background-image: url("../../public/background-home.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     width: 100%;
     padding: 2rem;
     margin-bottom: 2rem;
     display: flex;
     justify-content: center;
+    position: relative;
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background-color: rgba(0, 0, 0, 0.527);
+    }
 
     form {
       display: flex;
       flex-direction: column;
       width: 500px;
+      z-index: 9;
+      color: white;
 
       @include mobile {
         width: 100%;

@@ -79,6 +79,12 @@
       "relation": "manyToOne",
       "target": "api::category.category",
       "inversedBy": "properties"
+    },
+    "users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "property"
     }
   }
 }

@@ -19,16 +19,88 @@ export default function Search({ urlAPI, category }) {
   const handleSearch = async (event) => {
     event.preventDefault();
 
+    /* fetch(API + "graphql", {
+      method: "POST",
+      body: JSON.stringify(`query {
+        properties {
+          data {
+            id
+            attributes {
+              title
+              price
+              free
+              description
+              publishedAt
+              honoraires
+              garantie
+              pieces
+              surface
+              pictures {
+                data {
+                  attributes {
+                    url
+                  }
+                }
+              }
+              users_permissions_user {
+                data {
+                  id
+                  attributes {
+                    username
+                  }
+                }
+              }
+              tags {
+                data {
+                  attributes {
+                    title
+                  }
+                }
+              }
+              type {
+                data {
+                  attributes {
+                    title
+                  }
+                }
+              }
+              location {
+                data {
+                  attributes {
+                    title
+                  }
+                }
+              }
+              category {
+                data {
+                  attributes {
+                    title
+                  }
+                }
+              }
+              users {
+                data {
+                  id
+                  attributes {
+                    username
+                  }
+                }
+              }
+            }
+          }
+        }
+      }`),
+    }); */
+
     try {
       setProperty("");
 
       const rep = await fetch(
-        `${urlAPI}?[filters][type][title][$eq]=${search.type}&[filters][location][title][$eq]=${search.city}&[filters][category][title][$eq]=${search.categories}&[filters][pieces][$gte]=${search.pieces}&[filters][surface][$gte]=${search.surface}&[sort][0]=id%3Adesc&populate=*`
+        `${urlAPI}?filters[type][title][$eq]=${search.type}&filters[location][title][$eq]=${search.city}&filters[category][title][$eq]=${search.categories}&filters[pieces][$gte]=${search.pieces}&filters[surface][$gte]=${search.surface}&populate=*`
       );
       const response = await rep.json();
-
-      setProperty(response);
       setLoading(false);
+      setProperty(response);
     } catch (e) {
       console.log(e);
     }
@@ -37,6 +109,7 @@ export default function Search({ urlAPI, category }) {
   return (
     <div className={css.containerSearch}>
       <div className={css.formSearch}>
+        <div className={css.overlay}></div>
         <form onSubmit={handleSearch}>
           <input
             required
@@ -135,8 +208,8 @@ export default function Search({ urlAPI, category }) {
               <p>{property.data.length} annonce</p>
             )}
 
-            {property.data.map((item, i) => {
-              return <CardProperty key={i} data={item.attributes.title} />;
+            {property.data.map((item) => {
+              return <CardProperty key={item.id} dataInfo={item} />;
             })}
           </div>
         ) : null}

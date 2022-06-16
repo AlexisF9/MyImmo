@@ -25,9 +25,9 @@ export default function Header() {
         </Link>
 
         <div className={css.links}>
-          {session === true ? (
+          {session != undefined ? (
             <>
-              <Link href={"/"}>
+              <Link href={"/profil"}>
                 <a>Profil</a>
               </Link>
               <a className={css.logoutBtn} onClick={logout}>
