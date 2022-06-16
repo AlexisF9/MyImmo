@@ -1,15 +1,18 @@
-import { createRef, useState } from "react";
+import { createRef, useContext, useState } from "react";
+import { useSearch } from "../../contexte/search";
 import CardProperty from "../cardProperty";
 import css from "./index.module.scss";
 
 export default function Search({ urlAPI, category }) {
   const [loading, setLoading] = useState(true);
 
-  const [city, setCity] = useState();
-  const [type, setType] = useState();
-  const [categories, setCategories] = useState();
-  const [pieces, setPieces] = useState();
-  const [surface, setSurface] = useState();
+  const { search, setSearch } = useSearch(); // import du context
+
+  // const [city, setCity] = useState();
+  // const [type, setType] = useState();
+  // const [categories, setCategories] = useState();
+  // const [pieces, setPieces] = useState();
+  // const [surface, setSurface] = useState();
 
   const [property, setProperty] = useState();
 
@@ -20,7 +23,7 @@ export default function Search({ urlAPI, category }) {
       setProperty("");
 
       const rep = await fetch(
-        `${urlAPI}?[filters][type][title][$eq]=${type}&[filters][location][title][$eq]=${city}&[filters][category][title][$eq]=${categories}&[filters][pieces][$gte]=${pieces}&[filters][surface][$gte]=${surface}&[sort][0]=id%3Adesc&populate=*`
+        `${urlAPI}?[filters][type][title][$eq]=${search.type}&[filters][location][title][$eq]=${search.city}&[filters][category][title][$eq]=${search.categories}&[filters][pieces][$gte]=${search.pieces}&[filters][surface][$gte]=${search.surface}&[sort][0]=id%3Adesc&populate=*`
       );
       const response = await rep.json();
 
@@ -40,17 +43,21 @@ export default function Search({ urlAPI, category }) {
             placeholder="Taper une ville"
             type="text"
             onChange={(e) => {
-              setCity(e.currentTarget.value.toLowerCase());
+              let newSearch = { ...search }; // on garde les autres states
+              newSearch.city = e.currentTarget.value.toLowerCase(); // ajout de la nouvelle valeur
+              setSearch(newSearch); // on met à jour le state
             }}
             name="location"
-            value={city}
+            value={search.city} // dernière valeur enregistré
           />
 
           <select
             required
-            defaultValue=""
+            defaultValue={search.categories}
             onChange={(e) => {
-              setCategories(e.currentTarget.value);
+              let newSearch = { ...search };
+              newSearch.categories = e.currentTarget.value;
+              setSearch(newSearch);
             }}
           >
             <option value="" disabled hidden>
@@ -67,9 +74,11 @@ export default function Search({ urlAPI, category }) {
 
           <select
             required
-            defaultValue=""
+            defaultValue={search.type}
             onChange={(e) => {
-              setType(e.currentTarget.value);
+              let newSearch = { ...search };
+              newSearch.type = e.currentTarget.value;
+              setSearch(newSearch);
             }}
           >
             <option value="" disabled hidden>
@@ -87,8 +96,11 @@ export default function Search({ urlAPI, category }) {
                 type="number"
                 id="piece"
                 name="piece"
+                value={search.pieces}
                 onChange={(e) => {
-                  setPieces(e.currentTarget.value);
+                  let newSearch = { ...search };
+                  newSearch.pieces = e.currentTarget.value;
+                  setSearch(newSearch);
                 }}
               />
             </div>
@@ -100,8 +112,11 @@ export default function Search({ urlAPI, category }) {
                 type="number"
                 id="surface"
                 name="surface"
+                value={search.surface}
                 onChange={(e) => {
-                  setSurface(e.currentTarget.value);
+                  let newSearch = { ...search };
+                  newSearch.surface = e.currentTarget.value;
+                  setSearch(newSearch);
                 }}
               />
             </div>

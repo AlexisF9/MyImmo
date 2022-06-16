@@ -2,6 +2,8 @@ import "../styles/globals.scss";
 import Head from "next/head";
 import Header from "../component/header";
 import SessionContext from "../contexte/session";
+import { ProvideSearch } from "../contexte/search";
+
 import App from "next/app";
 import { parseCookies } from "nookies";
 
@@ -18,7 +20,9 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <SessionContext.Provider value={pageProps.user}>
         <Header />
-        <Component {...pageProps} />
+        <ProvideSearch>
+          <Component {...pageProps} />
+        </ProvideSearch>
       </SessionContext.Provider>
     </>
   );
@@ -26,9 +30,12 @@ function MyApp({ Component, pageProps }) {
 
 export default MyApp;
 
+// Info de la page actuel
 MyApp.getInitialProps = async (appContext) => {
   // dire a tout le site si l'user est co ou pas
   const cookies = parseCookies(appContext.ctx);
+
+  // APP de next
   const pageProps = await App.getInitialProps(appContext);
 
   if (cookies.authToken) {
