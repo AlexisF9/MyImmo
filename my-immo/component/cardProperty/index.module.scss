@@ -31,9 +31,15 @@
   .cardInfo {
     width: 300px;
     padding: 1rem;
+    position: relative;
 
     .moreBtn {
-      color: $secondary;
+      color: white;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      background-color: $secondary;
+      padding: 1rem;
     }
   }
 }

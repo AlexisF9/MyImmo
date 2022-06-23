@@ -19,85 +19,89 @@ export default function Search({ urlAPI, category }) {
   const handleSearch = async (event) => {
     event.preventDefault();
 
-    /* fetch(API + "graphql", {
-      method: "POST",
-      body: JSON.stringify(`query {
-        properties {
-          data {
-            id
-            attributes {
-              title
-              price
-              free
-              description
-              publishedAt
-              honoraires
-              garantie
-              pieces
-              surface
-              pictures {
-                data {
-                  attributes {
-                    url
-                  }
-                }
-              }
-              users_permissions_user {
-                data {
-                  id
-                  attributes {
-                    username
-                  }
-                }
-              }
-              tags {
-                data {
-                  attributes {
-                    title
-                  }
-                }
-              }
-              type {
-                data {
-                  attributes {
-                    title
-                  }
-                }
-              }
-              location {
-                data {
-                  attributes {
-                    title
-                  }
-                }
-              }
-              category {
-                data {
-                  attributes {
-                    title
-                  }
-                }
-              }
-              users {
-                data {
-                  id
-                  attributes {
-                    username
-                  }
-                }
-              }
-            }
-          }
-        }
-      }`),
-    }); */
-
     try {
       setProperty("");
 
       const rep = await fetch(
         `${urlAPI}?filters[type][title][$eq]=${search.type}&filters[location][title][$eq]=${search.city}&filters[category][title][$eq]=${search.categories}&filters[pieces][$gte]=${search.pieces}&filters[surface][$gte]=${search.surface}&populate=*`
       );
+      // const rep = await fetch("http://localhost:1337/" + "graphql", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     query: `query {
+      //     properties {
+      //       data {
+      //         id
+      //         attributes {
+      //           title
+      //           price
+      //           free
+      //           description
+      //           publishedAt
+      //           honoraires
+      //           garantie
+      //           pieces
+      //           surface
+      //           pictures {
+      //             data {
+      //               attributes {
+      //                 url
+      //               }
+      //             }
+      //           }
+      //           users_permissions_user {
+      //             data {
+      //               id
+      //               attributes {
+      //                 username
+      //               }
+      //             }
+      //           }
+      //           tags {
+      //             data {
+      //               attributes {
+      //                 title
+      //               }
+      //             }
+      //           }
+      //           type {
+      //             data {
+      //               attributes {
+      //                 title
+      //               }
+      //             }
+      //           }
+      //           location {
+      //             data {
+      //               attributes {
+      //                 title
+      //               }
+      //             }
+      //           }
+      //           category {
+      //             data {
+      //               attributes {
+      //                 title
+      //               }
+      //             }
+      //           }
+      //           users {
+      //             data {
+      //               id
+      //               attributes {
+      //                 username
+      //               }
+      //             }
+      //           }
+      //         }
+      //       }
+      //     }
+      //   }`,
+      //   }),
+      // });
       const response = await rep.json();
       setLoading(false);
       setProperty(response);

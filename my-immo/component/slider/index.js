@@ -18,11 +18,11 @@ export default function Slider({ pictures }) {
       <div className={css.arrows}>
         <img
           onClick={() => indexPictures(-1, pictures.length - 1)}
-          src="./left-arrow.png"
+          src="/left-arrow.png"
         />
         <img
           onClick={() => indexPictures(+1, pictures.length - 1)}
-          src="./right-arrow.png"
+          src="/right-arrow.png"
         />
       </div>
       <div>

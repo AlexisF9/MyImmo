@@ -1,5 +1,15 @@
+import css from "./index.module.scss";
+import Slider from "../../component/slider";
+
 export default function Annonce({ property }) {
-  return <p>{property.data.attributes.title}</p>;
+  return (
+    <div className={css.container}>
+      <div>
+        <p>{property.data.attributes.title}</p>
+        <Slider pictures={property.data.attributes.pictures.data} />
+      </div>
+    </div>
+  );
 }
 
 export async function getServerSideProps({ params, req }) {
@@ -12,7 +22,7 @@ export async function getServerSideProps({ params, req }) {
     };
   } else {
     const rep = await fetch(
-      `http://localhost:1337/api/properties/${params.id}`
+      `http://localhost:1337/api/properties/${params.id}?populate=*`
     );
     const property = await rep.json();
     return {
