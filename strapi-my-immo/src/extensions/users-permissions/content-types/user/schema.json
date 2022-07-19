@@ -69,11 +69,11 @@
       "target": "api::property.property",
       "mappedBy": "users_permissions_user"
     },
-    "property": {
+    "likes": {
       "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::property.property",
-      "inversedBy": "users"
+      "relation": "oneToMany",
+      "target": "api::like.like",
+      "mappedBy": "users_permissions_user"
     }
   }
 }

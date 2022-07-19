@@ -3,14 +3,40 @@ import Slider from "../slider";
 import css from "./index.module.scss";
 import Link from "next/link";
 import { useSession } from "../../contexte/session";
+import { parseCookies } from "nookies";
 
 export default function CardProperty({ dataInfo }) {
   const session = useSession();
+  const [user, setUser] = useState();
 
   const [like, setLike] = useState(false);
 
   // const maDate = new Date(item.attributes.publishedAt);
   //             const date = maDate.toLocaleString("fr");
+
+  useEffect(() => {
+    searchLikes();
+  }, []);
+
+  const searchLikes = async () => {
+    let useCookies = await parseCookies();
+    let user = await useCookies.username;
+
+    const rep = await fetch(
+      `http://localhost:1337/api/likes?filters[users_permissions_user][username][$eq]=${user}&filters[property][title][$eq]=${dataInfo.attributes.title}&populate=*`
+    );
+    const response = await rep.json();
+    //console.log(dataInfo.attributes.title, response.data.length);
+
+    if (response.data.length === 1) {
+      setLike(true);
+    }
+  };
+
+  function addLike() {
+    console.log("cc");
+  }
+
   return (
     <>
       <div className={css.card}>
@@ -18,7 +44,7 @@ export default function CardProperty({ dataInfo }) {
           <div
             className={css.like}
             onClick={() => {
-              setLike(!like);
+              addLike();
             }}
           >
             {like ? <img src="./like-red.svg" /> : <img src="./like.svg" />}

@@ -57,7 +57,7 @@ export default function Login({ urlLogin }) {
     <div className={css.login}>
       <div className={css.formLogin}>
         <h2>Se connecter</h2>
-        <form onSubmit={handleSubmit} action={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <p ref={error} className={css.error}>
             Identifiants de connexion incorrect
           </p>

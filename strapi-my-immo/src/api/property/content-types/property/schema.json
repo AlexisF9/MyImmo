@@ -80,10 +80,10 @@
       "target": "api::category.category",
       "inversedBy": "properties"
     },
-    "users": {
+    "likes": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "plugin::users-permissions.user",
+      "target": "api::like.like",
       "mappedBy": "property"
     }
   }

@@ -61,7 +61,7 @@ export default function Register({ urlRegister }) {
     <div className={css.login}>
       <div className={css.formLogin}>
         <h2>S'inscrire</h2>
-        <form onSubmit={handleSubmit} action={handleSubmit}>
+        <form onSubmit={handleSubmit}>
           <input
             type="text"
             name="username"
