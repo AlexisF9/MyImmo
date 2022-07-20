@@ -8,11 +8,11 @@ export default function Search({ urlAPI, category }) {
 
   const { search, setSearch } = useSearch(); // import du context
 
-  // const [city, setCity] = useState();
-  // const [type, setType] = useState();
-  // const [categories, setCategories] = useState();
-  // const [pieces, setPieces] = useState();
-  // const [surface, setSurface] = useState();
+  const [city, setCity] = useState();
+  const [type, setType] = useState();
+  const [categories, setCategories] = useState();
+  const [pieces, setPieces] = useState();
+  const [surface, setSurface] = useState();
 
   const [property, setProperty] = useState();
 

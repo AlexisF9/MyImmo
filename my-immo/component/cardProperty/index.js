@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Slider from "../slider";
 import css from "./index.module.scss";
 import Link from "next/link";
@@ -7,14 +7,18 @@ import { parseCookies } from "nookies";
 
 export default function CardProperty({ dataInfo }) {
   const session = useSession();
-  const [user, setUser] = useState();
 
+  const [userToken, setUserToken] = useState();
+  const [userId, setUserId] = useState();
+
+  const [idLike, setIdLike] = useState();
   const [like, setLike] = useState(false);
 
-  // const maDate = new Date(item.attributes.publishedAt);
-  //             const date = maDate.toLocaleString("fr");
-
   useEffect(() => {
+    let cookie = parseCookies();
+    setUserToken(cookie.authToken);
+    setUserId(cookie.idUser);
+
     searchLikes();
   }, []);
 
@@ -26,16 +30,67 @@ export default function CardProperty({ dataInfo }) {
       `http://localhost:1337/api/likes?filters[users_permissions_user][username][$eq]=${user}&filters[property][title][$eq]=${dataInfo.attributes.title}&populate=*`
     );
     const response = await rep.json();
-    //console.log(dataInfo.attributes.title, response.data.length);
+    await setIdLike(response.data[0]);
 
     if (response.data.length === 1) {
       setLike(true);
     }
   };
 
-  function addLike() {
-    console.log("cc");
-  }
+  const handleLike = async (like, id) => {
+    var myHeaders = new Headers();
+    myHeaders.append("Authorization", "Bearer " + userToken);
+
+    if (like) {
+      var requestOptions = {
+        method: "DELETE",
+        headers: myHeaders,
+        redirect: "follow",
+      };
+
+      try {
+        const rep = await fetch(
+          `http://localhost:1337/api/likes/${idLike.id}`,
+          requestOptions
+        );
+        const response = await rep.json();
+        setLike(false);
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      myHeaders.append("Content-Type", "application/json");
+
+      var raw = JSON.stringify({
+        data: {
+          property: {
+            id: id,
+          },
+          users_permissions_user: {
+            id: userId,
+          },
+        },
+      });
+
+      var requestOptions = {
+        method: "POST",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      try {
+        const rep = await fetch(
+          `http://localhost:1337/api/likes`,
+          requestOptions
+        );
+        const response = await rep.json();
+        searchLikes();
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
 
   return (
     <>
@@ -44,7 +99,7 @@ export default function CardProperty({ dataInfo }) {
           <div
             className={css.like}
             onClick={() => {
-              addLike();
+              handleLike(like, dataInfo.id);
             }}
           >
             {like ? <img src="./like-red.svg" /> : <img src="./like.svg" />}
