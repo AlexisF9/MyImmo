@@ -11,11 +11,13 @@
     background-size: cover;
     background-position: center;
     width: 100%;
+    height: 450px;
     padding: 2rem;
     margin-bottom: 2rem;
     display: flex;
     justify-content: center;
     position: relative;
+    align-items: center;
 
     .overlay {
       position: absolute;
@@ -23,7 +25,25 @@
       bottom: 0;
       left: 0;
       right: 0;
-      background-color: rgba(0, 0, 0, 0.527);
+      background-color: rgba(0, 0, 0, 0.596);
+    }
+
+    .oldSearch {
+      z-index: 9;
+      color: white;
+      text-align: center;
+
+      button {
+        @include button;
+        background-color: $secondary;
+      }
+
+      button:last-child {
+        margin-left: 0.5rem;
+        background-color: transparent;
+        border: 1px solid white;
+        color: white;
+      }
     }
 
     form {
@@ -49,6 +69,7 @@
           outline: none;
         }
       }
+
       button {
         @include button;
       }

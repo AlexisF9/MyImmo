@@ -6,12 +6,6 @@ import { parseCookies } from "nookies";
 
 export default function Home(props) {
   const session = useSession();
-  const [user, setUser] = useState();
-
-  useEffect(() => {
-    const useCookies = parseCookies();
-    setUser(useCookies.username);
-  });
 
   return (
     <div className={css.container}>
@@ -19,19 +13,6 @@ export default function Home(props) {
     </div>
   );
 }
-
-// Si PAS d'user connecter = redirige vers login
-// export function getServerSideProps({ req }) {
-//   if (!req.cookies.username) {
-//     return {
-//       redirect: {
-//         destination: "/login",
-//         permanent: false,
-//       },
-//     };
-//   }
-//   return { props: {} };
-// }
 
 export async function getServerSideProps() {
   const API = process.env.API_PROPERTIES;

@@ -1,20 +1,36 @@
-import { createRef, useContext, useState } from "react";
+import { createRef, useContext, useEffect, useRef, useState } from "react";
 import { useSearch } from "../../contexte/search";
 import CardProperty from "../cardProperty";
 import css from "./index.module.scss";
 
 export default function Search({ urlAPI, category }) {
   const [loading, setLoading] = useState(true);
+  // const { search, setSearch } = useSearch(); // import du context
 
-  const { search, setSearch } = useSearch(); // import du context
+  const [city, setCity] = useState("");
+  const [type, setType] = useState("");
+  const [categories, setCategories] = useState("");
+  const [pieces, setPieces] = useState("");
+  const [surface, setSurface] = useState("");
 
-  const [city, setCity] = useState();
-  const [type, setType] = useState();
-  const [categories, setCategories] = useState();
-  const [pieces, setPieces] = useState();
-  const [surface, setSurface] = useState();
-
+  const [oldSearch, setOldSearch] = useState();
   const [property, setProperty] = useState();
+
+  useEffect(() => {
+    setOldSearch(JSON.parse(localStorage.getItem("search")));
+  }, []);
+
+  useEffect(() => {
+    if (oldSearch) {
+      setCity(oldSearch.city);
+      setType(oldSearch.type);
+      setCategories(oldSearch.categories);
+      setPieces(oldSearch.pieces);
+      setSurface(oldSearch.surface);
+    }
+  }, [oldSearch]);
+
+  console.log(oldSearch);
 
   const handleSearch = async (event) => {
     event.preventDefault();
@@ -23,86 +39,20 @@ export default function Search({ urlAPI, category }) {
       setProperty("");
 
       const rep = await fetch(
-        `${urlAPI}?filters[type][title][$eq]=${search.type}&filters[location][title][$eq]=${search.city}&filters[category][title][$eq]=${search.categories}&filters[pieces][$gte]=${search.pieces}&filters[surface][$gte]=${search.surface}&populate=*`
+        `${urlAPI}?filters[type][title][$eq]=${type}&filters[location][title][$eq]=${city}&filters[category][title][$eq]=${categories}&filters[pieces][$gte]=${pieces}&filters[surface][$gte]=${surface}&populate=*`
       );
-      // const rep = await fetch("http://localhost:1337/" + "graphql", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({
-      //     query: `query {
-      //     properties {
-      //       data {
-      //         id
-      //         attributes {
-      //           title
-      //           price
-      //           free
-      //           description
-      //           publishedAt
-      //           honoraires
-      //           garantie
-      //           pieces
-      //           surface
-      //           pictures {
-      //             data {
-      //               attributes {
-      //                 url
-      //               }
-      //             }
-      //           }
-      //           users_permissions_user {
-      //             data {
-      //               id
-      //               attributes {
-      //                 username
-      //               }
-      //             }
-      //           }
-      //           tags {
-      //             data {
-      //               attributes {
-      //                 title
-      //               }
-      //             }
-      //           }
-      //           type {
-      //             data {
-      //               attributes {
-      //                 title
-      //               }
-      //             }
-      //           }
-      //           location {
-      //             data {
-      //               attributes {
-      //                 title
-      //               }
-      //             }
-      //           }
-      //           category {
-      //             data {
-      //               attributes {
-      //                 title
-      //               }
-      //             }
-      //           }
-      //           users {
-      //             data {
-      //               id
-      //               attributes {
-      //                 username
-      //               }
-      //             }
-      //           }
-      //         }
-      //       }
-      //     }
-      //   }`,
-      //   }),
-      // });
       const response = await rep.json();
+
+      let newItems = {
+        city: city,
+        type: type,
+        categories: categories,
+        pieces: pieces,
+        surface: surface,
+      };
+
+      localStorage.setItem("search", JSON.stringify(newItems));
+
       setLoading(false);
       setProperty(response);
     } catch (e) {
@@ -120,24 +70,20 @@ export default function Search({ urlAPI, category }) {
             placeholder="Taper une ville"
             type="text"
             onChange={(e) => {
-              let newSearch = { ...search }; // on garde les autres states
-              newSearch.city = e.currentTarget.value.toLowerCase(); // ajout de la nouvelle valeur
-              setSearch(newSearch); // on met à jour le state
+              setCity(e.currentTarget.value.toLowerCase());
             }}
             name="location"
-            value={search.city} // dernière valeur enregistré
+            value={city}
           />
 
           <select
             required
-            defaultValue={search.categories}
+            value={categories}
             onChange={(e) => {
-              let newSearch = { ...search };
-              newSearch.categories = e.currentTarget.value;
-              setSearch(newSearch);
+              setCategories(e.currentTarget.value);
             }}
           >
-            <option value="" disabled hidden>
+            <option value="" hidden>
               Choisir une catégorie
             </option>
             {category.data.map((item, i) => {
@@ -151,14 +97,12 @@ export default function Search({ urlAPI, category }) {
 
           <select
             required
-            defaultValue={search.type}
+            value={type}
             onChange={(e) => {
-              let newSearch = { ...search };
-              newSearch.type = e.currentTarget.value;
-              setSearch(newSearch);
+              setType(e.currentTarget.value);
             }}
           >
-            <option value="" disabled hidden>
+            <option value="" hidden>
               Choisir un type
             </option>
             <option value="Acheter">Acheter</option>
@@ -173,11 +117,9 @@ export default function Search({ urlAPI, category }) {
                 type="number"
                 id="piece"
                 name="piece"
-                value={search.pieces}
+                value={pieces}
                 onChange={(e) => {
-                  let newSearch = { ...search };
-                  newSearch.pieces = e.currentTarget.value;
-                  setSearch(newSearch);
+                  setPieces(e.currentTarget.value);
                 }}
               />
             </div>
@@ -189,11 +131,12 @@ export default function Search({ urlAPI, category }) {
                 type="number"
                 id="surface"
                 name="surface"
-                value={search.surface}
+                value={surface}
                 onChange={(e) => {
-                  let newSearch = { ...search };
-                  newSearch.surface = e.currentTarget.value;
-                  setSearch(newSearch);
+                  // let newSearch = { ...search };
+                  // newSearch.surface = e.currentTarget.value;
+                  // setSearch(newSearch);
+                  setSurface(e.currentTarget.value);
                 }}
               />
             </div>

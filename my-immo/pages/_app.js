@@ -2,7 +2,7 @@ import "../styles/globals.scss";
 import Head from "next/head";
 import Header from "../component/header";
 import SessionContext from "../contexte/session";
-import { ProvideSearch } from "../contexte/search";
+//import { ProvideSearch } from "../contexte/search";
 
 import App from "next/app";
 import { parseCookies } from "nookies";
@@ -20,9 +20,7 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <SessionContext.Provider value={pageProps.user}>
         <Header />
-        <ProvideSearch>
-          <Component {...pageProps} />
-        </ProvideSearch>
+        <Component {...pageProps} />
       </SessionContext.Provider>
     </>
   );
