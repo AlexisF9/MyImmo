@@ -1,0 +1,15 @@
+@import "../../styles/mixins.scss";
+
+.card {
+  padding: 0 1rem 0 1rem;
+
+  .cardInfo {
+    margin-bottom: 2rem;
+
+    .moreBtn {
+      color: white;
+      background-color: $secondary;
+      padding: 1rem;
+    }
+  }
+}
