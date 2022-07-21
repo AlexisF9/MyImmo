@@ -7,7 +7,9 @@ export default function Search({ urlAPI, category, setProperty }) {
   // const [loading, setLoading] = useState(true);
   // const { search, setSearch } = useSearch(); // import du context
 
+  const [searchCity, setSearchCity] = useState();
   const [city, setCity] = useState("");
+
   const [type, setType] = useState("");
   const [categories, setCategories] = useState("");
   const [pieces, setPieces] = useState("");
@@ -29,16 +31,17 @@ export default function Search({ urlAPI, category, setProperty }) {
     }
   }, [oldSearch]);
 
-  console.log(oldSearch);
-
   const handleSearch = async (event) => {
     event.preventDefault();
 
     try {
       setProperty("");
 
+      let ville = await city.toLowerCase();
+      let cityProperty = (await ville.charAt(0).toUpperCase()) + ville.slice(1); // Première lettre en uppercase et le reste lowercase
+
       const rep = await fetch(
-        `${urlAPI}?filters[type][title][$eq]=${type}&filters[location][title][$eq]=${city}&filters[category][title][$eq]=${categories}&filters[pieces][$gte]=${pieces}&filters[surface][$gte]=${surface}&populate=*`
+        `${urlAPI}?filters[type][title][$eq]=${type}&filters[location][title][$eq]=${cityProperty}&filters[category][title][$eq]=${categories}&filters[pieces][$gte]=${pieces}&filters[surface][$gte]=${surface}&populate=*`
       );
       const response = await rep.json();
 
@@ -59,6 +62,21 @@ export default function Search({ urlAPI, category, setProperty }) {
     }
   };
 
+  const searchTheCity = async () => {
+    let ville = await city.toLowerCase();
+    let cityProperty = (await ville.charAt(0).toUpperCase()) + ville.slice(1);
+
+    try {
+      const rep = await fetch(
+        `https://geo.api.gouv.fr/communes?nom=${cityProperty}`
+      );
+      const response = await rep.json();
+      setSearchCity(response);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <div className={css.containerSearch}>
       <div className={css.formSearch}>
@@ -66,14 +84,29 @@ export default function Search({ urlAPI, category, setProperty }) {
         <form onSubmit={handleSearch}>
           <input
             required
+            list="listCity"
             placeholder="Taper une ville"
             type="text"
             onChange={(e) => {
-              setCity(e.currentTarget.value.toLowerCase());
+              setCity(e.currentTarget.value);
+              searchTheCity();
             }}
             name="location"
             value={city}
           />
+          {searchCity && (
+            <datalist id="listCity">
+              {searchCity.map((item, index) => {
+                return (
+                  <option
+                    key={index}
+                    onClick={() => setCity(item.nom)}
+                    value={item.nom}
+                  />
+                );
+              })}
+            </datalist>
+          )}
 
           <select
             required
