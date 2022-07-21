@@ -1,1 +1,13 @@
+@import "styles/mixins.scss";
 
+.listProperty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+
+  @include mobile {
+    padding: 0 1rem 0 1rem;
+  }
+}

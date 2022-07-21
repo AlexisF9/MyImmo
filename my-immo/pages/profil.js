@@ -1,14 +1,12 @@
-import CardProperty from "../component/cardProperty";
+import { useState } from "react";
+import CardOverview from "../component/cardOverview/index.js";
 
 export default function Profil({ user, likes }) {
-  console.log(likes);
   return (
     <div>
       <p>Hello {user.username}</p>
       {likes.data.map((item, index) => {
-        return (
-          <p key={index}>{item.attributes.property.data.attributes.title}</p>
-        );
+        return <CardOverview data={item} />;
       })}
     </div>
   );

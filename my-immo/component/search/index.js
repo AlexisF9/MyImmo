@@ -3,8 +3,8 @@ import { useSearch } from "../../contexte/search";
 import CardProperty from "../cardProperty";
 import css from "./index.module.scss";
 
-export default function Search({ urlAPI, category }) {
-  const [loading, setLoading] = useState(true);
+export default function Search({ urlAPI, category, setProperty }) {
+  // const [loading, setLoading] = useState(true);
   // const { search, setSearch } = useSearch(); // import du context
 
   const [city, setCity] = useState("");
@@ -14,7 +14,6 @@ export default function Search({ urlAPI, category }) {
   const [surface, setSurface] = useState("");
 
   const [oldSearch, setOldSearch] = useState();
-  const [property, setProperty] = useState();
 
   useEffect(() => {
     setOldSearch(JSON.parse(localStorage.getItem("search")));
@@ -53,7 +52,7 @@ export default function Search({ urlAPI, category }) {
 
       localStorage.setItem("search", JSON.stringify(newItems));
 
-      setLoading(false);
+      //setLoading(false);
       setProperty(response);
     } catch (e) {
       console.log(e);
@@ -144,22 +143,6 @@ export default function Search({ urlAPI, category }) {
 
           <button type="submit">Rechercher</button>
         </form>
-      </div>
-
-      <div className={css.listCards}>
-        {!loading && property ? (
-          <div className={css.listProperty}>
-            {property.data.length > 1 ? (
-              <p>{property.data.length} annonces</p>
-            ) : (
-              <p>{property.data.length} annonce</p>
-            )}
-
-            {property.data.map((item) => {
-              return <CardProperty key={item.id} dataInfo={item} />;
-            })}
-          </div>
-        ) : null}
       </div>
     </div>
   );

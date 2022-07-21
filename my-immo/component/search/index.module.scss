@@ -114,15 +114,4 @@
       }
     }
   }
-
-  @include mobile {
-    .listCards {
-      margin: 0 1rem;
-    }
-  }
-}
-
-.listProperty {
-  display: flex;
-  flex-direction: column;
 }

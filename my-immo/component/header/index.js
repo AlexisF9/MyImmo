@@ -30,8 +30,8 @@ export default function Header() {
               <Link href={"/profil"}>
                 <a>Profil</a>
               </Link>
-              <a className={css.logoutBtn} onClick={logout}>
-                Déconnexion
+              <a className="material-symbols-outlined" onClick={logout}>
+                logout
               </a>
             </>
           ) : (

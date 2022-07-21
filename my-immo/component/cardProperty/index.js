@@ -102,7 +102,11 @@ export default function CardProperty({ dataInfo }) {
               handleLike(like, dataInfo.id);
             }}
           >
-            {like ? <img src="./like-red.svg" /> : <img src="./like.svg" />}
+            {like ? (
+              <img src="./like-red.svg" />
+            ) : (
+              <span className="material-symbols-outlined">favorite</span>
+            )}
           </div>
         )}
 
