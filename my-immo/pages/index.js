@@ -13,6 +13,7 @@ export default function Home(props) {
         category={props.categorie}
         setProperty={setProperty}
       />
+
       {property && (
         <div className={css.listProperty}>
           {property.data.length > 1 ? (

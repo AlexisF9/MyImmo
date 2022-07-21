@@ -33,6 +33,10 @@
     padding: 1rem;
     position: relative;
 
+    @include mobile {
+      width: auto;
+    }
+
     .moreBtn {
       color: white;
       position: absolute;
@@ -40,6 +44,10 @@
       right: 0;
       background-color: $secondary;
       padding: 1rem;
+
+      @include mobile {
+        padding: 0.5rem;
+      }
     }
   }
 }

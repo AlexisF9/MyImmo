@@ -5,9 +5,7 @@ import css from "../styles/profil.module.scss";
 export default function Profil({ user, likes }) {
   return (
     <div className={css.profil}>
-      <div className={css.content}>
-        <h2>Bienvenue sur votre profil {user.username}</h2>
-      </div>
+      <h2>Bienvenue sur votre profil {user.username}</h2>
 
       <div className={css.listeLikes}>
         {likes.data.map((item, index) => {

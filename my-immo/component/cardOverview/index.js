@@ -10,8 +10,6 @@ export default function CardOverview({ data }) {
     fetchData();
   }, []);
 
-  console.log(property);
-
   const fetchData = async () => {
     const prop = await fetch(
       `http://localhost:1337/api/properties/${data.attributes.property.data.id}?populate=*`
@@ -24,13 +22,14 @@ export default function CardOverview({ data }) {
     <>
       {property && (
         <div className={css.card}>
-          <div className={css.cardInfo}>
+          <div className={css.content}>
             <h3>{property.data.attributes.title}</h3>
-            <Link href={`/annonce/${property.data.id}`}>
-              <a className={css.moreBtn}>Voir l'annonce</a>
-            </Link>
+            <Slider pictures={property.data.attributes.pictures.data} />
           </div>
-          <Slider pictures={property.data.attributes.pictures.data} />
+
+          <Link href={`/annonce/${property.data.id}`}>
+            <a className={css.moreBtn}>Voir l'annonce</a>
+          </Link>
         </div>
       )}
     </>

@@ -1,8 +1,22 @@
-.content {
-  margin: 5rem;
-}
+@import "styles/mixins.scss";
 
-.listeLikes {
-  display: flex;
-  overflow: scroll;
+.profil {
+  h2 {
+    text-align: center;
+    margin: 4rem 0 3rem 0;
+  }
+
+  .listeLikes {
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr 1fr;
+
+    @include largeDesktop {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    @include tablet {
+      grid-template-columns: 1fr;
+    }
+  }
 }
