@@ -1,24 +1,25 @@
 import { useState } from "react";
 import { destroyCookie, setCookie } from "nookies";
 import { useRouter } from "next/router";
+import { useForm } from "react-hook-form";
 
 export default function FormRegister({ urlRegister }) {
   const router = useRouter();
 
-  const [username, setUsername] = useState("");
-  const [identifier, setIdentifier] = useState("");
-  const [password, setPassword] = useState("");
+  const { register, handleSubmit } = useForm();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  // const [username, setUsername] = useState("");
+  // const [identifier, setIdentifier] = useState("");
+  // const [password, setPassword] = useState("");
 
+  const onSubmit = async (data) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      username: username,
-      email: identifier,
-      password: password,
+      username: data.username,
+      email: data.identifier,
+      password: data.password,
       role: "Authenticated",
     });
 
@@ -44,10 +45,6 @@ export default function FormRegister({ urlRegister }) {
         maxAge: 30 * 24 * 60 * 60,
       });
 
-      setUsername("");
-      setIdentifier("");
-      setPassword("");
-
       router.push("/");
     } catch (e) {
       destroyCookie(null, "authToken");
@@ -56,33 +53,21 @@ export default function FormRegister({ urlRegister }) {
     }
   };
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <input
         type="text"
-        name="username"
+        {...register("username", { required: true })}
         placeholder="Nom d'utilisateur"
-        value={username}
-        onChange={(e) => {
-          setUsername(e.currentTarget.value);
-        }}
       />
       <input
         type="email"
-        name="identifier"
+        {...register("identifier", { required: true })}
         placeholder="Email"
-        value={identifier}
-        onChange={(e) => {
-          setIdentifier(e.currentTarget.value);
-        }}
       />
       <input
         type="password"
-        name="password"
+        {...register("password", { required: true })}
         placeholder="Mot de passe"
-        value={password}
-        onChange={(e) => {
-          setPassword(e.currentTarget.value);
-        }}
       />
       <button type="submit">S'inscrire</button>
     </form>

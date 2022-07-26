@@ -1,6 +1,4 @@
-import { createRef, useContext, useEffect, useRef, useState } from "react";
-import { useSearch } from "../../contexte/search";
-import CardProperty from "../cardProperty";
+import { useEffect, useState } from "react";
 import css from "./index.module.scss";
 
 export default function Search({ urlAPI, category, setProperty }) {
@@ -63,8 +61,8 @@ export default function Search({ urlAPI, category, setProperty }) {
   };
 
   const searchTheCity = async () => {
-    let ville = await city.toLowerCase();
-    let cityProperty = (await ville.charAt(0).toUpperCase()) + ville.slice(1);
+    let ville = city.toLowerCase();
+    let cityProperty = ville.charAt(0).toUpperCase() + ville.slice(1);
 
     try {
       const rep = await fetch(

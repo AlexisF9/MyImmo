@@ -2,23 +2,21 @@ import { useRouter } from "next/router";
 import { createRef, useState } from "react";
 import css from "./index.module.scss";
 import { destroyCookie, setCookie } from "nookies";
+import { useForm } from "react-hook-form";
 
 export default function FormLogin({ urlLogin }) {
-  const router = useRouter();
-  const [identifier, setIdentifier] = useState("");
-  const [password, setPassword] = useState("");
+  const { register, handleSubmit } = useForm();
 
+  const router = useRouter();
   const error = createRef();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
+  const onSubmit = async (data) => {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
     var raw = JSON.stringify({
-      identifier: identifier,
-      password: password,
+      identifier: data.identifier,
+      password: data.password,
     });
 
     var requestOptions = {
@@ -43,9 +41,6 @@ export default function FormLogin({ urlLogin }) {
         maxAge: 30 * 24 * 60 * 60,
       });
 
-      setIdentifier("");
-      setPassword("");
-
       router.push("/");
     } catch (e) {
       destroyCookie(null, "authToken");
@@ -53,27 +48,19 @@ export default function FormLogin({ urlLogin }) {
     }
   };
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <p ref={error} className={css.error}>
         Identifiants de connexion incorrect
       </p>
       <input
         type="email"
-        name="identifier"
+        {...register("identifier", { required: true })}
         placeholder="Email"
-        value={identifier}
-        onChange={(e) => {
-          setIdentifier(e.currentTarget.value);
-        }}
       />
       <input
         type="password"
-        name="password"
+        {...register("password", { required: true })}
         placeholder="Mot de passe"
-        value={password}
-        onChange={(e) => {
-          setPassword(e.currentTarget.value);
-        }}
       />
 
       <button type="submit">Se connecter</button>
