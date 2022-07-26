@@ -2,11 +2,16 @@ import { useState } from "react";
 import { destroyCookie, setCookie } from "nookies";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import css from "./index.module.scss";
 
 export default function FormRegister({ urlRegister }) {
   const router = useRouter();
 
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
 
   // const [username, setUsername] = useState("");
   // const [identifier, setIdentifier] = useState("");
@@ -56,19 +61,42 @@ export default function FormRegister({ urlRegister }) {
     <form onSubmit={handleSubmit(onSubmit)}>
       <input
         type="text"
-        {...register("username", { required: true })}
+        {...register("username", {
+          required: "Entrer votre nom d'utilisateur",
+        })}
         placeholder="Nom d'utilisateur"
       />
+      {errors.username && (
+        <p className={css.errorMessage}>
+          <span className="material-symbols-outlined">info</span>
+          {errors.username.message}
+        </p>
+      )}
+
       <input
         type="email"
-        {...register("identifier", { required: true })}
+        {...register("identifier", { required: "Entrer un email valide" })}
         placeholder="Email"
       />
+      {errors.identifier && (
+        <p className={css.errorMessage}>
+          <span className="material-symbols-outlined">info</span>
+          {errors.identifier.message}
+        </p>
+      )}
+
       <input
         type="password"
-        {...register("password", { required: true })}
+        {...register("password", { required: "Entrer votre mot de passe" })}
         placeholder="Mot de passe"
       />
+      {errors.password && (
+        <p className={css.errorMessage}>
+          <span className="material-symbols-outlined">info</span>
+          {errors.password.message}
+        </p>
+      )}
+
       <button type="submit">S'inscrire</button>
     </form>
   );

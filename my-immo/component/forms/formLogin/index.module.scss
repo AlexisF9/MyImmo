@@ -10,3 +10,15 @@
 .activeError {
   display: block;
 }
+
+.errorMessage {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  margin: 0 0 1rem 0;
+
+  span {
+    margin-right: 0.3rem;
+    color: rgb(201, 37, 37);
+  }
+}

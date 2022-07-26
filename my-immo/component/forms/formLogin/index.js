@@ -1,14 +1,18 @@
 import { useRouter } from "next/router";
-import { createRef, useState } from "react";
+import { createRef, useRef, useState } from "react";
 import css from "./index.module.scss";
 import { destroyCookie, setCookie } from "nookies";
 import { useForm } from "react-hook-form";
 
 export default function FormLogin({ urlLogin }) {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
 
   const router = useRouter();
-  const error = createRef();
+  const error = useRef();
 
   const onSubmit = async (data) => {
     var myHeaders = new Headers();
@@ -43,6 +47,7 @@ export default function FormLogin({ urlLogin }) {
 
       router.push("/");
     } catch (e) {
+      console.log(e);
       destroyCookie(null, "authToken");
       error.current.classList.add(css.activeError);
     }
@@ -50,18 +55,34 @@ export default function FormLogin({ urlLogin }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <p ref={error} className={css.error}>
-        Identifiants de connexion incorrect
+        Informations de connexion incorrect
       </p>
       <input
         type="email"
-        {...register("identifier", { required: true })}
+        {...register("identifier", { required: "Entrer votre email" })}
         placeholder="Email"
       />
+
+      {errors.identifier && (
+        <p className={css.errorMessage}>
+          <span className="material-symbols-outlined">info</span>
+          {errors.identifier.message}
+        </p>
+      )}
+
       <input
         type="password"
-        {...register("password", { required: true })}
+        {...register("password", {
+          required: "Entrer votre mot de passe",
+        })}
         placeholder="Mot de passe"
       />
+      {errors.password && (
+        <p className={css.errorMessage}>
+          <span className="material-symbols-outlined">info</span>
+          {errors.password.message}
+        </p>
+      )}
 
       <button type="submit">Se connecter</button>
     </form>
