@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { createRef, useRef, useState } from "react";
+import { useRef } from "react";
 import css from "./index.module.scss";
 import { destroyCookie, setCookie } from "nookies";
 import { useForm } from "react-hook-form";

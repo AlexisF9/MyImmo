@@ -75,7 +75,13 @@ export default function FormRegister({ urlRegister }) {
 
       <input
         type="email"
-        {...register("identifier", { required: "Entrer un email valide" })}
+        {...register("identifier", {
+          required: "Entrer votre email",
+          pattern: {
+            value: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+            message: "Entrer un email valide",
+          },
+        })}
         placeholder="Email"
       />
       {errors.identifier && (
@@ -87,7 +93,13 @@ export default function FormRegister({ urlRegister }) {
 
       <input
         type="password"
-        {...register("password", { required: "Entrer votre mot de passe" })}
+        {...register("password", {
+          required: "Entrer votre mot de passe",
+          minLength: {
+            value: 8,
+            message: "Votre mot de passe doit faire 8 caractères minimum",
+          },
+        })}
         placeholder="Mot de passe"
       />
       {errors.password && (
