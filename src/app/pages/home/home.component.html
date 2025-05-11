@@ -1,22 +1,15 @@
 <main>
-    <img class="h-64 w-full object-cover" src="/background.webp" alt=""/>
-    <div class="content pt-8">
-        <h2 class="text-xl mb-2">Nos dernières annonces :</h2>
-        <mat-tab-group animationDuration="0ms">
-            <mat-tab label="Acheter">
-                <div class="pt-4">
-                    @if (filteredBuyData && filteredBuyData.length > 0) {
-                        <app-cards-list [data]="filteredBuyData" />
-                    }
-                </div>
-            </mat-tab>
-            <mat-tab label="Louer">
-                <div class="pt-4">
-                    @if (filteredRentData && filteredRentData.length > 0) {
-                        <app-cards-list [data]="filteredRentData" />
-                    }
-                </div>
-            </mat-tab>
-        </mat-tab-group>
+    <img class="absolute h-64 w-full object-cover -z-[1]" src="/background.webp" alt=""/>
+    <div class="content">
+        <h2 class="text-2xl pt-24 mb-4">Bienvenue</h2>
+        <app-search/>
+        @if (filteredBuyData && filteredBuyData.length > 0) {
+            <h2 class="text-xl mb-2 pt-8">Nos dernières annonces à vendre :</h2>
+            <app-cards-list [data]="filteredBuyData" />
+        }
+        @if (filteredRentData && filteredRentData.length > 0) {
+            <h2 class="text-xl mb-2 pt-8">Nos dernières annonces à louer :</h2>
+            <app-cards-list [data]="filteredRentData" />
+        }
     </div>
 </main>

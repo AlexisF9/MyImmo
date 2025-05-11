@@ -3,6 +3,7 @@ import { ApiService } from '../../services/api.service';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { CardsListComponent } from "../../components/cards-list/cards-list.component";
 import {MatTabsModule} from '@angular/material/tabs';
+import { SearchComponent } from "../../components/search/search.component";
 
 export interface Advertisement {
   id: number,
@@ -24,7 +25,7 @@ export interface Advertisement {
 
 @Component({
   selector: 'app-home',
-  imports: [MatGridListModule, CardsListComponent, MatTabsModule],
+  imports: [MatGridListModule, CardsListComponent, MatTabsModule, SearchComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
