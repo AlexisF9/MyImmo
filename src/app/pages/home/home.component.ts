@@ -15,7 +15,10 @@ export interface Advertisement {
     id: number,
     name: string,
     url: string
-  }[]
+  }[],
+  distribution_type: {
+    name: string
+  }
 }
 
 @Component({

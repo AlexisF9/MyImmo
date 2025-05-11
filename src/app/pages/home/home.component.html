@@ -1,6 +1,6 @@
 <main>
     <p>Home</p>
-    <div class="card-list">
+    <div class="grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4">
         @for (item of data; track item.id) {
             <app-card [advertisement]="item" />
         }

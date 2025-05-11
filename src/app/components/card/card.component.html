@@ -1,9 +1,16 @@
 <div class="card">
     <mat-card appearance="outlined">
-        <img mat-card-image [src]="`${advertisement().pictures[0].url}`" [alt]="advertisement().pictures[0].name" />
+        <img class="object-cover aspect-2/1" mat-card-image [src]="`${advertisement().pictures[0].url}`" [alt]="advertisement().pictures[0].name" />
         <mat-card-content>
-            <div class="card__content">
-                <p class="text-xl font-bold">{{ advertisement().price }} € <span class="text-sm font-normal">{{ ceil(advertisement().price/advertisement().surface) }} €/m²</span></p>
+            <div class="flex flex-col gap-4">
+                <p class="text-xl font-bold">
+                    {{ advertisement().price }} €
+                    @if (advertisement().distribution_type.name === "Acheter") {
+                        <span class="text-sm font-normal">{{ ceil(advertisement().price/advertisement().surface) }} €/m²</span>
+                    } @else {
+                        <span>/mois</span>
+                    }
+                </p>
                 <ul class="flex">
                     <li>{{ advertisement().pieces }} pièces</li>
                     <li class="before:content-['•'] before:mr-2 before:pl-2">{{ advertisement().rooms }} chambres</li>

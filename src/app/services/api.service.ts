@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class ApiService {
-  private apiUrl = 'https://strapi-server-0ymt.onrender.com/api/advertisements?populate=pictures';
+  private apiUrl = 'https://strapi-server-0ymt.onrender.com/api/advertisements?populate=*';
 
   constructor(private http: HttpClient) {}
 
