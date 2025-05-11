@@ -1,7 +1,22 @@
 <main>
-    <h1 class="text-2xl font-bold">MyImmo</h1>
-    <h2 class="text-xl">Toutes nos annonces</h2>
-    @if (data && data.length > 0) {
-        <app-cards-list [data]="data" />
-    }
+    <img class="h-64 w-full object-cover" src="/background.webp" alt=""/>
+    <div class="content pt-8">
+        <h2 class="text-xl mb-2">Nos dernières annonces :</h2>
+        <mat-tab-group animationDuration="0ms">
+            <mat-tab label="Acheter">
+                <div class="pt-4">
+                    @if (filteredBuyData && filteredBuyData.length > 0) {
+                        <app-cards-list [data]="filteredBuyData" />
+                    }
+                </div>
+            </mat-tab>
+            <mat-tab label="Louer">
+                <div class="pt-4">
+                    @if (filteredRentData && filteredRentData.length > 0) {
+                        <app-cards-list [data]="filteredRentData" />
+                    }
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
 </main>
