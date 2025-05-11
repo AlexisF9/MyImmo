@@ -1,18 +1,25 @@
-<div class="p-4 max-w-[750px] rounded-2xl shadow-md bg-white">
+<div class="p-4 max-w-[750px] rounded-2xl shadow-md bg-white relative">
     <mat-tab-group animationDuration="0ms">
         <mat-tab label="Acheter">
             <mat-form-field class="mt-4 w-full">
                 <mat-label>Chercher par ville ou cp</mat-label>
-                <input matInput [(ngModel)]="search">
+                <input matInput [formControl]="searchControl" [value]="searchControl">
                 <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
         </mat-tab>
         <mat-tab label="Louer">
             <mat-form-field class="mt-4 w-full">
                 <mat-label>Chercher par ville ou cp</mat-label>
-                <input matInput [(ngModel)]="search">
+                <input matInput [formControl]="searchControl" [value]="searchControl">
                 <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
         </mat-tab>
     </mat-tab-group>
+    @if (openResults && data && data.length > 0) {
+        <ul class="absolute bg-white p-4 rounded-2xl shadow-md" #resultsList>
+            @for (item of data; track item.postale_code) {
+                <li><button (click)="changeSearchControl(item.city, item.postale_code)">{{ item.city }} ({{ item.postale_code }})</button></li>
+            }
+        </ul>
+    }
 </div>
