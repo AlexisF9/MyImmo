@@ -1,0 +1,8 @@
+<main>
+    <p>Home</p>
+    <div class="card-list">
+        @for (item of data; track item.id) {
+            <app-card [advertisement]="item" />
+        }
+    </div>
+</main>
