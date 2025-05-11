@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { CardComponent } from "../../components/card/card.component";
 import { ApiService } from '../../services/api.service';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { CardsListComponent } from "../../components/cards-list/cards-list.component";
 
 export interface Advertisement {
   id: number,
@@ -23,7 +23,7 @@ export interface Advertisement {
 
 @Component({
   selector: 'app-home',
-  imports: [CardComponent, MatGridListModule],
+  imports: [MatGridListModule, CardsListComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
