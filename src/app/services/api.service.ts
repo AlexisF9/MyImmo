@@ -18,7 +18,7 @@ export class ApiService {
     return this.http.get<any>(url);
   }
 
-  getAdvertisementsByAddress(city: string): Observable<any> {
-    return this.http.get<any>(this.apiUrl + `/api/advertisements?filters[address][city][$eq]=${city}&populate=address`);
+  getAdvertisementsByAddress(city: string, distribution: string): Observable<any> {
+    return this.http.get<any>(this.apiUrl + `/api/advertisements?filters[$and][0][address][city][$eq]=${city}&filters[$and][1][distribution_type][name][$eq]=${distribution}&populate=*`);
   }
 }

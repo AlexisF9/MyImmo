@@ -6,6 +6,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { ApiService } from '../../services/api.service';
 import { debounceTime } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -31,7 +32,7 @@ export class SearchComponent {
     }
   ]
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   @ViewChild('resultsList') resultsListRef!: ElementRef;
 
@@ -46,20 +47,14 @@ export class SearchComponent {
   changeSearchControl(city: string, cp: string) {
     this.searchControl.setValue(`${city} (${cp})`)
     this.data = null
-
-    this.apiService.getAdvertisementsByAddress(city).subscribe({
-      next: (res) => {
-        console.log(res.data)
-      },
-      error: (err) => {
-        console.error('Erreur API:', err)
-      }
-    });
+    this.router.navigate(['/rechercher'], { queryParams: { ville: city, cp, distribution_type: this.tabs[this.selectedTab.value ?? 0].label } });
   }
 
   ngOnInit() {
-    this.selectedTab.valueChanges.pipe().subscribe(data => {
-      console.log(data && this.tabs[data].label, data)
+    this.selectedTab.valueChanges.subscribe(data => {
+      if (this.selectedTab.value !== data) {
+        this.selectedTab.setValue(data, { emitEvent: false });
+      }
     });
     this.searchControl.valueChanges.pipe(debounceTime(300)).subscribe(data => {
       this.searchAddress(data)
