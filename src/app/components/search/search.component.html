@@ -1,19 +1,15 @@
-<div class="p-4 max-w-[750px] rounded-2xl shadow-md bg-white relative">
+<div class="p-4 md:p-8 max-w-[750px] rounded-2xl shadow-md bg-white relative">
     <mat-tab-group animationDuration="0ms" [selectedIndex]="selectedTab.value" (selectedIndexChange)="selectedTab.setValue($event)">
         @for (tab of tabs; track tab.name) {
             <mat-tab [label]="tab.label">
-                <mat-form-field class="mt-4 w-full">
-                    <mat-label>Chercher par ville ou cp</mat-label>
-                    <input matInput placeholder="Ex: Grenoble" [formControl]="searchControl" [value]="searchControl">
-                    <mat-icon matSuffix>search</mat-icon>
-                </mat-form-field>
+                <input type="text" class="mt-4 p-4 w-full border border-neutral-300 bg-white rounded-2xl" placeholder="Saisir le lieu ou le code postale" [formControl]="searchControl" [value]="searchControl"/>
             </mat-tab>
         }
     </mat-tab-group>
     @if (openResults && data && data.length > 0) {
-        <ul class="absolute bg-white p-4 rounded-2xl shadow-md" #resultsList>
+        <ul class="absolute inset-x-[16px] md:inset-x-[32px] bg-white rounded-2xl shadow-sm overflow-hidden" #resultsList>
             @for (item of data; track item.postale_code) {
-                <li><button (click)="changeSearchControl(item.city, item.postale_code)">{{ item.city }} ({{ item.postale_code }})</button></li>
+                <li><button class="text-start p-4 w-full cursor-pointer hover:bg-neutral-200" (click)="changeSearchControl(item.city, item.postale_code)">{{ item.city }} ({{ item.postale_code }})</button></li>
             }
         </ul>
     }
