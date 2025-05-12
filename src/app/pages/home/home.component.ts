@@ -12,7 +12,10 @@ export interface Advertisement {
   surface: number,
   pieces: number,
   rooms: number,
-  address: string,
+  address: {
+    city: string,
+    postale_code: string
+  },
   pictures: {
     id: number,
     name: string,

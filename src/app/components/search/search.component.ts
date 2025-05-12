@@ -15,9 +15,21 @@ import { debounceTime } from 'rxjs';
 })
 export class SearchComponent {
   searchControl = new FormControl();
+  selectedTab = new FormControl(0);
   search: string = ""
   data: {city: string, postale_code: string}[] | null = null;
   openResults: boolean = false
+
+  tabs = [
+    {
+      name: "acheter",
+      label: "Acheter"
+    },
+    {
+      name: "louer",
+      label: "Louer"
+    }
+  ]
 
   constructor(private apiService: ApiService) {}
 
@@ -46,6 +58,9 @@ export class SearchComponent {
   }
 
   ngOnInit() {
+    this.selectedTab.valueChanges.pipe().subscribe(data => {
+      console.log(data && this.tabs[data].label, data)
+    });
     this.searchControl.valueChanges.pipe(debounceTime(300)).subscribe(data => {
       this.searchAddress(data)
     });

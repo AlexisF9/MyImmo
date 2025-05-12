@@ -16,7 +16,7 @@
                     <li class="before:content-['•'] before:mr-2 before:pl-2">{{ advertisement().rooms }} chambres</li>
                     <li class="before:content-['•'] before:mr-2 before:pl-2">{{ advertisement().surface }} m²</li>
                 </ul>
-                <p>{{ advertisement().address }}</p>
+                <p>{{ advertisement().address.city }} ({{ advertisement().address.postale_code }})</p>
             </div>
         </mat-card-content>
     </mat-card>
