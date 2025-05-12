@@ -17,7 +17,7 @@
                     <li class="before:content-['•'] before:mr-2 before:pl-2">{{ announcement().surface }} m²</li>
                 </ul>
                 <p>{{ announcement().address.city }} ({{ announcement().address.postale_code }})</p>
-                <button mt-button routerLink="/annonce/11">Link</button>
+                <button class="absolute inset-0 z-10 cursor-pointer sr-only-focusable" aria-label="Voir plus" [routerLink]="`/annonce/${announcement().id}`"></button>
             </div>
         </mat-card-content>
     </mat-card>
