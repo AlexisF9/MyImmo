@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
-import { Advertisement } from '../../pages/home/home.component';
+import { Announcement } from '../../pages/home/home.component';
 
 @Component({
   selector: 'app-card',
@@ -9,6 +9,6 @@ import { Advertisement } from '../../pages/home/home.component';
   styleUrl: './card.component.scss'
 })
 export class CardComponent {
-  advertisement = input.required<Advertisement>()
+  announcement = input.required<Announcement>()
   ceil = Math.ceil
 }

@@ -1,22 +1,22 @@
 <div class="card">
     <mat-card appearance="outlined">
-        <img class="object-cover aspect-2/1" mat-card-image [src]="`${advertisement().pictures[0].url}`" [alt]="advertisement().pictures[0].name" />
+        <img class="object-cover aspect-2/1" mat-card-image [src]="`${announcement().pictures[0].url}`" [alt]="announcement().pictures[0].name" />
         <mat-card-content>
             <div class="flex flex-col gap-4">
                 <p class="text-xl font-bold">
-                    {{ advertisement().price }} €
-                    @if (advertisement().distribution_type.name === "Acheter") {
-                        <span class="text-sm font-normal">{{ ceil(advertisement().price/advertisement().surface) }} €/m²</span>
+                    {{ announcement().price }} €
+                    @if (announcement().distribution_type.name === "Acheter") {
+                        <span class="text-sm font-normal">{{ ceil(announcement().price/announcement().surface) }} €/m²</span>
                     } @else {
                         <span>/mois</span>
                     }
                 </p>
                 <ul class="flex">
-                    <li>{{ advertisement().pieces }} pièces</li>
-                    <li class="before:content-['•'] before:mr-2 before:pl-2">{{ advertisement().rooms }} chambres</li>
-                    <li class="before:content-['•'] before:mr-2 before:pl-2">{{ advertisement().surface }} m²</li>
+                    <li>{{ announcement().pieces }} pièces</li>
+                    <li class="before:content-['•'] before:mr-2 before:pl-2">{{ announcement().rooms }} chambres</li>
+                    <li class="before:content-['•'] before:mr-2 before:pl-2">{{ announcement().surface }} m²</li>
                 </ul>
-                <p>{{ advertisement().address.city }} ({{ advertisement().address.postale_code }})</p>
+                <p>{{ announcement().address.city }} ({{ announcement().address.postale_code }})</p>
             </div>
         </mat-card-content>
     </mat-card>

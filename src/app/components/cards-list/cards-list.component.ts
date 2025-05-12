@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
 import { CardComponent } from "../card/card.component";
-import { Advertisement } from '../../pages/home/home.component';
+import { Announcement } from '../../pages/home/home.component';
 
 @Component({
   selector: 'app-cards-list',
@@ -9,5 +9,5 @@ import { Advertisement } from '../../pages/home/home.component';
   styleUrl: './cards-list.component.scss'
 })
 export class CardsListComponent {
-  data = input.required<Advertisement[]>()
+  data = input.required<Announcement[]>()
 }
