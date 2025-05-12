@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
+import { Announcement } from '../home/home.component';
 
 @Component({
   selector: 'app-announcement',
@@ -9,16 +10,16 @@ import { ApiService } from '../../services/api.service';
   styleUrl: './announcement.component.scss'
 })
 export class AnnouncementComponent {
+  data: Announcement | null = null;
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-    console.log('ID de l’annonce :', id);
 
     if (id) {
       this.apiService.getAnnouncementById(parseInt(id)).subscribe({
         next: (res) => {
-          console.log(res.data)
+          this.data = res.data[0]
         },
         error: (err) => {
           console.error('Erreur API:', err)
