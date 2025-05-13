@@ -1,9 +1,11 @@
 <div class="content pt-8 px-4">
     @if (data && data.length > 0) {
-        <p>{{ data.length }} résultat{{ data.length > 1 && "s" }}</p>
+        <p>{{ data.length }} résultat{{ data.length > 1 ? "s" : "" }}</p>
     }
     <h2 class="text-2xl mb-4">Maisons et appartements à {{ distribution_type === "Acheter" ? "vendre" : "louer" }} - {{ city }}</h2>
-    @if (data && data.length > 0) {
+    @if (loading) {
+        <app-loader/>
+    } @else if (data && data.length > 0) {
         <app-cards-list [data]="data" />
     } @else {
         <p>Il n'y a actuellement aucun résultat correspondant à vos critères de recherche.</p>

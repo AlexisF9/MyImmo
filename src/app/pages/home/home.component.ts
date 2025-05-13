@@ -33,7 +33,7 @@ export interface Announcement {
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  data: Announcement[] | null = null;
+  data: Announcement[] | null = null
 
   filteredBuyData: Announcement[] | null = null
   filteredRentData: Announcement[] | null = null
@@ -47,7 +47,9 @@ export class HomeComponent {
         this.filteredBuyData = this.data?.filter((item: Announcement) => item.distribution_type.name === "Acheter") ?? null
         this.filteredRentData = this.data?.filter((item: Announcement) => item.distribution_type.name === "Louer") ?? null
       },
-      error: (err) => console.error('Erreur API:', err)
+      error: (err) => {
+        console.error('Erreur API:', err)
+      }
     });
   }
 

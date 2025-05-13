@@ -1,5 +1,9 @@
 <div class="content px-4 pt-8">
-    @if (data) {
+    @if (loading) {
+        <app-loader/>
+    } @else if (data) {
         <h2>{{ data.name }}</h2>
+    } @else {
+        <p>Une erreur est survenu lors du chargement de l'annonce.</p>
     }
 </div>
