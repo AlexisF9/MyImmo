@@ -1,4 +1,4 @@
-import { Component, ElementRef, HostListener, model, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
@@ -18,7 +18,7 @@ export class SearchComponent {
   searchControl = new FormControl();
   selectedTab = new FormControl(0);
   search: string = ""
-  data: {city: string, postale_code: string}[] | null = null;
+  data: { properties: { city: string, postcode: string } }[] | null = null;
   openResults: boolean = false
 
   tabs = [
@@ -63,10 +63,11 @@ export class SearchComponent {
   
   searchAddress(search: string) {
     if (search.length >= 3) {
-      const url = `https://strapi-server-0ymt.onrender.com/api/addresses?filters[$or][0][city][$containsi]=${search}&filters[$or][1][postale_code][$containsi]=${search}&pagination[limit]=10`
-      this.apiService.getAddress(url).subscribe({
+      //const url = `https://strapi-server-0ymt.onrender.com/api/addresses?filters[$or][0][city][$containsi]=${search}&filters[$or][1][postale_code][$containsi]=${search}&pagination[limit]=10`
+      this.apiService.getCities(search).subscribe({
         next: (res) => {
-          this.data = res.data
+          console.log(res.features)
+          this.data = res.features
           if (this.data && this.data?.length > 0) {
             this.openResults = true
           }

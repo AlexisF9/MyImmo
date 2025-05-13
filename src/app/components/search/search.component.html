@@ -7,9 +7,9 @@
         }
     </mat-tab-group>
     @if (openResults && data && data.length > 0) {
-        <ul class="absolute inset-x-[16px] md:inset-x-[32px] bg-white rounded-2xl shadow-sm overflow-hidden" #resultsList>
-            @for (item of data; track item.postale_code) {
-                <li><button class="text-start p-4 w-full cursor-pointer hover:bg-neutral-200" (click)="changeSearchControl(item.city, item.postale_code)">{{ item.city }} ({{ item.postale_code }})</button></li>
+        <ul class="absolute z-[1] inset-x-[16px] md:inset-x-[32px] bg-white rounded-2xl shadow-sm overflow-hidden" #resultsList>
+            @for (item of data; track $index) {
+                <li><button class="text-start p-4 w-full cursor-pointer hover:bg-neutral-200" (click)="changeSearchControl(item.properties.city, item.properties.postcode)">{{ item.properties.city }} ({{ item.properties.postcode }})</button></li>
             }
         </ul>
     }
