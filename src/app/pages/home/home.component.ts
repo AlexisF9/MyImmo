@@ -8,6 +8,7 @@ import { SearchComponent } from "../../components/search/search.component";
 export interface Announcement {
   id: number,
   name: string,
+  description: string,
   price: number,
   surface: number,
   pieces: number,
@@ -23,6 +24,15 @@ export interface Announcement {
   }[],
   distribution_type: {
     name: string
+  },
+  category: {
+    name: string
+  },
+  characteristics: {
+    name: string
+  }[],
+  energy_performance: {
+    letter: string
   }
 }
 

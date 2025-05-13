@@ -13,17 +13,18 @@ import { LoaderComponent } from "../../components/loader/loader.component";
 export class AnnouncementComponent {
   data: Announcement | null = null
   loading: boolean = false
+  ceil = Math.ceil
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
-
     this.loading = true
 
     if (id) {
       this.apiService.getAnnouncementById(parseInt(id)).subscribe({
         next: (res) => {
           this.data = res.data[0]
+          console.log(this.data)
           this.loading = false
         },
         error: (err) => {

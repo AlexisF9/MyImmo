@@ -2,7 +2,42 @@
     @if (loading) {
         <app-loader/>
     } @else if (data) {
-        <h2>{{ data.name }}</h2>
+        @for (item of data.pictures; track $index) {
+            <img [src]="item.url" [alt]="item.name"/>
+        }
+        <p>{{ data.category.name }} à {{ data.distribution_type.name === "Acheter" ? "vendre" : "louer" }}</p>
+        <p class="text-xl font-bold">
+            {{ data.price }} €
+            @if (data.distribution_type.name === "Acheter") {
+                <span class="text-sm font-normal">{{ ceil(data.price/data.surface) }} €/m²</span>
+            } @else {
+                <span>/mois</span>
+            }
+        </p>
+        <ul class="flex border-t border-b border-neutral-300">
+            <li>{{ data.pieces }} pièces</li>
+            <li class="before:content-['•'] before:mr-2 before:pl-2">{{ data.rooms }} chambres</li>
+            <li class="before:content-['•'] before:mr-2 before:pl-2">{{ data.surface }} m²</li>
+        </ul>
+        <div class="border-b border-neutral-300">
+            <p>{{ data.address.city }} ({{ data.address.postale_code }})</p>
+        </div>
+        <div class="border-b border-neutral-300">
+            <h3>{{ data.name }}</h3>
+            <p>{{ data.description }}</p>
+        </div>
+        <div class="border-b border-neutral-300">
+            <h3>Informations et caractéristiques</h3>
+            <ul>
+                @for (item of data.characteristics; track $index) {
+                    <li>{{ item.name }}</li>
+                }
+            </ul>
+        </div>
+        <div>
+            <h3>Énergie et diagnostics</h3>
+            <p>{{ data.energy_performance.letter }}</p>
+        </div>
     } @else {
         <p>Une erreur est survenu lors du chargement de l'annonce.</p>
     }
