@@ -47,7 +47,7 @@ export class SearchComponent {
   changeSearchControl(city: string, cp: string) {
     this.searchControl.setValue(`${city} (${cp})`)
     this.data = null
-    this.router.navigate(['/rechercher'], { queryParams: { ville: city, cp, distribution_type: this.tabs[this.selectedTab.value ?? 0].label } });
+    this.router.navigate(['/rechercher'], { queryParams: { ville: city, distribution_type: this.tabs[this.selectedTab.value ?? 0].label } });
   }
 
   ngOnInit() {

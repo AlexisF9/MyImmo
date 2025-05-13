@@ -7,12 +7,18 @@
         <h2 class="relative text-2xl pt-24 mb-4">Vous avez les clés !</h2>
         <app-search/>
         @if (filteredBuyData && filteredBuyData.length > 0) {
-            <h2 class="text-xl mb-2 pt-8">Nos dernières annonces à vendre :</h2>
+            <h2 class="text-xl mb-2 pt-8">Nos dernières annonces à vendre à Grenoble :</h2>
             <app-cards-list [data]="filteredBuyData" />
+            <div class="flex justify-center">
+                <button (click)="goToSearchPage('Grenoble', 'Acheter')" mat-flat-button class="mt-4">Vois plus de biens à Grenoble</button>
+            </div>
         }
         @if (filteredRentData && filteredRentData.length > 0) {
-            <h2 class="text-xl mb-2 pt-8">Nos dernières annonces à louer :</h2>
+            <h2 class="text-xl mb-2 pt-8">Nos dernières annonces à louer à Grenoble :</h2>
             <app-cards-list [data]="filteredRentData" />
+            <div class="flex justify-center">
+                <button (click)="goToSearchPage('Grenoble', 'Louer')" mat-flat-button class="mt-4">Vois plus de biens à Grenoble</button>
+            </div>
         }
     </div>
 </main>

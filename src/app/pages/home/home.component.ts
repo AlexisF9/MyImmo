@@ -4,6 +4,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import { CardsListComponent } from "../../components/cards-list/cards-list.component";
 import {MatTabsModule} from '@angular/material/tabs';
 import { SearchComponent } from "../../components/search/search.component";
+import {MatButtonModule} from '@angular/material/button';
+import { Router } from '@angular/router';
 
 export interface Announcement {
   id: number,
@@ -38,24 +40,35 @@ export interface Announcement {
 
 @Component({
   selector: 'app-home',
-  imports: [MatGridListModule, CardsListComponent, MatTabsModule, SearchComponent],
+  imports: [MatGridListModule, CardsListComponent, MatTabsModule, SearchComponent, MatButtonModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  data: Announcement[] | null = null
+  //data: Announcement[] | null = null
 
   filteredBuyData: Announcement[] | null = null
   filteredRentData: Announcement[] | null = null
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit(): void {
-    this.apiService.getData().subscribe({
+    this.apiService.getAdvertisementsByAddress('Grenoble', 'Acheter').subscribe({
       next: (res) => {
-        this.data = res.data
-        this.filteredBuyData = this.data?.filter((item: Announcement) => item.distribution_type.name === "Acheter") ?? null
-        this.filteredRentData = this.data?.filter((item: Announcement) => item.distribution_type.name === "Louer") ?? null
+        //this.data = res.data
+        this.filteredBuyData = res.data
+        //this.filteredRentData = this.data?.filter((item: Announcement) => item.distribution_type.name === "Louer") ?? null
+      },
+      error: (err) => {
+        console.error('Erreur API:', err)
+      }
+    });
+
+    this.apiService.getAdvertisementsByAddress('Grenoble', 'Louer').subscribe({
+      next: (res) => {
+        //this.data = res.data
+        //this.filteredBuyData = this.data?.filter((item: Announcement) => item.distribution_type.name === "Acheter") ?? null
+        this.filteredRentData = res.data
       },
       error: (err) => {
         console.error('Erreur API:', err)
@@ -63,4 +76,7 @@ export class HomeComponent {
     });
   }
 
+  goToSearchPage(city: string, distribution_type: string) {
+      this.router.navigate(['/rechercher'], { queryParams: { ville: city, distribution_type } });
+  }
 }

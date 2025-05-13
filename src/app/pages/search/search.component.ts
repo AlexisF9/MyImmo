@@ -22,12 +22,11 @@ export class SearchComponent {
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       const city = params['ville'];
-      const postale_code = params['cp'];
       const distribution_type = params['distribution_type'];
       this.city = city
       this.distribution_type = distribution_type
 
-      if (!city && !postale_code && !distribution_type) {
+      if (!city && !distribution_type) {
         this.router.navigate(['/']);
       } else {
         this.loading = true
