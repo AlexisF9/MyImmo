@@ -1,46 +1,68 @@
-@if (!zoom) {
-    <div class="relative w-full h-full">
-        <div class="h-150">
-            @if (pictures().length > 1) {
-                <div class="grid grid-cols-3 grid-rows-2 gap-4 h-full">
-                    <div class="row-span-2 col-span-2">
-                        <img class="h-full w-full object-cover" [src]="pictures()[0].url" [alt]="pictures()[0].name"/>
-                    </div>
-                    @if (pictures()[1]) {
-                        <div class="col-start-3">
-                            <img class="h-full w-full object-cover" [src]="pictures()[1].url" [alt]="pictures()[1].name"/>
-                        </div>
-                    }
-                    @if (pictures()[2]) {
-                        <div class="row-start-2 col-start-3">
-                            <img class="h-full w-full object-cover" [src]="pictures()[2].url" [alt]="pictures()[2].name"/>
-                        </div>
-                    }
-                </div>
-            } @else {
-                <img class="h-full w-full object-cover" [src]="pictures()[0].url" [alt]="pictures()[0].name"/>
+@if (isMobile) {
+    <div class="relative">
+        <div class="keen-slider" #sliderRef>
+            @for (item of pictures(); track $index) {
+                <img class="keen-slider__slide w-full object-cover aspect-4/3" [src]="item.url" [alt]="item.name"/>
             }
-        </div>  
-        
-        <button class="absolute inset-0 z-1 cursor-pointer sr-only-focusable" (click)="toggleZoom()" aria-label="Zoomer"></button>
-    </div> 
-} @else {
-    <div class="fixed inset-[0] bg-white overflow-y-scroll">
-        
-        <div class="sticky top-[0] py-4 border-b border-grey bg-white">
-            <div class="content-large">
-                <button type="button" class="cursor-pointer flex items-center gap-2" (click)="toggleZoom()"><lucide-angular [img]="ArrowIcon" [size]="30" [strokeWidth]="1"></lucide-angular> Retour à l'annonce</button>
-            </div>
         </div>
-        <div class="content px-4">
-            <div class="md:columns-2 gap-4 space-y-4">
-                @for (item of pictures(); track $index) {
-                    <img class="w-full" [src]="item.url" [alt]="item.name"/>
+        
+        @if (slider) {
+            <p class="absolute text-sm bottom-2 right-2 bg-black text-white rounded-full px-3 py-1">{{ currentSlide + 1 }} / {{ slider.track.details.slides.length }}</p>
+            <button type="button" class="absolute top-[50%] -translate-y-[50%] left-2 bg-white rounded-full p-2 cursor-pointer disabled:opacity-50" [disabled]="currentSlide === 0 ? true : false" (click)="slider.prev()">
+                <lucide-angular [img]="ChevronLeftIcon" [size]="30"></lucide-angular>
+            </button>
+            <button type="button" class="absolute top-[50%] -translate-y-[50%] right-2 bg-white rounded-full p-2 cursor-pointer disabled:opacity-50" [disabled]="slider.track.details.slides.length - 1 === currentSlide ? true : false" (click)="slider.next()">
+                <lucide-angular [img]="ChevronRightIcon" [size]="30"></lucide-angular>
+            </button>
+        }
+    </div>
+} @else {
+    @if (!zoom) {
+        <div class="relative w-full h-full">
+            <div class="h-150">
+                @if (pictures().length > 1) {
+                    <div class="grid grid-cols-3 grid-rows-2 gap-4 h-full">
+                        <div class="row-span-2 col-span-2">
+                            <img class="h-full w-full object-cover" [src]="pictures()[0].url" [alt]="pictures()[0].name"/>
+                        </div>
+                        @if (pictures()[1]) {
+                            <div class="col-start-3">
+                                <img class="h-full w-full object-cover" [src]="pictures()[1].url" [alt]="pictures()[1].name"/>
+                            </div>
+                        }
+                        @if (pictures()[2]) {
+                            <div class="row-start-2 col-start-3">
+                                <img class="h-full w-full object-cover" [src]="pictures()[2].url" [alt]="pictures()[2].name"/>
+                            </div>
+                        }
+                    </div>
+                } @else {
+                    <img class="h-full w-full object-cover" [src]="pictures()[0].url" [alt]="pictures()[0].name"/>
                 }
             </div>
+            
+            <p class="absolute flex bottom-4 left-4 px-4 py-2 text-sm font-bold items-center gap-2 bg-white rounded-full"><lucide-angular [img]="CameraIcon" [size]="20" [strokeWidth]="1"></lucide-angular> Afficher {{ pictures().length > 1 ? `les ${pictures().length} photos` : "la photo" }}</p>
+            <button class="absolute inset-0 z-1 cursor-pointer sr-only-focusable" (click)="toggleZoom()" aria-label="Zoomer"></button>
+        </div> 
+    } @else {
+        <div class="fixed inset-[0] bg-white overflow-y-scroll">
+            
+            <div class="sticky top-[0] py-4 border-b border-grey bg-white">
+                <div class="content-large">
+                    <button type="button" class="cursor-pointer flex items-center gap-2" (click)="toggleZoom()"><lucide-angular [img]="ChevronLeftIcon" [size]="30" [strokeWidth]="1"></lucide-angular> Retour à l'annonce</button>
+                </div>
+            </div>
+            <div class="content px-4">
+                <div class="md:columns-2 gap-4 space-y-4">
+                    @for (item of pictures(); track $index) {
+                        <img class="w-full" [src]="item.url" [alt]="item.name"/>
+                    }
+                </div>
+            </div>
         </div>
-    </div>
+    }
 }
+
 
 
 
