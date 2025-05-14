@@ -6,14 +6,17 @@
         }
     </div>
     <div class="flex flex-col gap-4 p-4">
-        <p class="text-xl font-bold">
-            {{ announcement().price }} €
-            @if (announcement().distribution_type.name === "Acheter") {
-                <span class="text-sm font-normal">{{ ceil(announcement().price/announcement().surface) }} €/m²</span>
-            } @else {
-                <span>/mois</span>
-            }
-        </p>
+        <div class="flex justify-between flex-wrap-reverse gap-2">
+            <p class="text-xl font-bold">
+                {{ announcement().price }} €
+                @if (announcement().distribution_type.name === "Acheter") {
+                    <span class="text-sm font-normal">{{ ceil(announcement().price/announcement().surface) }} €/m²</span>
+                } @else {
+                    <span>/mois</span>
+                }
+            </p>
+            <button class="relative z-2" (click)="toggleLike(announcement().id)"><lucide-angular [img]="HeartIcon" [size]="20" [strokeWidth]="1" [class]="likeClass(announcement().id)"></lucide-angular></button>
+        </div>
         <ul class="flex">
             <li>{{ announcement().pieces }} pièces</li>
             <li class="before:content-['•'] before:mr-2 before:pl-2">{{ announcement().rooms }} chambres</li>
