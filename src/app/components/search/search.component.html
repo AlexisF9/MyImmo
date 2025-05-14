@@ -1,18 +1,22 @@
 <div class="p-4 md:p-8 max-w-[750px] rounded-2xl shadow-md bg-white relative">
-    <!--
-    <mat-tab-group animationDuration="0ms" [selectedIndex]="selectedTab.value" (selectedIndexChange)="selectedTab.setValue($event)">
-        @for (tab of tabs; track tab.name) {
-            <mat-tab [label]="tab.label">
-                <input type="text" class="mt-4 p-4 w-full border border-neutral-300 bg-white rounded-2xl" placeholder="Saisir le lieu ou le code postale" [formControl]="searchControl" [value]="searchControl"/>
-            </mat-tab>
-        }
-    </mat-tab-group>-->
-    <app-distribution/>
-    <input type="text" class="mt-4 p-4 w-full border border-neutral-300 bg-white rounded-2xl" placeholder="Saisir le lieu ou le code postale" [formControl]="searchControl" [value]="searchControl"/>
+    <form (submit)="onSubmit($event)" [formGroup]="form">
+        <div class="flex border-b border-gray-300">
+            <input formControlName="distribution" type="radio" id="option1" value="Acheter" class="sr-only peer/option1">
+            <label for="option1" class="w-[50%] text-center py-4 cursor-pointer peer-hover/option1:bg-gray-300 peer-checked/option1:border-b-2 peer-checked/option1:border-primary">
+                Acheter
+            </label>
+
+            <input formControlName="distribution" type="radio" id="option2" value="Louer" class="sr-only peer/option2">
+            <label for="option2" class="w-[50%] text-center py-4 cursor-pointer peer-hover/option2:bg-gray-300 peer-checked/option2:border-b-2 peer-checked/option2:border-primary">
+                Louer
+            </label>
+        </div>
+        <input formControlName="search" type="text" class="mt-4 p-4 w-full border border-neutral-300 bg-white rounded-2xl" placeholder="Saisir le lieu ou le code postale"/>
+    </form>
     @if (openResults && data && data.length > 0) {
         <ul class="absolute z-9 inset-x-[16px] md:inset-x-[32px] bg-white rounded-2xl shadow-sm overflow-hidden" #resultsList>
             @for (item of data; track $index) {
-                <li><button class="text-start p-4 w-full cursor-pointer hover:bg-neutral-200" (click)="changeSearchControl(item.properties.city, item.properties.postcode)">{{ item.properties.city }} ({{ item.properties.postcode }})</button></li>
+                <li><button class="text-start p-4 w-full cursor-pointer hover:bg-neutral-200" (click)="changeSearchControl(item.properties.city)">{{ item.properties.city }} ({{ item.properties.postcode }})</button></li>
             }
         </ul>
     }
