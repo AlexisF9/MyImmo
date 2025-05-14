@@ -1,6 +1,6 @@
 <div class="content pt-8 px-4">
     @if (data && data.length > 0) {
-        <p>{{ data.length }} résultat{{ data.length > 1 ? "s" : "" }}</p>
+        <p class="text-primary font-bold">{{ data.length }} résultat{{ data.length > 1 ? "s" : "" }}</p>
     }
     <h2 class="text-2xl mb-4">Maisons et appartements à {{ distribution_type === "Acheter" ? "vendre" : "louer" }} - {{ city }}</h2>
     @if (loading) {

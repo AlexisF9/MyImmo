@@ -1,12 +1,32 @@
+@use '../theme-colors' as custom;
+@use '@angular/material' as mat;
 @use "tailwindcss";
+@tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+@theme {
+  --font-open: "Open Sans", sans-serif;
+
+  --color-primary: var(--mat-sys-primary);
+}
+
+html {
+  @include mat.theme((
+    typography: var(--font-open),
+    color: (
+      primary: custom.$primary-palette,
+    ),
+    density: 0
+  ));
+}
 html,
 body {
   height: 100%;
 }
 body {
   margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
+  font-family: var(--font-open);
 }
 ul {
   list-style: none;
