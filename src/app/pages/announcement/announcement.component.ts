@@ -3,10 +3,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { Announcement } from '../home/home.component';
 import { LoaderComponent } from "../../components/loader/loader.component";
+import { PicturesComponent } from '../../components/pictures/pictures.component';
 
 @Component({
   selector: 'app-announcement',
-  imports: [LoaderComponent],
+  imports: [LoaderComponent, PicturesComponent],
   templateUrl: './announcement.component.html',
   styleUrl: './announcement.component.scss'
 })

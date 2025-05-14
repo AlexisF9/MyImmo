@@ -1,0 +1,46 @@
+@if (!zoom) {
+    <div class="relative w-full h-full">
+        <div class="h-150">
+            @if (pictures().length > 1) {
+                <div class="grid grid-cols-3 grid-rows-2 gap-4 h-full">
+                    <div class="row-span-2 col-span-2">
+                        <img class="h-full w-full object-cover" [src]="pictures()[0].url" [alt]="pictures()[0].name"/>
+                    </div>
+                    @if (pictures()[1]) {
+                        <div class="col-start-3">
+                            <img class="h-full w-full object-cover" [src]="pictures()[1].url" [alt]="pictures()[1].name"/>
+                        </div>
+                    }
+                    @if (pictures()[2]) {
+                        <div class="row-start-2 col-start-3">
+                            <img class="h-full w-full object-cover" [src]="pictures()[2].url" [alt]="pictures()[2].name"/>
+                        </div>
+                    }
+                </div>
+            } @else {
+                <img class="h-full w-full object-cover" [src]="pictures()[0].url" [alt]="pictures()[0].name"/>
+            }
+        </div>  
+        
+        <button class="absolute inset-0 z-1 cursor-pointer sr-only-focusable" (click)="toggleZoom()" aria-label="Zoomer"></button>
+    </div> 
+} @else {
+    <div class="fixed inset-[0] bg-white overflow-y-scroll">
+        
+        <div class="sticky top-[0] py-4 border-b border-grey bg-white">
+            <div class="content-large">
+                <button type="button" class="cursor-pointer flex items-center gap-2" (click)="toggleZoom()"><lucide-angular [img]="ArrowIcon" [size]="30" [strokeWidth]="1"></lucide-angular> Retour à l'annonce</button>
+            </div>
+        </div>
+        <div class="content px-4">
+            <div class="md:columns-2 gap-4 space-y-4">
+                @for (item of pictures(); track $index) {
+                    <img class="w-full" [src]="item.url" [alt]="item.name"/>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+
+

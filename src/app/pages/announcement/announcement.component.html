@@ -2,30 +2,7 @@
     @if (loading) {
         <app-loader/>
     } @else if (data) {
-        <!--@for (item of data.pictures; track $index) {
-                <img [src]="item.url" [alt]="item.name"/>
-            }-->
-        <div class="h-150">
-            @if (data.pictures.length > 1) {
-                <div class="grid grid-cols-3 grid-rows-2 gap-4 h-full">
-                    <div class="row-span-2 col-span-2">
-                        <img class="h-full w-full object-cover" [src]="data.pictures[0].url" [alt]="data.pictures[0].name"/>
-                    </div>
-                    @if (data.pictures[1]) {
-                        <div class="col-start-3">
-                            <img class="h-full w-full object-cover" [src]="data.pictures[1].url" [alt]="data.pictures[1].name"/>
-                        </div>
-                    }
-                    @if (data.pictures[2]) {
-                        <div class="row-start-2 col-start-3">
-                            <img class="h-full w-full object-cover" [src]="data.pictures[2].url" [alt]="data.pictures[2].name"/>
-                        </div>
-                    }
-                </div>
-            } @else {
-                <img class="h-full w-full object-cover" [src]="data.pictures[0].url" [alt]="data.pictures[0].name"/>
-            }
-        </div>        
+        <app-pictures [pictures]="data.pictures" />       
         
         <p class="font-bold pt-8">{{ data.category.name }} à {{ data.distribution_type.name === "Acheter" ? "vendre" : "louer" }}</p>
         <p class="text-xl font-bold pt-2">
@@ -45,11 +22,11 @@
             <p>{{ data.address.city }} ({{ data.address.postale_code }})</p>
         </div>
         <div class="pb-4 mb-4 border-b border-neutral-300">
-            <h3>{{ data.name }}</h3>
+            <h3 class="text-xl font-bold mb-4">{{ data.name }}</h3>
             <p>{{ data.description }}</p>
         </div>
         <div class="pb-4 mb-4 border-b border-neutral-300">
-            <h3>Informations et caractéristiques</h3>
+            <h3 class="text-xl font-bold mb-4">Informations et caractéristiques</h3>
             <ul>
                 @for (item of data.characteristics; track $index) {
                     <li>{{ item.name }}</li>
@@ -58,7 +35,7 @@
         </div>
         
         <div>
-            <h3>Énergie et diagnostics</h3>
+            <h3 class="text-xl font-bold mb-4">Énergie et diagnostics</h3>
             @if (data.energy_performance) {
                 <p>{{ data.energy_performance.letter }}</p>
             } @else {

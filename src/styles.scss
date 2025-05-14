@@ -7,7 +7,7 @@
   --font-open: "Open Sans", sans-serif;
 
   --color-primary: #017cbc;
-  --color-primary-20: rgba(1, 124, 188, .2);
+  --color-primary-10: rgba(1, 124, 188, .1);
   --color-grey: #e0e0e0;
 
   --color-dpe-a: #019f6e;
@@ -32,9 +32,18 @@ ul {
   list-style: none;
 }
 
+.content-large {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
 .content {
   max-width: 1200px;
   margin: 0 auto;
+}
+
+.noscroll {
+  overflow: hidden;
 }
 
 .bg-dpe-a {
