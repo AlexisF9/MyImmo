@@ -5,28 +5,30 @@
         <!--@for (item of data.pictures; track $index) {
                 <img [src]="item.url" [alt]="item.name"/>
             }-->
-        @if (data.pictures.length > 1) {
-            <div class="grid grid-cols-3 grid-rows-2 gap-4">
-                <div class="row-span-2 col-span-2">
-                    <img class="h-full object-cover" [src]="data.pictures[0].url" [alt]="data.pictures[0].name"/>
+        <div class="h-150">
+            @if (data.pictures.length > 1) {
+                <div class="grid grid-cols-3 grid-rows-2 gap-4 h-full">
+                    <div class="row-span-2 col-span-2">
+                        <img class="h-full w-full object-cover" [src]="data.pictures[0].url" [alt]="data.pictures[0].name"/>
+                    </div>
+                    @if (data.pictures[1]) {
+                        <div class="col-start-3">
+                            <img class="h-full w-full object-cover" [src]="data.pictures[1].url" [alt]="data.pictures[1].name"/>
+                        </div>
+                    }
+                    @if (data.pictures[2]) {
+                        <div class="row-start-2 col-start-3">
+                            <img class="h-full w-full object-cover" [src]="data.pictures[2].url" [alt]="data.pictures[2].name"/>
+                        </div>
+                    }
                 </div>
-                @if (data.pictures[1]) {
-                    <div class="col-start-3">
-                        <img class="h-full object-cover" [src]="data.pictures[1].url" [alt]="data.pictures[1].name"/>
-                    </div>
-                }
-                @if (data.pictures[2]) {
-                    <div class="row-start-2 col-start-3">
-                        <img class="h-full object-cover" [src]="data.pictures[2].url" [alt]="data.pictures[2].name"/>
-                    </div>
-                }
-            </div>
-        } @else {
-            <img [src]="data.pictures[0].url" [alt]="data.pictures[0].name"/>
-        }
+            } @else {
+                <img class="h-full w-full object-cover" [src]="data.pictures[0].url" [alt]="data.pictures[0].name"/>
+            }
+        </div>        
         
-        <p>{{ data.category.name }} à {{ data.distribution_type.name === "Acheter" ? "vendre" : "louer" }}</p>
-        <p class="text-xl font-bold">
+        <p class="font-bold pt-8">{{ data.category.name }} à {{ data.distribution_type.name === "Acheter" ? "vendre" : "louer" }}</p>
+        <p class="text-xl font-bold pt-2">
             {{ data.price }} €
             @if (data.distribution_type.name === "Acheter") {
                 <span class="text-sm font-normal">{{ ceil(data.price/data.surface) }} €/m²</span>
@@ -34,19 +36,19 @@
                 <span>/mois</span>
             }
         </p>
-        <ul class="flex border-t border-b border-neutral-300">
+        <ul class="flex py-4 my-4 border-t border-b border-neutral-300">
             <li>{{ data.pieces }} pièces</li>
             <li class="before:content-['•'] before:mr-2 before:pl-2">{{ data.rooms }} chambres</li>
             <li class="before:content-['•'] before:mr-2 before:pl-2">{{ data.surface }} m²</li>
         </ul>
-        <div class="border-b border-neutral-300">
+        <div class="pb-4 mb-4 border-b border-neutral-300">
             <p>{{ data.address.city }} ({{ data.address.postale_code }})</p>
         </div>
-        <div class="border-b border-neutral-300">
+        <div class="pb-4 mb-4 border-b border-neutral-300">
             <h3>{{ data.name }}</h3>
             <p>{{ data.description }}</p>
         </div>
-        <div class="border-b border-neutral-300">
+        <div class="pb-4 mb-4 border-b border-neutral-300">
             <h3>Informations et caractéristiques</h3>
             <ul>
                 @for (item of data.characteristics; track $index) {
@@ -54,9 +56,14 @@
                 }
             </ul>
         </div>
+        
         <div>
             <h3>Énergie et diagnostics</h3>
-            <p>{{ data.energy_performance.letter }}</p>
+            @if (data.energy_performance) {
+                <p>{{ data.energy_performance.letter }}</p>
+            } @else {
+                <p>Le diagnostic de performance énergétique (DPE) n'est pas renseigné</p>
+            }
         </div>
     } @else {
         <p>Une erreur est survenu lors du chargement de l'annonce.</p>

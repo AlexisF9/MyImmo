@@ -1,0 +1,9 @@
+.clip-square-with-triangle {
+  clip-path: polygon(
+    0% 0%,           /* top-left */
+    70% 0%,          /* near top-right */
+    100% 50%,        /* triangle point (middle right) */
+    70% 100%,        /* near bottom-right */
+    0% 100%          /* bottom-left */
+  );
+}

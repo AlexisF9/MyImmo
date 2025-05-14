@@ -1,5 +1,10 @@
 <div class="relative border border-grey rounded-lg overflow-hidden transition duration-300 ease-in-out hover:shadow-lg">
-    <img class="object-cover aspect-2/1 w-full" [src]="`${announcement().pictures[0].url}`" [alt]="announcement().pictures[0].name" />
+    <div class="relative">
+        <img class="object-cover aspect-2/1 w-full" [src]="`${announcement().pictures[0].url}`" [alt]="announcement().pictures[0].name" />
+        @if (announcement().energy_performance) {
+            <div [class]="`absolute bottom-2 text-sm left-2 w-fit py-1 pl-2 pr-4 bg-dpe-${announcement().energy_performance.letter.toLowerCase()} clip-square-with-triangle`">{{ announcement().energy_performance.letter }}</div>
+        }
+    </div>
     <div class="flex flex-col gap-4 p-4">
         <p class="text-xl font-bold">
             {{ announcement().price }} €
