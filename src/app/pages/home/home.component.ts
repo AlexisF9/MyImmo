@@ -32,7 +32,8 @@ export interface Announcement {
   }[],
   energy_performance: {
     letter: string
-  }
+  },
+  construction_year: string
 }
 
 @Component({

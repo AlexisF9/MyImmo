@@ -4,7 +4,7 @@ import { ApiService } from '../../services/api.service';
 import { Announcement } from '../home/home.component';
 import { LoaderComponent } from "../../components/loader/loader.component";
 import { PicturesComponent } from '../../components/pictures/pictures.component';
-import { BedDouble, DoorClosed, Grid2X2, LucideAngularModule } from 'lucide-angular';
+import { BedDouble, DoorClosed, Grid2X2, Hammer, LucideAngularModule, MapPinned } from 'lucide-angular';
 
 @Component({
   selector: 'app-announcement',
@@ -19,6 +19,39 @@ export class AnnouncementComponent {
   readonly DoorIcon = DoorClosed;
   readonly BedIcon = BedDouble;
   readonly SurfaceIcon = Grid2X2;
+  readonly MapIcon = MapPinned;
+  readonly HammerIcon = Hammer;
+
+  dpeList = [
+    {
+      letter: "A",
+      color: "bg-dpe-a"
+    },
+    {
+      letter: "B",
+      color: "bg-dpe-b"
+    },
+    {
+      letter: "C",
+      color: "bg-dpe-c"
+    },
+    {
+      letter: "D",
+      color: "bg-dpe-d"
+    },
+    {
+      letter: "E",
+      color: "bg-dpe-e"
+    },
+    {
+      letter: "F",
+      color: "bg-dpe-f"
+    },
+    {
+      letter: "G",
+      color: "bg-dpe-g"
+    }
+  ]
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {}
 
