@@ -14,9 +14,9 @@
             }
         </p>
         <ul class="flex py-4 my-4 border-t border-b border-neutral-300">
-            <li>{{ data.pieces }} pièces</li>
-            <li class="before:content-['•'] before:mr-2 before:pl-2">{{ data.rooms }} chambres</li>
-            <li class="before:content-['•'] before:mr-2 before:pl-2">{{ data.surface }} m²</li>
+            <li class="flex items-center gap-2"><lucide-angular [img]="DoorIcon" [size]="20" [strokeWidth]="1"></lucide-angular> <span class="font-bold">{{ data.pieces }}</span> pièces</li>
+            <li class="flex items-center gap-2 before:content-['•'] before:mr-2 before:pl-2"><lucide-angular [img]="BedIcon" [size]="20" [strokeWidth]="1"></lucide-angular> <span class="font-bold">{{ data.rooms }}</span> chambres</li>
+            <li class="flex items-center gap-2 before:content-['•'] before:mr-2 before:pl-2"><lucide-angular [img]="SurfaceIcon" [size]="20" [strokeWidth]="1"></lucide-angular> <span class="font-bold">{{ data.surface }}</span> m²</li>
         </ul>
         <div class="pb-4 mb-4 border-b border-neutral-300">
             <p>{{ data.address.city }} ({{ data.address.postale_code }})</p>

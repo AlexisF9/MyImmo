@@ -4,10 +4,11 @@ import { ApiService } from '../../services/api.service';
 import { Announcement } from '../home/home.component';
 import { LoaderComponent } from "../../components/loader/loader.component";
 import { PicturesComponent } from '../../components/pictures/pictures.component';
+import { BedDouble, DoorClosed, Grid2X2, LucideAngularModule } from 'lucide-angular';
 
 @Component({
   selector: 'app-announcement',
-  imports: [LoaderComponent, PicturesComponent],
+  imports: [LoaderComponent, PicturesComponent, LucideAngularModule],
   templateUrl: './announcement.component.html',
   styleUrl: './announcement.component.scss'
 })
@@ -15,6 +16,10 @@ export class AnnouncementComponent {
   data: Announcement | null = null
   loading: boolean = false
   ceil = Math.ceil
+  readonly DoorIcon = DoorClosed;
+  readonly BedIcon = BedDouble;
+  readonly SurfaceIcon = Grid2X2;
+
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
