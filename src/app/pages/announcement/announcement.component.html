@@ -2,9 +2,29 @@
     @if (loading) {
         <app-loader/>
     } @else if (data) {
-        @for (item of data.pictures; track $index) {
-            <img [src]="item.url" [alt]="item.name"/>
+        <!--@for (item of data.pictures; track $index) {
+                <img [src]="item.url" [alt]="item.name"/>
+            }-->
+        @if (data.pictures.length > 1) {
+            <div class="grid grid-cols-3 grid-rows-2 gap-4">
+                <div class="row-span-2 col-span-2">
+                    <img class="h-full object-cover" [src]="data.pictures[0].url" [alt]="data.pictures[0].name"/>
+                </div>
+                @if (data.pictures[1]) {
+                    <div class="col-start-3">
+                        <img class="h-full object-cover" [src]="data.pictures[1].url" [alt]="data.pictures[1].name"/>
+                    </div>
+                }
+                @if (data.pictures[2]) {
+                    <div class="row-start-2 col-start-3">
+                        <img class="h-full object-cover" [src]="data.pictures[2].url" [alt]="data.pictures[2].name"/>
+                    </div>
+                }
+            </div>
+        } @else {
+            <img [src]="data.pictures[0].url" [alt]="data.pictures[0].name"/>
         }
+        
         <p>{{ data.category.name }} à {{ data.distribution_type.name === "Acheter" ? "vendre" : "louer" }}</p>
         <p class="text-xl font-bold">
             {{ data.price }} €
