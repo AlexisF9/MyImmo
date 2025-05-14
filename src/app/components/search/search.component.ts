@@ -3,18 +3,16 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ApiService } from '../../services/api.service';
 import { debounceTime } from 'rxjs';
 import { Router } from '@angular/router';
+import { LucideAngularModule, SearchIcon } from 'lucide-angular';
 
 @Component({
   selector: 'app-search',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, LucideAngularModule],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
 })
 export class SearchComponent {
-  //searchControl = new FormControl();
-  //testControl: string = "acheter";
-  //selectedTab = new FormControl(0);
-  search: string = ""
+  readonly SearchIcon = SearchIcon;
   data: { properties: { city: string, postcode: string } }[] | null = null;
   openResults: boolean = false
 

@@ -11,7 +11,10 @@
                 Louer
             </label>
         </div>
-        <input formControlName="search" type="text" class="mt-4 p-4 w-full border border-neutral-300 bg-white rounded-2xl" placeholder="Saisir le lieu ou le code postale"/>
+        <div class="relative mt-4">
+            <label id="search-input" class="absolute top-[50%] left-4 translate-y-[-50%]"><lucide-angular [img]="SearchIcon" [size]="20"></lucide-angular></label>
+            <input formControlName="search" for="search-input" type="text" class="px-12 py-4 w-full border border-grey bg-white rounded-2xl outline-[0] focus:border-black" placeholder="Saisir le lieu ou le code postale"/>
+        </div>
     </form>
     @if (openResults && data && data.length > 0) {
         <ul class="absolute z-9 inset-x-[16px] md:inset-x-[32px] bg-white rounded-2xl shadow-sm overflow-hidden" #resultsList>
