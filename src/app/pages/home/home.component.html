@@ -1,5 +1,4 @@
 <main class="px-4">
-    <app-distribution />
     <div class="absolute inset-x-[0] bg-center bg-cover bg-[url(/background.webp)]">
         <!--<div class="bg-black/10 h-64"></div>-->
         <div class="h-64"></div>
@@ -11,14 +10,14 @@
             <h2 class="text-xl mb-2 pt-8">Nos dernières annonces à vendre à Grenoble :</h2>
             <app-cards-list [data]="filteredBuyData" />
             <div class="flex justify-center">
-                <button (click)="goToSearchPage('Grenoble', 'Acheter')" mat-flat-button class="mt-4">Vois plus de biens à Grenoble</button>
+                <button (click)="goToSearchPage('Grenoble', 'Acheter')" class="mt-4">Vois plus de biens à Grenoble</button>
             </div>
         }
         @if (filteredRentData && filteredRentData.length > 0) {
             <h2 class="text-xl mb-2 pt-8">Nos dernières annonces à louer à Grenoble :</h2>
             <app-cards-list [data]="filteredRentData" />
             <div class="flex justify-center">
-                <button (click)="goToSearchPage('Grenoble', 'Louer')" mat-flat-button class="mt-4">Vois plus de biens à Grenoble</button>
+                <button (click)="goToSearchPage('Grenoble', 'Louer')" class="mt-4">Vois plus de biens à Grenoble</button>
             </div>
         }
     </div>

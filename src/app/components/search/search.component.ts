@@ -1,16 +1,13 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
-import {MatFormFieldModule} from '@angular/material/form-field';
 import { ApiService } from '../../services/api.service';
 import { debounceTime } from 'rxjs';
 import { Router } from '@angular/router';
+import { DistributionComponent } from "../distribution/distribution.component";
 
 @Component({
   selector: 'app-search',
-  imports: [MatTabsModule, MatIconModule, MatInputModule, ReactiveFormsModule, MatFormFieldModule],
+  imports: [ReactiveFormsModule, DistributionComponent],
   templateUrl: './search.component.html',
   styleUrl: './search.component.scss',
 })

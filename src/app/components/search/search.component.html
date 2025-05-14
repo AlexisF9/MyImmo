@@ -1,11 +1,14 @@
 <div class="p-4 md:p-8 max-w-[750px] rounded-2xl shadow-md bg-white relative">
+    <!--
     <mat-tab-group animationDuration="0ms" [selectedIndex]="selectedTab.value" (selectedIndexChange)="selectedTab.setValue($event)">
         @for (tab of tabs; track tab.name) {
             <mat-tab [label]="tab.label">
                 <input type="text" class="mt-4 p-4 w-full border border-neutral-300 bg-white rounded-2xl" placeholder="Saisir le lieu ou le code postale" [formControl]="searchControl" [value]="searchControl"/>
             </mat-tab>
         }
-    </mat-tab-group>
+    </mat-tab-group>-->
+    <app-distribution/>
+    <input type="text" class="mt-4 p-4 w-full border border-neutral-300 bg-white rounded-2xl" placeholder="Saisir le lieu ou le code postale" [formControl]="searchControl" [value]="searchControl"/>
     @if (openResults && data && data.length > 0) {
         <ul class="absolute z-9 inset-x-[16px] md:inset-x-[32px] bg-white rounded-2xl shadow-sm overflow-hidden" #resultsList>
             @for (item of data; track $index) {

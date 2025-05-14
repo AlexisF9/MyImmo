@@ -1,5 +1,3 @@
-@use '../theme-colors' as custom;
-@use '@angular/material' as mat;
 @use "tailwindcss";
 @tailwind utilities;
 
@@ -8,18 +6,11 @@
 @theme {
   --font-open: "Open Sans", sans-serif;
 
-  --color-primary: var(--mat-sys-primary);
+  --color-primary: #017cbc;
+
+  --color-grey: #e0e0e0;
 }
 
-html {
-  @include mat.theme((
-    typography: var(--font-open),
-    color: (
-      primary: custom.$primary-palette,
-    ),
-    density: 0
-  ));
-}
 html,
 body {
   height: 100%;

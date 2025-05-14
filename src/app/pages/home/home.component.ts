@@ -1,11 +1,7 @@
 import { Component } from '@angular/core';
 import { ApiService } from '../../services/api.service';
-import {MatGridListModule} from '@angular/material/grid-list';
 import { CardsListComponent } from "../../components/cards-list/cards-list.component";
-import {MatTabsModule} from '@angular/material/tabs';
 import { SearchComponent } from "../../components/search/search.component";
-import { DistributionComponent } from "../../components/distribution/distribution.component";
-import {MatButtonModule} from '@angular/material/button';
 import { Router } from '@angular/router';
 
 export interface Announcement {
@@ -41,7 +37,7 @@ export interface Announcement {
 
 @Component({
   selector: 'app-home',
-  imports: [MatGridListModule, CardsListComponent, MatTabsModule, SearchComponent, MatButtonModule, DistributionComponent],
+  imports: [CardsListComponent, SearchComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
