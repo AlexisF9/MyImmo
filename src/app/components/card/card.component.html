@@ -10,7 +10,7 @@
             <p class="text-xl font-bold">
                 {{ announcement().price }} €
                 @if (announcement().distribution_type.name === "Acheter") {
-                    <span class="text-sm font-normal">{{ ceil(announcement().price/announcement().surface) }} €/m²</span>
+                    <span class="text-sm font-normal text-light">{{ ceil(announcement().price/announcement().surface) }} €/m²</span>
                 } @else {
                     <span>/mois</span>
                 }
@@ -22,7 +22,7 @@
             <li class="before:content-['•'] before:mr-2 before:pl-2">{{ announcement().rooms }} chambres</li>
             <li class="before:content-['•'] before:mr-2 before:pl-2">{{ announcement().surface }} m²</li>
         </ul>
-        <p>{{ announcement().address.city }} ({{ announcement().address.postale_code }})</p>
+        <p class="text-light">{{ announcement().address.city }} ({{ announcement().address.postale_code }})</p>
         <button class="absolute inset-0 z-1 cursor-pointer sr-only-focusable" aria-label="Voir plus" [routerLink]="`/annonce/${announcement().id}`"></button>
     </div>
 </div>
