@@ -4,7 +4,8 @@ import { ApiService } from '../../services/api.service';
 import { Announcement } from '../home/home.component';
 import { LoaderComponent } from "../../components/loader/loader.component";
 import { PicturesComponent } from '../../components/pictures/pictures.component';
-import { BedDouble, DoorClosed, Grid2X2, Hammer, LucideAngularModule, MapPinned } from 'lucide-angular';
+import { BedDouble, DoorClosed, Grid2X2, Hammer, Heart, LucideAngularModule, MapPinned } from 'lucide-angular';
+import { LocalStorageServiceService } from '../../services/local-storage-service.service';
 
 @Component({
   selector: 'app-announcement',
@@ -16,6 +17,9 @@ export class AnnouncementComponent {
   data: Announcement | null = null
   loading: boolean = false
   ceil = Math.ceil
+  likesList: number[] = []
+  
+  readonly LikeIcon = Heart;
   readonly DoorIcon = DoorClosed;
   readonly BedIcon = BedDouble;
   readonly SurfaceIcon = Grid2X2;
@@ -84,13 +88,22 @@ export class AnnouncementComponent {
     }
   ]
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {}
+  constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router, private localStorageService: LocalStorageServiceService) {}
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
         this.loadAnnonce(id);
+      }
+    });
+
+    const storedLikes = this.localStorageService.getItem<number[]>("likes");
+    this.likesList = storedLikes ?? [];
+
+    this.localStorageService.storageChanges$.subscribe(change => {
+      if (change.key === "likes") {
+        this.likesList = change.value ?? [];
       }
     });
   }
@@ -107,5 +120,22 @@ export class AnnouncementComponent {
         this.loading = false
       }
     });
+  }
+
+  toggleLike(id: number) {
+    const index = this.likesList.indexOf(id);
+    if (index !== -1) {
+      this.likesList.splice(index, 1);
+      this.localStorageService.setItem("likes", this.likesList);
+    } else {
+      this.likesList.push(id);
+      this.localStorageService.setItem("likes", this.likesList);
+    }
+  }
+
+  likeClass(id: number) {
+    return this.likesList.includes(id)
+      ? "fill-red-600 stroke-red-600"
+      : "";
   }
 } 

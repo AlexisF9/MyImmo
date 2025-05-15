@@ -4,15 +4,20 @@
     } @else if (data) {
         <app-pictures [pictures]="data.pictures" />       
         
-        <p class="font-bold pt-8">{{ data.category.name }} à {{ data.distribution_type.name === "Acheter" ? "vendre" : "louer" }}</p>
-        <p class="text-xl font-bold pt-2">
-            {{ data.price }} €
-            @if (data.distribution_type.name === "Acheter") {
-                <span class="text-sm font-normal">{{ ceil(data.price/data.surface) }} €/m²</span>
-            } @else {
-                <span>/mois</span>
-            }
-        </p>
+        <div class="flex items-end justify-between gap-2 flex-wrap-reverse pt-8">
+            <div>
+                <h2 class="font-bold">{{ data.category.name }} à {{ data.distribution_type.name === "Acheter" ? "vendre" : "louer" }}</h2>
+                <h3 class="text-xl font-bold pt-2">
+                    {{ data.price }} €
+                    @if (data.distribution_type.name === "Acheter") {
+                        <span class="text-sm font-normal">{{ ceil(data.price/data.surface) }} €/m²</span>
+                    } @else {
+                        <span>/mois</span>
+                    }
+                </h3>
+            </div>
+            <button class="border rounded-full p-2 cursor-pointer" aria-label="Aimer l'annonce" (click)="toggleLike(data.id)"><lucide-angular [img]="LikeIcon" [size]="20" [strokeWidth]="1" [class]="likeClass(data.id)"></lucide-angular></button>
+        </div>
         <ul class="flex flex-col gap-2 md:gap-[0] md:flex-row py-8 my-8 border-t border-b border-neutral-300">
             <li class="flex items-center gap-2"><lucide-angular [img]="DoorIcon" [size]="20" [strokeWidth]="1"></lucide-angular> <span class="font-bold">{{ data.pieces }}</span> pièces</li>
             <li class="flex items-center gap-2 md:before:content-['•'] md:before:mr-2 md:before:pl-2"><lucide-angular [img]="BedIcon" [size]="20" [strokeWidth]="1"></lucide-angular> <span class="font-bold">{{ data.rooms }}</span> chambres</li>
