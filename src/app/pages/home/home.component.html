@@ -10,14 +10,14 @@
             <h2 class="text-xl mb-2 pt-8">Nos dernières annonces à vendre à Grenoble :</h2>
             <app-cards-list [data]="filteredBuyData" />
             <div class="flex justify-center">
-                <button (click)="goToSearchPage('Grenoble', 'Acheter')" class="mt-4">Vois plus de biens à Grenoble</button>
+                <app-button (clicked)="goToSearchPage('Grenoble', 'Acheter')" label="Vois plus de biens à Grenoble" />
             </div>
         }
         @if (filteredRentData && filteredRentData.length > 0) {
             <h2 class="text-xl mb-2 pt-8">Nos dernières annonces à louer à Grenoble :</h2>
             <app-cards-list [data]="filteredRentData" />
             <div class="flex justify-center">
-                <button (click)="goToSearchPage('Grenoble', 'Louer')" class="mt-4">Vois plus de biens à Grenoble</button>
+                <app-button (clicked)="goToSearchPage('Grenoble', 'Louer')" label="Vois plus de biens à Grenoble" />
             </div>
         }
     </div>

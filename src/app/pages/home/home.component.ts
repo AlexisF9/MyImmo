@@ -3,6 +3,7 @@ import { ApiService } from '../../services/api.service';
 import { CardsListComponent } from "../../components/cards-list/cards-list.component";
 import { SearchComponent } from "../../components/search/search.component";
 import { Router } from '@angular/router';
+import { ButtonComponent } from "../../components/button/button.component";
 
 export interface Announcement {
   id: number,
@@ -38,7 +39,7 @@ export interface Announcement {
 
 @Component({
   selector: 'app-home',
-  imports: [CardsListComponent, SearchComponent],
+  imports: [CardsListComponent, SearchComponent, ButtonComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
