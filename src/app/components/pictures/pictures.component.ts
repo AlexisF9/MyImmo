@@ -26,33 +26,31 @@ export class PicturesComponent {
   currentSlide: number = 0
   slider: KeenSliderInstance | null = null
 
-  ngAfterViewInit() {
-    if (this.sliderRef) {
-      this.slider = new KeenSlider(this.sliderRef.nativeElement, {
-        initial: this.currentSlide,
-        slideChanged: (s) => {
-          this.currentSlide = s.track.details.rel
-        },
-      })
-    }
-  }
-
   ngOnInit() {
-    this.screenWidth = window.innerWidth;
-    this.isMobile = this.screenWidth <= 768; 
+    this.updateDeviceMode();
 
     this.resizeListener = this.renderer.listen('window', 'resize', () => {
-      this.onResize();
+      const wasMobile = this.isMobile;
+      this.updateDeviceMode();
 
-      if (this.isMobile && this.sliderRef) {
-        this.slider = new KeenSlider(this.sliderRef.nativeElement, {
-          initial: this.currentSlide,
-          slideChanged: (s) => {
-            this.currentSlide = s.track.details.rel
-          },
-        })
+      // detection changement de mode mobile ↔ desktop
+      if (wasMobile !== this.isMobile) {
+        // on attent un tour d'evenement en plus
+        setTimeout(() => {
+          if (this.isMobile) {
+            this.initSlider();
+          } else {
+            this.destroySlider();
+          }
+        });
       }
     });
+  }
+
+  ngAfterViewInit() {
+    if (this.isMobile) {
+      this.initSlider();
+    }
   }
 
   ngOnDestroy() {
@@ -70,8 +68,26 @@ export class PicturesComponent {
     document.body.classList.toggle('noscroll');
   }
 
-  onResize() {
+  private updateDeviceMode() {
     this.screenWidth = window.innerWidth;
     this.isMobile = this.screenWidth <= 768;
+  }
+
+  private initSlider() {
+    if (this.sliderRef && !this.slider) {
+      this.slider = new KeenSlider(this.sliderRef.nativeElement, {
+        initial: this.currentSlide,
+        slideChanged: (s) => {
+          this.currentSlide = s.track.details.rel;
+        },
+      });
+    }
+  }
+
+  private destroySlider() {
+    if (this.slider) {
+      this.slider.destroy();
+      this.slider = null;
+    }
   }
 }

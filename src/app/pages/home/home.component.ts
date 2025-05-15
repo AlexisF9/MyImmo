@@ -55,7 +55,7 @@ export class HomeComponent {
   constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit(): void {
-    this.apiService.getAdvertisementsByAddress('Grenoble', 'Acheter').subscribe({
+    this.apiService.getAdvertisementsByAddress('Grenoble', 'Acheter', 3).subscribe({
       next: (res) => {
         //this.data = res.data
         this.filteredBuyData = res.data
@@ -66,7 +66,7 @@ export class HomeComponent {
       }
     });
 
-    this.apiService.getAdvertisementsByAddress('Grenoble', 'Louer').subscribe({
+    this.apiService.getAdvertisementsByAddress('Grenoble', 'Louer', 3).subscribe({
       next: (res) => {
         //this.data = res.data
         //this.filteredBuyData = this.data?.filter((item: Announcement) => item.distribution_type.name === "Acheter") ?? null

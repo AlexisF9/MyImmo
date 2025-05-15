@@ -100,7 +100,6 @@ export class AnnouncementComponent {
     this.apiService.getAnnouncementById(parseInt(id)).subscribe({
       next: (res) => {
         this.data = res.data[0]
-        console.log(this.data)
         this.loading = false
       },
       error: (err) => {

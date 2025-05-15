@@ -14,8 +14,8 @@ export class ApiService {
     return this.http.get<any>(this.apiUrl + '/api/advertisements?sort=createdAt:desc&populate=*');
   }
 
-  getAdvertisementsByAddress(city: string, distribution: string): Observable<any> {
-    return this.http.get<any>(this.apiUrl + `/api/advertisements?filters[$and][0][address][city][$eq]=${city}&filters[$and][1][distribution_type][name][$eq]=${distribution}&sort=createdAt:desc&populate=*`);
+  getAdvertisementsByAddress(city: string, distribution: string, limit?: number): Observable<any> {
+    return this.http.get<any>(this.apiUrl + `/api/advertisements?filters[$and][0][address][city][$eq]=${city}&filters[$and][1][distribution_type][name][$eq]=${distribution}&sort=createdAt:desc&pagination[limit]=${limit ? limit : 10}&populate=*`);
   }
 
   getAnnouncementById(id: number): Observable<any> {

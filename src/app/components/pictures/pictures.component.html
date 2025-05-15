@@ -46,14 +46,13 @@
         </div> 
     } @else {
         <div class="fixed inset-[0] bg-white overflow-y-scroll">
-            
             <div class="sticky top-[0] py-4 border-b border-grey bg-white">
                 <div class="content-large">
                     <button type="button" class="cursor-pointer flex items-center gap-2" (click)="toggleZoom()"><lucide-angular [img]="ChevronLeftIcon" [size]="30" [strokeWidth]="1"></lucide-angular> Retour à l'annonce</button>
                 </div>
             </div>
             <div class="content px-4">
-                <div class="md:columns-2 gap-4 space-y-4">
+                <div [class]="`${pictures().length > 1 ? 'md:columns-2 gap-4 space-y-4' : ''}`">
                     @for (item of pictures(); track $index) {
                         <img class="w-full" [src]="item.url" [alt]="item.name"/>
                     }
