@@ -2,6 +2,7 @@ import { Component, input, output } from '@angular/core';
 import { Announcement } from '../../pages/home/home.component';
 import { RouterLink } from '@angular/router';
 import { Heart, LucideAngularModule } from 'lucide-angular';
+import { LocalStorageServiceService } from '../../services/local-storage-service.service';
 
 @Component({
   selector: 'app-card',
@@ -16,28 +17,36 @@ export class CardComponent {
   likesList: number[] = []
   dislike = output<void>()
 
+  constructor(private localStorageService: LocalStorageServiceService) {}
+
   ngOnInit() {
-    if (localStorage.getItem("likes")) {
-      this.likesList = JSON.parse(localStorage.getItem("likes") as string)
-    }
+    // Init des likes depuis le localStorage
+    const storedLikes = this.localStorageService.getItem<number[]>("likes");
+    this.likesList = storedLikes ?? [];
+
+    // Écoute des changements
+    this.localStorageService.storageChanges$.subscribe(change => {
+      if (change.key === "likes") {
+        this.likesList = change.value ?? [];
+      }
+    });
   }
 
   toggleLike(id: number) {
-    if (this.likesList.find((el) => el === id)) {
-      const index = this.likesList.indexOf(id)
-      this.likesList.splice(index, 1)
-      localStorage.setItem("likes", JSON.stringify(this.likesList))
-      this.dislike.emit()
+    const index = this.likesList.indexOf(id);
+    if (index !== -1) {
+      this.likesList.splice(index, 1);
+      this.localStorageService.setItem("likes", this.likesList);
+      this.dislike.emit();
     } else {
-      this.likesList.push(id)
-      localStorage.setItem("likes", JSON.stringify(this.likesList))
+      this.likesList.push(id);
+      this.localStorageService.setItem("likes", this.likesList);
     }
   }
 
   likeClass(id: number) {
-    if (this.likesList.find((el) => el === id)) {
-      return "fill-red-600 stroke-red-600"
-    }
-    return;
+    return this.likesList.includes(id)
+      ? "fill-red-600 stroke-red-600"
+      : "";
   }
 }
