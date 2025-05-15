@@ -11,11 +11,11 @@ export class ApiService {
   constructor(private http: HttpClient) {}
 
   getData(): Observable<any> {
-    return this.http.get<any>(this.apiUrl + '/api/advertisements?populate=*');
+    return this.http.get<any>(this.apiUrl + '/api/advertisements?sort=createdAt:desc&populate=*');
   }
 
   getAdvertisementsByAddress(city: string, distribution: string): Observable<any> {
-    return this.http.get<any>(this.apiUrl + `/api/advertisements?filters[$and][0][address][city][$eq]=${city}&filters[$and][1][distribution_type][name][$eq]=${distribution}&populate=*`);
+    return this.http.get<any>(this.apiUrl + `/api/advertisements?filters[$and][0][address][city][$eq]=${city}&filters[$and][1][distribution_type][name][$eq]=${distribution}&sort=createdAt:desc&populate=*`);
   }
 
   getAnnouncementById(id: number): Observable<any> {
@@ -31,6 +31,6 @@ export class ApiService {
       .map((id, index) => `filters[id][$in][${index}]=${id}`)
       .join('&');
     
-    return this.http.get<any>(this.apiUrl + `/api/advertisements?${filterParams}&populate=*`);
+    return this.http.get<any>(this.apiUrl + `/api/advertisements?${filterParams}&sort=createdAt:desc&populate=*`);
   }
 }
