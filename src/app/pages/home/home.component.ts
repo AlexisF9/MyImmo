@@ -34,6 +34,9 @@ export interface Announcement {
   energy_performance: {
     letter: string
   },
+  gaz_performance: {
+    letter: string
+  },
   construction_year: string
 }
 

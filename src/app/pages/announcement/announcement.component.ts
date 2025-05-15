@@ -53,6 +53,37 @@ export class AnnouncementComponent {
     }
   ]
 
+  gesList = [
+    {
+      letter: "A",
+      color: "bg-ges-a"
+    },
+    {
+      letter: "B",
+      color: "bg-ges-b"
+    },
+    {
+      letter: "C",
+      color: "bg-ges-c"
+    },
+    {
+      letter: "D",
+      color: "bg-ges-d"
+    },
+    {
+      letter: "E",
+      color: "bg-ges-e"
+    },
+    {
+      letter: "F",
+      color: "bg-ges-f"
+    },
+    {
+      letter: "G",
+      color: "bg-ges-g"
+    }
+  ]
+
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {

@@ -19,6 +19,14 @@
   --color-dpe-e: #f0b50e;
   --color-dpe-f: #ec8136;
   --color-dpe-g: #d7211f;
+
+  --color-ges-a: #f4ecf4;
+  --color-ges-b: #d4c0da;
+  --color-ges-c: #c2aaca;
+  --color-ges-d: #b396c0;
+  --color-ges-e: #9877a9;
+  --color-ges-f: #7b5897;
+  --color-ges-g: #66438c;
 }
 
 html,
@@ -68,6 +76,28 @@ ul {
 }
 .bg-dpe-g {
   background-color: var(--color-dpe-g);
+}
+
+.bg-ges-a {
+  background-color: var(--color-ges-a);
+}
+.bg-ges-b {
+  background-color: var(--color-ges-b);
+}
+.bg-ges-c {
+  background-color: var(--color-ges-c);
+}
+.bg-ges-d {
+  background-color: var(--color-ges-d);
+}
+.bg-ges-e {
+  background-color: var(--color-ges-e);
+}
+.bg-ges-f {
+  background-color: var(--color-ges-f);
+}
+.bg-ges-g {
+  background-color: var(--color-ges-g);
 }
 
 .clip-square-with-triangle {

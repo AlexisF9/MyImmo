@@ -60,7 +60,15 @@
                 </div>
                 <div class="grow">
                     <h4 class="mb-2 text-sm font-bold">Indice d'émission de gaz à effet de serre (GES)</h4>
-                    <p class="text-sm">Le GES n'est pas renseigné</p>
+                    @if (data.gaz_performance) {
+                        <ul class="flex items-center gap-1">
+                            @for (item of gesList; track $index) {
+                                <li [class]="`${item.color} text-lg min-h-3 h-fit grow rounded-full text-center`" [ariaLabel]="item.letter">{{ item.letter === data.gaz_performance.letter ? item.letter : null }}</li>
+                            }
+                        </ul>
+                    } @else {
+                        <p class="text-sm">Le GES n'est pas renseigné</p>
+                    }
                 </div>
             </div>
         </div>
