@@ -56,21 +56,26 @@ export class AnnouncementComponent {
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.loading = true
-
-    if (id) {
-      this.apiService.getAnnouncementById(parseInt(id)).subscribe({
-        next: (res) => {
-          this.data = res.data[0]
-          console.log(this.data)
-          this.loading = false
-        },
-        error: (err) => {
-          console.error('Erreur API:', err)
-          this.loading = false
-        }
-      });
-    }
+    this.route.paramMap.subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.loadAnnonce(id);
+      }
+    });
   }
-}
+
+  loadAnnonce(id: string) {
+    this.loading = true
+    this.apiService.getAnnouncementById(parseInt(id)).subscribe({
+      next: (res) => {
+        this.data = res.data[0]
+        console.log(this.data)
+        this.loading = false
+      },
+      error: (err) => {
+        console.error('Erreur API:', err)
+        this.loading = false
+      }
+    });
+  }
+} 

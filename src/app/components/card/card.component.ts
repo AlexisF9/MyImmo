@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { Announcement } from '../../pages/home/home.component';
 import { RouterLink } from '@angular/router';
 import { Heart, LucideAngularModule } from 'lucide-angular';
@@ -14,6 +14,7 @@ export class CardComponent {
   ceil = Math.ceil
   readonly HeartIcon = Heart
   likesList: number[] = []
+  dislike = output<void>()
 
   ngOnInit() {
     if (localStorage.getItem("likes")) {
@@ -26,6 +27,7 @@ export class CardComponent {
       const index = this.likesList.indexOf(id)
       this.likesList.splice(index, 1)
       localStorage.setItem("likes", JSON.stringify(this.likesList))
+      this.dislike.emit()
     } else {
       this.likesList.push(id)
       localStorage.setItem("likes", JSON.stringify(this.likesList))

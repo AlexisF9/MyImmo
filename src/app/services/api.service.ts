@@ -25,4 +25,12 @@ export class ApiService {
   getCities(text: string): Observable<any> {
     return this.http.get<any>(`https://api-adresse.data.gouv.fr/search/?q=${text}&type=municipality&limit=10`);
   }
+
+  getAnnouncementByIds(ids: number[]): Observable<any> {
+    const filterParams = ids
+      .map((id, index) => `filters[id][$in][${index}]=${id}`)
+      .join('&');
+    
+    return this.http.get<any>(this.apiUrl + `/api/advertisements?${filterParams}&populate=*`);
+  }
 }
