@@ -12,6 +12,8 @@ export class ButtonComponent {
   clicked = output<void>()
   icon = input<LucideIconData | undefined>(undefined)
   iconPosition = input<"right" | "left" | null>(null)
+  type = input<string>("button")
+  ghost = input<boolean>(false)
 
   onClick(): void {
     this.clicked.emit();
