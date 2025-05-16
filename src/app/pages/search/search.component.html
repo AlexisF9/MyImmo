@@ -3,6 +3,7 @@
         <app-button [ghost]="true" (clicked)="toggleFilters()" [label]="`${distribution}`" />
         <app-button [ghost]="true" (clicked)="toggleFilters()" [label]="`${category === 'all' ? 'Maison et appartement' : category}`" />
         <app-button [ghost]="true" (clicked)="toggleFilters()" [label]="`${price}`" [class]="`${price === 'Budget' ? 'text-light border-light' : ''}`" />
+        <app-button [ghost]="true" (clicked)="toggleFilters()" [label]="`${pieces}`" [class]="`${pieces === 'Pièces' ? 'text-light border-light' : ''}`" />
     </div>
 </div>
 <div class="content pt-8 px-4">
@@ -22,16 +23,13 @@
         <div [class]="`fixed z-8 inset-[0] ${openFilters ? 'bg-black/20' : 'bg-transparent'} transition duration-300 ease-in-out`">
             <button class="absolute inset-0 cursor-pointer sr-only-focusable" (click)="toggleFilters()" aria-label="Fermer les filtres"></button>
         </div>
-        <div [class]="`fixed z-9 top-[50%] left-4 right-4 md:right-auto md:left-[50%] translate-y-[-50%] md:translate-x-[-50%] bg-white p-4 rounded-lg md:w-full md:max-w-[640px] md:max-h-[740px] overflow-y-auto ${openFilters ? 'opacity-100' : 'opacity-0'} transition duration-300 ease-in-out`">
+        <div [class]="`fixed z-9 top-[50%] left-4 right-4 md:right-auto md:left-[50%] translate-y-[-50%] md:translate-x-[-50%] bg-white p-4 rounded-lg md:w-full md:max-w-[640px] max-h-[90%] md:max-h-[740px] overflow-y-auto ${openFilters ? 'opacity-100' : 'opacity-0'} transition duration-300 ease-in-out`">
             <div class="flex items-center gap-2 pb-6">
                 <button (click)="toggleFilters()" class="cursor-pointer" aria-label="Fermer"><lucide-angular [img]="CloseIcon" [size]="30" [strokeWidth]="1"></lucide-angular></button>
                 <p class="text-xl">Filtres</p>
             </div>
             <!--
-            <div #targetElement class="flex border border-grey rounded-full overflow-hidden">
-                <button (click)="filterDistribution('Acheter')" [class]="`${distribution_type === 'Acheter' ? 'bg-primary text-white' : 'bg-transparent hover:bg-primary/10'} w-[50%] cursor-pointer py-2`">Acheter</button>
-                <button (click)="filterDistribution('Louer')" [class]="`${distribution_type === 'Louer' ? 'bg-primary text-white' : 'bg-transparent hover:bg-primary/10'} w-[50%] cursor-pointer py-2`">louer</button>
-            </div>
+            <div #targetElement
             -->
             <form (submit)="onSubmit($event)" [formGroup]="form">
                 <div class="flex flex-col gap-6">
@@ -42,26 +40,40 @@
                         <input formControlName="formDistribution" id="option2" type="radio" value="Louer" class="sr-only peer/option2"/>
                         <label for="option2" class="w-[50%] py-2 cursor-pointer text-center peer-checked/option2:bg-light peer-checked/option2:text-white">Louer</label>
                     </div>
-                    <select class="text-black border border-grey rounded-lg p-2 w-full" id="pet-select" formControlName="formCategory">
+                    <select class="text-black border border-grey rounded-lg p-3 w-full" id="pet-select" formControlName="formCategory">
                         <option value="all">Maison et appartement</option>
                         <option value="Maison">Maison</option>
                         <option value="Appartement">Appartement</option>
                     </select>
                     <div class="border-t border-grey pt-6">
-                        <p class="text-lg font-bold mb-4">Budget</p>
+                        <p class="text-xl font-bold mb-4">Budget</p>
                         <div class="flex flex-col md:flex-row gap-4">
                             <div class="md:w-[50%] flex flex-col">
-                                <label for="min-price" class="mb-2">Minimum</label>
-                                <input formControlName="formPriceMinimum" type="number" id="min-price" class="border rounded-lg border-grey p-2" />
+                                <label for="min-price" class="mb-2 font-bold">Minimum</label>
+                                <input formControlName="formPriceMinimum" type="number" id="min-price" class="border rounded-lg border-grey p-3" />
                             </div>
                             <div class="md:w-[50%] flex flex-col">
-                                <label for="max-price" class="mb-2">Maximum</label>
-                                <input formControlName="formPriceMaximum" type="number" id="max-price" class="border rounded-lg border-grey p-2" />
+                                <label for="max-price" class="mb-2 font-bold">Maximum</label>
+                                <input formControlName="formPriceMaximum" type="number" id="max-price" class="border rounded-lg border-grey p-3" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-t border-grey pt-6">
+                        <p class="text-xl font-bold mb-4">Pièces</p>
+                        <div class="flex flex-col md:flex-row gap-4">
+                            <div class="md:w-[50%] flex flex-col">
+                                <label for="min-pieces" class="mb-2 font-bold">Minimum</label>
+                                <input formControlName="formPiecesMinimum" type="number" id="min-pieces" class="border rounded-lg border-grey p-3" />
+                            </div>
+                            <div class="md:w-[50%] flex flex-col">
+                                <label for="max-pieces" class="mb-2 font-bold">Maximum</label>
+                                <input formControlName="formPiecesMaximum" type="number" id="max-pieces" class="border rounded-lg border-grey p-3" />
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="flex justify-end pt-8">
+                <div class="flex justify-end pt-8 gap-2">
+                    <app-button [ghost]="true" (clicked)="reset()" label="Réinitialiser" />
                     <app-button type="submit" label="Mettre à jour" />
                 </div>
             </form>

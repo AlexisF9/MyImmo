@@ -22,6 +22,7 @@ export class SearchComponent {
   openFilters: boolean = false
   category: string = "all"
   price: string = "Budget"
+  pieces: string = "Pièces"
 
   readonly CloseIcon = X
 
@@ -30,6 +31,8 @@ export class SearchComponent {
     formCategory: new FormControl<string>('all', [Validators.required]),
     formPriceMinimum: new FormControl<number | null>(null),
     formPriceMaximum: new FormControl<number | null>(null),
+    formPiecesMinimum: new FormControl<number | null>(null),
+    formPiecesMaximum: new FormControl<number | null>(null),
   });
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {}
@@ -43,11 +46,14 @@ export class SearchComponent {
       const category = params['category']
       const minPrice = params['minPrice']
       const maxPrice = params['maxPrice']
+      const minPieces = params['minPieces']
+      const maxPieces = params['maxPieces']
 
       this.city = city
       this.distribution = distribution_type
       this.category = !category ? 'all' : category
       this.price = minPrice && maxPrice ? `${minPrice} € - ${maxPrice} €` : minPrice ? `minimum ${minPrice} €` : maxPrice ? `maximum ${maxPrice} €` : 'Budget'
+      this.pieces = minPieces && maxPieces ? `${minPieces} - ${maxPieces} pièces` : minPieces ? `minimum ${minPieces} pièces` : maxPieces ? `maximum ${maxPieces} pièces` : 'Pièces'
 
       if (!city && !distribution_type) {
         this.router.navigate(['/'])
@@ -56,6 +62,8 @@ export class SearchComponent {
         this.form.get('formCategory')?.setValue(this.category)
         this.form.get('formPriceMinimum')?.setValue(minPrice ?? null)
         this.form.get('formPriceMaximum')?.setValue(maxPrice ?? null)
+        this.form.get('formPiecesMinimum')?.setValue(minPieces ?? null)
+        this.form.get('formPiecesMaximum')?.setValue(maxPieces ?? null)
 
         this.loading = true
         this.apiService.getAnnouncements(
@@ -63,7 +71,9 @@ export class SearchComponent {
           distribution_type,
           category === "all" ? undefined : category,
           minPrice ?? 0,
-          maxPrice ?? undefined
+          maxPrice ?? undefined,
+          minPieces ?? 0,
+          maxPieces ?? undefined
         ).subscribe({
           next: (res) => {
             this.data = res.data
@@ -93,39 +103,43 @@ export class SearchComponent {
     event.preventDefault()
     this.toggleFilters()
 
+    const rawForm = this.form.value;
+
     let params: any = {
       ville: this.city,
-      distribution_type: this.form.value.formDistribution
+      distribution_type: this.form.value.formDistribution ?? this.distribution
     }
     
-    if (this.form.value.formCategory !== 'all') {
-      params = { ...params, category: this.form.value.formCategory };
-    } else {
-      params = Object.fromEntries(
-        Object.entries(params).filter(([key]) => key !== 'category')
-      );
-    }
+    const optionalParams = {
+      category: rawForm.formCategory !== 'all' ? rawForm.formCategory : null,
+      minPrice: rawForm.formPriceMinimum,
+      maxPrice: rawForm.formPriceMaximum,
+      minPieces: rawForm.formPiecesMinimum,
+      maxPieces: rawForm.formPiecesMaximum
+    };
 
-    if (this.form.value.formPriceMinimum) {
-      params = { ...params, minPrice: this.form.value.formPriceMinimum };
-    } else {
-      params = Object.fromEntries(
-        Object.entries(params).filter(([key]) => key !== 'minPrice')
-      );
-    }
-    
-    if (this.form.value.formPriceMaximum) {
-      params = { ...params, maxPrice: this.form.value.formPriceMaximum };
-    } else {
-      params = Object.fromEntries(
-        Object.entries(params).filter(([key]) => key !== 'maxPrice')
-      );
-    }
+    // Ajouter seulement les clés non nulles/non undefined
+    Object.entries(optionalParams).forEach(([key, value]) => {
+      if (value != null) {
+        params[key] = value;
+      }
+    });
 
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: params
       //queryParamsHandling: 'merge',
+    });
+  }
+
+  reset() {
+    this.form.reset({
+      formDistribution: this.distribution,
+      formCategory: 'all',
+      formPriceMinimum: null,
+      formPriceMaximum: null,
+      formPiecesMinimum: null,
+      formPiecesMaximum: null
     });
   }
 }
