@@ -26,10 +26,10 @@ export class SearchComponent {
   readonly CloseIcon = X
 
   form = new FormGroup({
-    distribution: new FormControl<string>('', [Validators.required]),
-    category: new FormControl<string>('all', [Validators.required]),
-    minimum: new FormControl<number | null>(null),
-    maximum: new FormControl<number | null>(null),
+    formDistribution: new FormControl<string>('', [Validators.required]),
+    formCategory: new FormControl<string>('all', [Validators.required]),
+    formPriceMinimum: new FormControl<number | null>(null),
+    formPriceMaximum: new FormControl<number | null>(null),
   });
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {}
@@ -52,10 +52,10 @@ export class SearchComponent {
       if (!city && !distribution_type) {
         this.router.navigate(['/'])
       } else {
-        this.form.get('distribution')?.setValue(distribution_type)
-        this.form.get('category')?.setValue(this.category)
-        this.form.get('minimum')?.setValue(minPrice ?? null)
-        this.form.get('maximum')?.setValue(maxPrice ?? null)
+        this.form.get('formDistribution')?.setValue(distribution_type)
+        this.form.get('formCategory')?.setValue(this.category)
+        this.form.get('formPriceMinimum')?.setValue(minPrice ?? null)
+        this.form.get('formPriceMaximum')?.setValue(maxPrice ?? null)
 
         this.loading = true
         this.apiService.getAnnouncements(
@@ -95,27 +95,27 @@ export class SearchComponent {
 
     let params: any = {
       ville: this.city,
-      distribution_type: this.form.value.distribution
+      distribution_type: this.form.value.formDistribution
     }
     
-    if (this.form.value.category !== 'all') {
-      params = { ...params, category: this.form.value.category };
+    if (this.form.value.formCategory !== 'all') {
+      params = { ...params, category: this.form.value.formCategory };
     } else {
       params = Object.fromEntries(
         Object.entries(params).filter(([key]) => key !== 'category')
       );
     }
 
-    if (this.form.value.minimum) {
-      params = { ...params, minPrice: this.form.value.minimum };
+    if (this.form.value.formPriceMinimum) {
+      params = { ...params, minPrice: this.form.value.formPriceMinimum };
     } else {
       params = Object.fromEntries(
         Object.entries(params).filter(([key]) => key !== 'minPrice')
       );
     }
     
-    if (this.form.value.maximum) {
-      params = { ...params, maxPrice: this.form.value.maximum };
+    if (this.form.value.formPriceMaximum) {
+      params = { ...params, maxPrice: this.form.value.formPriceMaximum };
     } else {
       params = Object.fromEntries(
         Object.entries(params).filter(([key]) => key !== 'maxPrice')
