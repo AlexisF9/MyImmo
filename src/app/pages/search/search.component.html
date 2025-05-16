@@ -1,5 +1,5 @@
 <div class="border-b border-grey">
-    <div class="content p-4 flex gap-4">
+    <div class="content p-4 flex gap-4 overflow-x-auto">
         <app-button [ghost]="true" (clicked)="toggleFilters()" [label]="`${distribution}`" />
         <app-button [ghost]="true" (clicked)="toggleFilters()" [label]="`${category === 'all' ? 'Maison et appartement' : category}`" />
         <app-button [ghost]="true" (clicked)="toggleFilters()" [label]="`${price}`" [class]="`${price === 'Budget' ? 'text-light border-light' : ''}`" />
