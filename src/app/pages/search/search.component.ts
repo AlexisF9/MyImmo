@@ -67,8 +67,6 @@ export class SearchComponent {
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {}
 
-  @ViewChild('distributionForm') distributionFormRef!: ElementRef;
-  @ViewChild('categoryForm') categoryFormRef!: ElementRef;
   @ViewChild('budgetForm') budgetFormRef!: ElementRef;
   @ViewChild('piecesForm') piecesFormRef!: ElementRef;
   
