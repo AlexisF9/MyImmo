@@ -3,8 +3,8 @@
         <div class="content p-6 flex gap-4 overflow-x-auto">
             <app-button [ghost]="true" (clicked)="toggleFilters()" [label]="`${distribution}`" />
             <app-button [ghost]="true" (clicked)="toggleFilters()" [label]="`${category === 'all' ? 'Maison et appartement' : category}`" />
-            <app-button [ghost]="true" (clicked)="toggleFilters()" [label]="`${price}`" [class]="`${price === 'Budget' ? 'text-light border-light' : ''}`" />
-            <app-button [ghost]="true" (clicked)="toggleFilters()" [label]="`${pieces}`" [class]="`${pieces === 'Pièces' ? 'text-light border-light' : ''}`" />
+            <app-button [ghost]="true" (clicked)="toggleFilters(budgetFormRef)" [label]="`${price}`" [class]="`${price === 'Budget' ? 'text-light border-light' : ''}`" />
+            <app-button [ghost]="true" (clicked)="toggleFilters(piecesFormRef)" [label]="`${pieces}`" [class]="`${pieces === 'Pièces' ? 'text-light border-light' : ''}`" />
             <app-button [ghost]="true" (clicked)="toggleFilters()" label="Filtres" [icon]="FiltersIcon" iconPosition="left" />
         </div>
     </div>
@@ -42,9 +42,6 @@
                     <button (click)="toggleFilters()" class="cursor-pointer" aria-label="Fermer"><lucide-angular [img]="CloseIcon" [size]="30" [strokeWidth]="1"></lucide-angular></button>
                     <p class="text-xl">Filtres</p>
                 </div>
-                <!--
-                <div #targetElement
-                -->
                 <form (submit)="onSubmit($event)" [formGroup]="form">
                     <div class="flex flex-col gap-6">
                         <div class="flex border border-grey rounded-full overflow-hidden">
@@ -59,7 +56,7 @@
                             <option value="Maison">Maison</option>
                             <option value="Appartement">Appartement</option>
                         </select>
-                        <div class="border-t border-grey pt-6">
+                        <div class="border-t border-grey pt-6" #budgetForm>
                             <p class="text-xl font-bold mb-4">Budget</p>
                             <div class="flex flex-col md:flex-row gap-4">
                                 <div class="md:w-[50%] flex flex-col">
@@ -72,7 +69,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="border-t border-grey pt-6">
+                        <div class="border-t border-grey pt-6" #piecesForm>
                             <p class="text-xl font-bold mb-4">Pièces</p>
                             <div class="flex flex-col md:flex-row gap-4">
                                 <div class="md:w-[50%] flex flex-col">

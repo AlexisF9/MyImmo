@@ -67,7 +67,8 @@ export class SearchComponent {
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {}
 
-  @ViewChild('targetElement') targetElement!: ElementRef;
+  @ViewChild('budgetForm') budgetFormRef!: ElementRef;
+  @ViewChild('piecesForm') piecesFormRef!: ElementRef;
   
   ngOnInit() {
     this.splitOrderFilters()
@@ -122,15 +123,16 @@ export class SearchComponent {
     });
   }
 
-  toggleFilters() {
+  toggleFilters(goTo?: ElementRef) {
     this.openFilters = !this.openFilters
     document.body.classList.toggle('noscroll');
 
-    //if (this.openFilters) {
-    //  setTimeout(() => {
-    //    this.targetElement?.nativeElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    //  }, 300); // correspond au délai de ta transition CSS
-    //}
+    // Scroll jusqu'à l'élément
+    if (this.openFilters && goTo) {
+      setTimeout(() => {
+        goTo?.nativeElement?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 300);
+    }
   }
 
   onSubmit(event: SubmitEvent) {
