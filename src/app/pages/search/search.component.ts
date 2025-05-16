@@ -1,10 +1,10 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { CardsListComponent } from "../../components/cards-list/cards-list.component";
 import { Announcement } from '../home/home.component';
 import { LoaderComponent } from "../../components/loader/loader.component";
-import { LucideAngularModule, SlidersHorizontal, X } from 'lucide-angular';
+import { ListFilter, LucideAngularModule, SlidersHorizontal, X } from 'lucide-angular';
 import { ButtonComponent } from "../../components/button/button.component";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -24,8 +24,37 @@ export class SearchComponent {
   price: string = "Budget"
   pieces: string = "Pièces"
 
+  listFilter: boolean = false
+  order: string = ""
+
+  readonly ListFilterIcon = ListFilter
   readonly CloseIcon = X
   readonly FiltersIcon = SlidersHorizontal
+
+  orderFilters = [
+    {
+      label: "Les plus récentes",
+      name: "dateDesc",
+      active: true
+    },
+    {
+      label: "Prix croissants",
+      name: "priceAsc",
+      active: false
+    },
+    {
+      label: "Prix décroissants",
+      name: "priceDesc",
+      active: false
+    }
+  ]
+  inactiveOrderFilters: {label: string, name: string, active: boolean}[] = []
+  activeOrderFilters: {label: string, name: string, active: boolean} | undefined = undefined
+
+  splitOrderFilters() {
+    this.inactiveOrderFilters = this.orderFilters.filter((item) => !item.active)
+    this.activeOrderFilters = this.orderFilters.find((item) => item.active)
+  }
 
   form = new FormGroup({
     formDistribution: new FormControl<string>('', [Validators.required]),
@@ -39,8 +68,10 @@ export class SearchComponent {
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {}
 
   @ViewChild('targetElement') targetElement!: ElementRef;
-
+  
   ngOnInit() {
+    this.splitOrderFilters()
+
     this.route.queryParams.subscribe(params => {
       const city = params['ville']
       const distribution_type = params['distribution_type']
@@ -49,6 +80,7 @@ export class SearchComponent {
       const maxPrice = params['maxPrice']
       const minPieces = params['minPieces']
       const maxPieces = params['maxPieces']
+      const order = params['order']
 
       this.city = city
       this.distribution = distribution_type
@@ -74,7 +106,8 @@ export class SearchComponent {
           minPrice ?? 0,
           maxPrice ?? undefined,
           minPieces ?? 0,
-          maxPieces ?? undefined
+          maxPieces ?? undefined,
+          order
         ).subscribe({
           next: (res) => {
             this.data = res.data
@@ -102,8 +135,11 @@ export class SearchComponent {
 
   onSubmit(event: SubmitEvent) {
     event.preventDefault()
+    this.updateData()
     this.toggleFilters()
+  }
 
+  updateData() {
     const rawForm = this.form.value;
 
     let params: any = {
@@ -116,7 +152,8 @@ export class SearchComponent {
       minPrice: rawForm.formPriceMinimum,
       maxPrice: rawForm.formPriceMaximum,
       minPieces: rawForm.formPiecesMinimum,
-      maxPieces: rawForm.formPiecesMaximum
+      maxPieces: rawForm.formPiecesMaximum,
+      order: this.activeOrderFilters?.name
     };
 
     // Ajouter seulement les clés non nulles/non undefined
@@ -142,5 +179,29 @@ export class SearchComponent {
       formPiecesMinimum: null,
       formPiecesMaximum: null
     });
+  }
+
+  @ViewChild('filtersList') filtersListRef!: ElementRef;
+  @HostListener('document:click', ['$event'])
+  onClickDocument(event: MouseEvent): void {
+    const clickedInside = this.filtersListRef?.nativeElement.contains(event.target);
+    if (!clickedInside) {
+      this.listFilter = false
+    }
+  }
+
+  toggleListFilter() {
+    this.listFilter = !this.listFilter
+  }
+
+  editOrder(selectedName: string) {
+    this.orderFilters = this.orderFilters.map(filter => ({
+      ...filter,
+      active: filter.name === selectedName
+    }));
+    
+    this.splitOrderFilters()
+    this.listFilter = false
+    this.updateData()
   }
 }
