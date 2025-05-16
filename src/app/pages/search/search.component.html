@@ -1,8 +1,8 @@
 <div class="relative">
     <div class="sticky top-[0] z-8 bg-white border-b border-grey">
         <div class="content p-6 flex gap-4 overflow-x-auto">
-            <app-button [ghost]="true" (clicked)="toggleFilters()" [label]="`${distribution}`" />
-            <app-button [ghost]="true" (clicked)="toggleFilters()" [label]="`${category === 'all' ? 'Maison et appartement' : category}`" />
+            <app-button [ghost]="true" (clicked)="toggleFilters(distributionFormRef)" [label]="`${distribution}`" />
+            <app-button [ghost]="true" (clicked)="toggleFilters(categoryFormRef)" [label]="`${category === 'all' ? 'Maison et appartement' : category}`" />
             <app-button [ghost]="true" (clicked)="toggleFilters(budgetFormRef)" [label]="`${price}`" [class]="`${price === 'Budget' ? 'text-light border-light' : ''}`" />
             <app-button [ghost]="true" (clicked)="toggleFilters(piecesFormRef)" [label]="`${pieces}`" [class]="`${pieces === 'Pièces' ? 'text-light border-light' : ''}`" />
             <app-button [ghost]="true" (clicked)="toggleFilters()" label="Filtres" [icon]="FiltersIcon" iconPosition="left" />
@@ -44,14 +44,14 @@
                 </div>
                 <form (submit)="onSubmit($event)" [formGroup]="form">
                     <div class="flex flex-col gap-6">
-                        <div class="flex border border-grey rounded-full overflow-hidden">
+                        <div class="flex border border-grey rounded-full overflow-hidden" #distributionForm>
                             <input formControlName="formDistribution" id="option1" type="radio" value="Acheter" class="sr-only peer/option1"/>
                             <label for="option1" class="w-[50%] py-2 cursor-pointer text-center peer-checked/option1:bg-light peer-checked/option1:text-white">Acheter</label>
 
                             <input formControlName="formDistribution" id="option2" type="radio" value="Louer" class="sr-only peer/option2"/>
                             <label for="option2" class="w-[50%] py-2 cursor-pointer text-center peer-checked/option2:bg-light peer-checked/option2:text-white">Louer</label>
                         </div>
-                        <select class="text-black border border-grey rounded-lg p-3 w-full" id="pet-select" formControlName="formCategory">
+                        <select class="text-black border border-grey rounded-lg p-3 w-full" id="pet-select" formControlName="formCategory" #categoryForm>
                             <option value="all">Maison et appartement</option>
                             <option value="Maison">Maison</option>
                             <option value="Appartement">Appartement</option>
