@@ -53,7 +53,7 @@ export class HomeComponent {
   constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit(): void {
-    this.apiService.getAnnouncements('Grenoble', 'Acheter', '', 0, undefined, 0, undefined, 3).subscribe({
+    this.apiService.getAnnouncementByAddress('Grenoble', 'Acheter', 3).subscribe({
       next: (res) => {
         this.filteredBuyData = res.data
       },
@@ -62,7 +62,7 @@ export class HomeComponent {
       }
     });
 
-    this.apiService.getAnnouncements('Grenoble', 'Louer', '', 0, undefined, 0, undefined, 3).subscribe({
+    this.apiService.getAnnouncementByAddress('Grenoble', 'Louer', 3).subscribe({
       next: (res) => {
         this.filteredRentData = res.data
       },

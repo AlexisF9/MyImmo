@@ -10,12 +10,12 @@ export class ApiService {
 
   constructor(private http: HttpClient) {}
 
-  getData(): Observable<any> {
-    return this.http.get<any>(this.apiUrl + '/api/advertisements?sort=createdAt:desc&populate=*');
-  }
-
   getAnnouncements(city: string, distribution: string, category?: string, minPrice?: number, maxPrice?: number, minPieces?: number, maxPieces?: number, limit?: number): Observable<any> {
     return this.http.get<any>(this.apiUrl + `/api/advertisements?filters[$and][0][address][city][$eq]=${city}&filters[$and][1][distribution_type][name][$eq]=${distribution}${category ? '&filters[$and][2][category][name][$eq]=' + category : ''}${minPrice ? '&filters[$and][3][price][$gte]=' + minPrice : ''}${maxPrice ? '&filters[$and][4][price][$lte]=' + maxPrice : ''}${minPieces ? '&filters[$and][5][pieces][$gte]=' + minPieces : ''}${maxPieces ? '&filters[$and][6][pieces][$lte]=' + maxPieces : ''}&sort=createdAt:desc&pagination[limit]=${limit ? limit : 10}&populate=*`);
+  }
+
+  getAnnouncementByAddress(city: string, distribution: string, limit?: number): Observable<any> {
+    return this.http.get<any>(this.apiUrl + `/api/advertisements?filters[$and][0][address][city][$eq]=${city}&filters[$and][1][distribution_type][name][$eq]=${distribution}&sort=createdAt:desc&pagination[limit]=${limit ? limit : 10}&populate=*`);
   }
 
   getAnnouncementById(id: number): Observable<any> {
