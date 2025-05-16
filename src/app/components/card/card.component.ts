@@ -16,6 +16,7 @@ export class CardComponent {
   readonly HeartIcon = Heart
   likesList: number[] = []
   dislike = output<void>()
+  priceFormated: string | null = null
 
   constructor(private localStorageService: LocalStorageServiceService) {}
 
@@ -23,6 +24,7 @@ export class CardComponent {
     // Init des likes depuis le localStorage
     const storedLikes = this.localStorageService.getItem<number[]>("likes");
     this.likesList = storedLikes ?? [];
+    this.priceFormated = this.formatNumberWithSpaces(this.announcement().price)
 
     // Écoute des changements
     this.localStorageService.storageChanges$.subscribe(change => {
@@ -30,6 +32,10 @@ export class CardComponent {
         this.likesList = change.value ?? [];
       }
     });
+  }
+
+  formatNumberWithSpaces(x: number) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   }
 
   toggleLike(id: number) {

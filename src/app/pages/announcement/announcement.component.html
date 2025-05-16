@@ -8,7 +8,7 @@
             <div>
                 <h2 class="font-bold">{{ data.category.name }} à {{ data.distribution_type.name === "Acheter" ? "vendre" : "louer" }}</h2>
                 <h3 class="text-xl font-bold pt-2">
-                    {{ data.price }} €
+                    {{ priceFormated }} €
                     @if (data.distribution_type.name === "Acheter") {
                         <span class="text-sm font-normal">{{ ceil(data.price/data.surface) }} €/m²</span>
                     } @else {

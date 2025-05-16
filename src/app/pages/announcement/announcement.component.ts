@@ -18,6 +18,7 @@ export class AnnouncementComponent {
   loading: boolean = false
   ceil = Math.ceil
   likesList: number[] = []
+  priceFormated: string | null = null
   
   readonly LikeIcon = Heart;
   readonly DoorIcon = DoorClosed;
@@ -113,6 +114,7 @@ export class AnnouncementComponent {
     this.apiService.getAnnouncementById(parseInt(id)).subscribe({
       next: (res) => {
         this.data = res.data[0]
+        this.priceFormated = this.formatNumberWithSpaces(res.data[0].price)
         this.loading = false
       },
       error: (err) => {
@@ -120,6 +122,10 @@ export class AnnouncementComponent {
         this.loading = false
       }
     });
+  }
+
+  formatNumberWithSpaces(x: number) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   }
 
   toggleLike(id: number) {
