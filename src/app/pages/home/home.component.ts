@@ -47,29 +47,23 @@ export interface Announcement {
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  //data: Announcement[] | null = null
-
   filteredBuyData: Announcement[] | null = null
   filteredRentData: Announcement[] | null = null
 
   constructor(private apiService: ApiService, private router: Router) {}
 
   ngOnInit(): void {
-    this.apiService.getAdvertisementsByAddress('Grenoble', 'Acheter', 3).subscribe({
+    this.apiService.getAnnouncements('Grenoble', 'Acheter', '', 0, undefined, 3).subscribe({
       next: (res) => {
-        //this.data = res.data
         this.filteredBuyData = res.data
-        //this.filteredRentData = this.data?.filter((item: Announcement) => item.distribution_type.name === "Louer") ?? null
       },
       error: (err) => {
         console.error('Erreur API:', err)
       }
     });
 
-    this.apiService.getAdvertisementsByAddress('Grenoble', 'Louer', 3).subscribe({
+    this.apiService.getAnnouncements('Grenoble', 'Louer', '', 0, undefined, 3).subscribe({
       next: (res) => {
-        //this.data = res.data
-        //this.filteredBuyData = this.data?.filter((item: Announcement) => item.distribution_type.name === "Acheter") ?? null
         this.filteredRentData = res.data
       },
       error: (err) => {

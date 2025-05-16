@@ -17,13 +17,19 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 export class SearchComponent {
   data: Announcement[] | null = null
   city: string = ""
-  distribution_type: string = ""
+  distribution: string = ""
   loading: boolean = false
   openFilters: boolean = false
+  category: string = "all"
+  price: string = "Budget"
+
   readonly CloseIcon = X
 
   form = new FormGroup({
     distribution: new FormControl<string>('', [Validators.required]),
+    category: new FormControl<string>('all', [Validators.required]),
+    minimum: new FormControl<number | null>(null),
+    maximum: new FormControl<number | null>(null),
   });
 
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {}
@@ -34,19 +40,31 @@ export class SearchComponent {
     this.route.queryParams.subscribe(params => {
       const city = params['ville']
       const distribution_type = params['distribution_type']
+      const category = params['category']
+      const minPrice = params['minPrice']
+      const maxPrice = params['maxPrice']
+
       this.city = city
-      this.distribution_type = distribution_type
+      this.distribution = distribution_type
+      this.category = !category ? 'all' : category
+      this.price = minPrice && maxPrice ? `${minPrice} € - ${maxPrice} €` : minPrice ? `minimum ${minPrice} €` : maxPrice ? `maximum ${maxPrice} €` : 'Budget'
 
       if (!city && !distribution_type) {
         this.router.navigate(['/'])
       } else {
-
         this.form.get('distribution')?.setValue(distribution_type)
-        console.log(this.form.get('distribution'))
-
+        this.form.get('category')?.setValue(this.category)
+        this.form.get('minimum')?.setValue(minPrice ?? null)
+        this.form.get('maximum')?.setValue(maxPrice ?? null)
 
         this.loading = true
-        this.apiService.getAdvertisementsByAddress(city, distribution_type).subscribe({
+        this.apiService.getAnnouncements(
+          city,
+          distribution_type,
+          category === "all" ? undefined : category,
+          minPrice ?? 0,
+          maxPrice ?? undefined
+        ).subscribe({
           next: (res) => {
             this.data = res.data
             this.loading = false
@@ -73,14 +91,41 @@ export class SearchComponent {
 
   onSubmit(event: SubmitEvent) {
     event.preventDefault()
-    //console.log(this.form.value);
-
     this.toggleFilters()
+
+    let params: any = {
+      ville: this.city,
+      distribution_type: this.form.value.distribution
+    }
+    
+    if (this.form.value.category !== 'all') {
+      params = { ...params, category: this.form.value.category };
+    } else {
+      params = Object.fromEntries(
+        Object.entries(params).filter(([key]) => key !== 'category')
+      );
+    }
+
+    if (this.form.value.minimum) {
+      params = { ...params, minPrice: this.form.value.minimum };
+    } else {
+      params = Object.fromEntries(
+        Object.entries(params).filter(([key]) => key !== 'minPrice')
+      );
+    }
+    
+    if (this.form.value.maximum) {
+      params = { ...params, maxPrice: this.form.value.maximum };
+    } else {
+      params = Object.fromEntries(
+        Object.entries(params).filter(([key]) => key !== 'maxPrice')
+      );
+    }
 
     this.router.navigate([], {
       relativeTo: this.route,
-      queryParams: { distribution_type: this.form.value.distribution },
-      queryParamsHandling: 'merge',
+      queryParams: params
+      //queryParamsHandling: 'merge',
     });
   }
 }
