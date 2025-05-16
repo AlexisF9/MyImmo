@@ -15,6 +15,13 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrl: './search.component.scss'
 })
 export class SearchComponent {
+  readonly ListFilterIcon = ListFilter
+  readonly CloseIcon = X
+  readonly FiltersIcon = SlidersHorizontal
+
+  @ViewChild('budgetForm') budgetFormRef!: ElementRef;
+  @ViewChild('piecesForm') piecesFormRef!: ElementRef;
+
   data: Announcement[] | null = null
   city: string = ""
   distribution: string = ""
@@ -26,11 +33,6 @@ export class SearchComponent {
 
   listFilter: boolean = false
   order: string = ""
-
-  readonly ListFilterIcon = ListFilter
-  readonly CloseIcon = X
-  readonly FiltersIcon = SlidersHorizontal
-
   orderFilters = [
     {
       label: "Les plus récentes",
@@ -51,11 +53,6 @@ export class SearchComponent {
   inactiveOrderFilters: {label: string, name: string, active: boolean}[] = []
   activeOrderFilters: {label: string, name: string, active: boolean} | undefined = undefined
 
-  splitOrderFilters() {
-    this.inactiveOrderFilters = this.orderFilters.filter((item) => !item.active)
-    this.activeOrderFilters = this.orderFilters.find((item) => item.active)
-  }
-
   form = new FormGroup({
     formDistribution: new FormControl<string>('', [Validators.required]),
     formCategory: new FormControl<string>('all', [Validators.required]),
@@ -64,11 +61,13 @@ export class SearchComponent {
     formPiecesMinimum: new FormControl<number | null>(null),
     formPiecesMaximum: new FormControl<number | null>(null),
   });
-
+  
   constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {}
 
-  @ViewChild('budgetForm') budgetFormRef!: ElementRef;
-  @ViewChild('piecesForm') piecesFormRef!: ElementRef;
+  splitOrderFilters() {
+    this.inactiveOrderFilters = this.orderFilters.filter((item) => !item.active)
+    this.activeOrderFilters = this.orderFilters.find((item) => item.active)
+  }
   
   ngOnInit() {
     this.splitOrderFilters()
