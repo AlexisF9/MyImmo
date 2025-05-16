@@ -4,7 +4,7 @@ import { ApiService } from '../../services/api.service';
 import { CardsListComponent } from "../../components/cards-list/cards-list.component";
 import { Announcement } from '../home/home.component';
 import { LoaderComponent } from "../../components/loader/loader.component";
-import { LucideAngularModule, X } from 'lucide-angular';
+import { LucideAngularModule, SlidersHorizontal, X } from 'lucide-angular';
 import { ButtonComponent } from "../../components/button/button.component";
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -25,6 +25,7 @@ export class SearchComponent {
   pieces: string = "Pièces"
 
   readonly CloseIcon = X
+  readonly FiltersIcon = SlidersHorizontal
 
   form = new FormGroup({
     formDistribution: new FormControl<string>('', [Validators.required]),
