@@ -4,6 +4,7 @@ import { CardsListComponent } from "../../components/cards-list/cards-list.compo
 import { SearchComponent } from "../../components/search/search.component";
 import { Router } from '@angular/router';
 import { ButtonComponent } from "../../components/button/button.component";
+import { LoaderComponent } from "../../components/loader/loader.component";
 
 export interface Announcement {
   id: number,
@@ -42,7 +43,7 @@ export interface Announcement {
 
 @Component({
   selector: 'app-home',
-  imports: [CardsListComponent, SearchComponent, ButtonComponent],
+  imports: [CardsListComponent, SearchComponent, ButtonComponent, LoaderComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
