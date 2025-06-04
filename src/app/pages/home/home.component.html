@@ -14,7 +14,7 @@
                 <app-button (clicked)="goToSearchPage('Grenoble', 'Acheter')" label="Vois plus de biens" />
             </div>
         } @else {
-            <app-loader/>
+            <app-cards-list-loader/>
         }
 
         <h2 class="text-xl mb-4 pt-8">Nos dernières annonces à louer à Grenoble :</h2>
@@ -24,7 +24,7 @@
                 <app-button (clicked)="goToSearchPage('Grenoble', 'Louer')" label="Vois plus de biens" />
             </div>
         } @else {
-            <app-loader/>
+            <app-cards-list-loader/>
         }
     </div>
 </main>

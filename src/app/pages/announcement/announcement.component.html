@@ -1,7 +1,5 @@
 <div class="content px-4 pt-8">
-    @if (loading) {
-        <app-loader/>
-    } @else if (data) {
+    @if (data) {
         <app-pictures [pictures]="data.pictures" />       
         
         <div class="flex items-end justify-between gap-2 flex-wrap-reverse pt-8">
@@ -77,7 +75,7 @@
                 </div>
             </div>
         </div>
-    } @else {
+    } @else if (!loading && !data) {
         <p>Une erreur est survenu lors du chargement de l'annonce.</p>
     }
 </div>

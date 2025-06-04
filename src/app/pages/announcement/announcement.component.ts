@@ -2,14 +2,13 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { Announcement } from '../home/home.component';
-import { LoaderComponent } from "../../components/loader/loader.component";
 import { PicturesComponent } from '../../components/pictures/pictures.component';
 import { BedDouble, DoorClosed, Grid2X2, Hammer, Heart, LucideAngularModule, MapPinned } from 'lucide-angular';
 import { LocalStorageServiceService } from '../../services/local-storage-service.service';
 
 @Component({
   selector: 'app-announcement',
-  imports: [LoaderComponent, PicturesComponent, LucideAngularModule],
+  imports: [PicturesComponent, LucideAngularModule],
   templateUrl: './announcement.component.html',
   styleUrl: './announcement.component.scss'
 })
