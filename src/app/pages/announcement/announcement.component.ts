@@ -5,10 +5,11 @@ import { Announcement } from '../home/home.component';
 import { PicturesComponent } from '../../components/pictures/pictures.component';
 import { BedDouble, DoorClosed, Grid2X2, Hammer, Heart, LucideAngularModule, MapPinned } from 'lucide-angular';
 import { LocalStorageServiceService } from '../../services/local-storage-service.service';
+import { AnnouncementLoaderComponent } from "../../components/announcement-loader/announcement-loader.component";
 
 @Component({
   selector: 'app-announcement',
-  imports: [PicturesComponent, LucideAngularModule],
+  imports: [PicturesComponent, LucideAngularModule, AnnouncementLoaderComponent],
   templateUrl: './announcement.component.html',
   styleUrl: './announcement.component.scss'
 })
