@@ -15,7 +15,7 @@
                     <span>/mois</span>
                 }
             </p>
-            <button class="relative z-2" (click)="toggleLike(announcement().id)"><lucide-angular [img]="HeartIcon" [size]="20" [strokeWidth]="1" [class]="likeClass(announcement().id)"></lucide-angular></button>
+            <button role="button" type="button" class="relative z-2" aria-label="like" title="Bouton like" (click)="toggleLike(announcement().id)"><lucide-angular [img]="HeartIcon" [size]="24" [strokeWidth]="1" [class]="likeClass(announcement().id)"></lucide-angular></button>
         </div>
         <p class="font-bold mb-4">{{ announcement().category.name }} à {{ announcement().distribution_type.name === "Acheter" ? 'vendre' : 'louer' }}</p>
         <ul class="flex mb-2">
