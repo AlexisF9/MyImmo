@@ -22,9 +22,10 @@ export class HeaderComponent {
   data: Announcement[] | null = null
   openLikesList: boolean = false
   loading: boolean = false
-  likesList: number[] = []
+  likesList: {id: number, time: number}[] = []
 
   constructor(private apiService: ApiService, private router: Router, private localStorageService: LocalStorageServiceService) {
+    // close les likes si on change la page
     this.router.events
       .pipe(
         filter(event => event instanceof NavigationEnd)
@@ -34,33 +35,37 @@ export class HeaderComponent {
       });
   }
 
+  sortAdsByTimeOrder(timeArr: {id: number, time: number}[], ads: Announcement[]): Announcement[] {
+    // Étape 1 : trier timeArr par time décroissant
+    const sortedIds = timeArr
+      .slice()
+      .sort((a, b) => b.time - a.time)
+      .map(item => item.id);
+
+    // Étape 2 : créer un map pour accès rapide aux annonces par id
+    const adMap = new Map<number, Announcement>(ads.map(ad => [ad.id, ad]));
+
+    // Étape 3 : réordonner les annonces selon l’ordre des ids triés
+    return sortedIds
+      .map(id => adMap.get(id))
+      .filter((ad): ad is Announcement => ad !== undefined); // filtre les id non trouvés
+  }
+
   open() {
     this.openLikesList = true
     document.body.classList.add('noscroll');
 
-    if (!this.arraysAreEqual(this.likesList, this.localStorageService.getItem<number[]>("likes") ?? [])) {
-      const storedLikes = this.localStorageService.getItem<number[]>("likes");
+    if (!this.arraysAreEqual(this.likesList, this.localStorageService.getItem<{id: number, time: number}[]>("likes") ?? [])) {
+      const storedLikes = this.localStorageService.getItem<{id: number, time: number}[]>("likes");
       this.likesList = storedLikes ?? [];
       
-      if (this.likesList.length > 0) {
-        this.loading = true
-
-        this.apiService.getAnnouncementByIds(this.likesList).subscribe({
-          next: (res) => {
-            this.data = res.data
-            this.loading = false
-          },
-          error: (err) => {
-            console.error('Erreur API:', err)
-            this.loading = false
-          }
-        });
-      }
-    }
-    
+      this.getApiService(true)
+    } else {
+      this.update();
+    }    
   }
 
-  arraysAreEqual(arr1: number[], arr2: number[]) {
+  arraysAreEqual(arr1: {id: number, time: number}[], arr2: {id: number, time: number}[]) {
     if (arr1.length !== arr2.length) return false;
 
     return arr1.every((val, index) => val === arr2[index]);
@@ -73,13 +78,19 @@ export class HeaderComponent {
   }
 
   update() {
-    const storedLikes = this.localStorageService.getItem<number[]>("likes");
+    const storedLikes = this.localStorageService.getItem<{id: number, time: number}[]>("likes");
     this.likesList = storedLikes ?? [];
 
+    this.getApiService()
+  }
+
+  getApiService(loader?: boolean) {
     if (this.likesList.length > 0) {
+      this.loading = loader ? true : false
+
       this.apiService.getAnnouncementByIds(this.likesList).subscribe({
         next: (res) => {
-          this.data = res.data
+          this.data = this.sortAdsByTimeOrder(this.likesList, res.data)
           this.loading = false
         },
         error: (err) => {

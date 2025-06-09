@@ -17,7 +17,7 @@ export class AnnouncementComponent {
   data: Announcement | null = null
   loading: boolean = false
   ceil = Math.ceil
-  likesList: number[] = []
+  likesList: {id: number, time: number}[] = []
   priceFormated: string | null = null
   
   readonly LikeIcon = Heart;
@@ -99,7 +99,7 @@ export class AnnouncementComponent {
       }
     });
 
-    const storedLikes = this.localStorageService.getItem<number[]>("likes");
+    const storedLikes = this.localStorageService.getItem<{id: number, time: number}[]>("likes");
     this.likesList = storedLikes ?? [];
 
     this.localStorageService.storageChanges$.subscribe(change => {
@@ -129,18 +129,19 @@ export class AnnouncementComponent {
   }
 
   toggleLike(id: number) {
-    const index = this.likesList.indexOf(id);
+    const index = this.likesList.findIndex(item => item.id === id);
+    const date = new Date()
     if (index !== -1) {
       this.likesList.splice(index, 1);
       this.localStorageService.setItem("likes", this.likesList);
     } else {
-      this.likesList.push(id);
+      this.likesList.push({id, time: date.getTime()});
       this.localStorageService.setItem("likes", this.likesList);
     }
   }
 
   likeClass(id: number) {
-    return this.likesList.includes(id)
+    return this.likesList.find(item => item.id === id)
       ? "fill-red-600 stroke-red-600"
       : "";
   }
