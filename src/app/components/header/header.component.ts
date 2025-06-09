@@ -60,15 +60,13 @@ export class HeaderComponent {
       this.likesList = storedLikes ?? [];
       
       this.getApiService(true)
-    } else {
-      this.update();
-    }    
+    }  
   }
 
   arraysAreEqual(arr1: {id: number, time: number}[], arr2: {id: number, time: number}[]) {
     if (arr1.length !== arr2.length) return false;
 
-    return arr1.every((val, index) => val === arr2[index]);
+    return arr1.every((val, index) => val.id === arr2[index].id);
   }
 
   close() {
