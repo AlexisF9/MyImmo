@@ -36,6 +36,14 @@ export class HeaderComponent {
       });
   }
 
+  ngOnInit() {
+    const storedLikes = this.localStorageService.getItem<{id: number, time: number}[]>("likes");
+    
+    if (storedLikes && storedLikes.length > 0 && !storedLikes[0].time) {
+      this.removeAll()
+    }
+  }
+
   sortAdsByTimeOrder(timeArr: {id: number, time: number}[], ads: Announcement[]): Announcement[] {
     // Étape 1 : trier timeArr par time décroissant
     const sortedIds = timeArr
