@@ -21,6 +21,9 @@
                     <app-card [announcement]="item" (dislike)="update()" />
                 }
             </div>
+            <div class="mt-4 mx-auto w-fit">
+                <app-button (clicked)="removeAll()" label="Tout supprimer" [ghost]="true" [icon]="Trash" iconPosition="left" />
+            </div>
         } @else {
             <p class="text-sm">Vous n'avez ajouté aucune annonce à vos favoris.</p>
         }

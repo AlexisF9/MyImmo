@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { ButtonComponent } from "../button/button.component";
-import { Heart, LucideAngularModule, X } from 'lucide-angular';
+import { Heart, LucideAngularModule, Trash2, X } from 'lucide-angular';
 import { ApiService } from '../../services/api.service';
 import { LoaderComponent } from '../loader/loader.component';
 import { Announcement } from '../../pages/home/home.component';
@@ -18,6 +18,7 @@ import { LocalStorageServiceService } from '../../services/local-storage-service
 export class HeaderComponent {
   readonly HeartIcon = Heart
   readonly CloseIcon = X
+  readonly Trash = Trash2
 
   data: Announcement[] | null = null
   openLikesList: boolean = false
@@ -99,5 +100,10 @@ export class HeaderComponent {
     } else {
       this.data = null
     }
+  }
+
+  removeAll() {
+    this.localStorageService.removeItem('likes')
+    this.update()
   }
 }
