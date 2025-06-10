@@ -1,6 +1,6 @@
 <div class="relative border border-grey rounded-lg overflow-hidden transition duration-300 ease-in-out hover:shadow-lg">
     <div class="relative">
-        <img class="object-cover aspect-2/1 w-full" [src]="`${announcement().pictures[0].url}`" [alt]="announcement().pictures[0].name" />
+        <img class="object-cover aspect-2/1 w-full" [src]="`${announcement().pictures[0].formats.small.url}`" [alt]="announcement().pictures[0].name" />
         @if (announcement().energy_performance) {
             <div [class]="`absolute bottom-2 text-sm left-2 w-fit py-1 pl-2 pr-4 bg-dpe-${announcement().energy_performance.letter.toLowerCase()} clip-square-with-triangle`">{{ announcement().energy_performance.letter }}</div>
         }
@@ -15,7 +15,7 @@
                     <span>/mois</span>
                 }
             </p>
-            <button role="button" type="button" class="relative z-2" aria-label="like" title="Bouton like" (click)="toggleLike(announcement().id)"><lucide-angular [img]="HeartIcon" [size]="24" [strokeWidth]="1" [class]="likeClass(announcement().id)"></lucide-angular></button>
+            <button role="button" type="button" class="relative z-2 cursor-pointer" aria-label="like" title="Bouton like" (click)="toggleLike(announcement().id)"><lucide-angular [img]="HeartIcon" [size]="24" [strokeWidth]="1" [class]="likeClass(announcement().id)"></lucide-angular></button>
         </div>
         <p class="font-bold mb-4">{{ announcement().category.name }} à {{ announcement().distribution_type.name === "Acheter" ? 'vendre' : 'louer' }}</p>
         <ul class="flex mb-2">

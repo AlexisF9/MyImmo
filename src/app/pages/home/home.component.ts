@@ -21,7 +21,13 @@ export interface Announcement {
   pictures: {
     id: number,
     name: string,
-    url: string
+    url: string,
+    formats: {
+      small: {
+        name: string,
+        url: string,
+      }
+    }
   }[],
   distribution_type: {
     name: string
