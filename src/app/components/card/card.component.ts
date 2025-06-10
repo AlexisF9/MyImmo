@@ -32,8 +32,6 @@ export class CardComponent {
         this.likesList = change.value ?? [];
       }
     });
-
-    console.log(this.announcement())
   }
 
   formatNumberWithSpaces(x: number) {
