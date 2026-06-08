@@ -1,6 +1,6 @@
 import { Component, computed, OnInit, inject } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
-import { LogOut, LucideAngularModule } from 'lucide-angular';
+import { Hammer, LogOut, LucideAngularModule } from 'lucide-angular';
 import { ButtonComponent } from '../../components/button/button.component';
 import { AsyncPipe } from '@angular/common';
 
@@ -14,6 +14,7 @@ import { AsyncPipe } from '@angular/common';
 export class DashboardComponent {
   auth = inject(AuthService);
   readonly LogoutIcon = LogOut;
+  readonly HammerIcon = Hammer;
 
   logout() {
     this.auth.logout();
