@@ -5,15 +5,15 @@ import { LucideAngularModule, LucideIconData } from 'lucide-angular';
   selector: 'app-button',
   imports: [LucideAngularModule],
   templateUrl: './button.component.html',
-  styleUrl: './button.component.scss'
+  styleUrl: './button.component.scss',
 })
 export class ButtonComponent {
-  label = input.required<string>()
-  clicked = output<void>()
-  icon = input<LucideIconData | undefined>(undefined)
-  iconPosition = input<"right" | "left" | null>(null)
-  type = input<string>("button")
-  ghost = input<boolean>(false)
+  label = input.required<string>();
+  clicked = output<void>();
+  icon = input<LucideIconData | undefined>(undefined);
+  iconPosition = input<'right' | 'left' | null>(null);
+  type = input<string>('button');
+  ghost = input<boolean>(false);
 
   onClick(): void {
     this.clicked.emit();

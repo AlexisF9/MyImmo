@@ -1,0 +1,84 @@
+<main class="content flex-1 px-4 pt-8">
+  <div class="flex border-b border-gray-300 mb-6 max-w-[400px]">
+    <button
+      [class]="
+        `w-[50%] text-center py-4 cursor-pointer hover:bg-primary-10 ${tab() === 'login' ? 'border-b-2 border-primary' : ''}`
+      "
+      (click)="switchTab('login')"
+    >
+      Connexion
+    </button>
+    <button
+      [class]="
+        `w-[50%] text-center py-4 cursor-pointer hover:bg-primary-10 ${tab() === 'register' ? 'border-b-2 border-primary' : ''}`
+      "
+      (click)="switchTab('register')"
+    >
+      Inscription
+    </button>
+  </div>
+
+  @if (tab() === "login") {
+    <form class="space-y-2" [formGroup]="authForm">
+      <input
+        formControlName="email"
+        name="email"
+        type="email"
+        class="p-4 w-full border border-grey bg-white rounded-2xl outline-[0] focus:border-black placeholder-light"
+        placeholder="Adresse email"
+      />
+
+      <input
+        formControlName="password"
+        name="password"
+        type="password"
+        class="p-4 w-full border border-grey bg-white rounded-2xl outline-[0] focus:border-black placeholder-light"
+        placeholder="Mot de passe"
+      />
+
+      <app-button
+        (clicked)="login()"
+        [label]="loading() ? 'Connexion...' : 'Se connecter'"
+      />
+    </form>
+  }
+
+  @if (tab() === "register") {
+    <form class="space-y-2" [formGroup]="authForm">
+      <input
+        formControlName="username"
+        name="username"
+        type="text"
+        class="p-4 w-full border border-grey bg-white rounded-2xl outline-[0] focus:border-black placeholder-light"
+        placeholder="Nom d'utilisateur"
+      />
+      <input
+        formControlName="email"
+        name="email"
+        type="email"
+        class="p-4 w-full border border-grey bg-white rounded-2xl outline-[0] focus:border-black placeholder-light"
+        placeholder="Adresse email"
+      />
+
+      <input
+        formControlName="password"
+        name="password"
+        type="password"
+        class="p-4 w-full border border-grey bg-white rounded-2xl outline-[0] focus:border-black placeholder-light"
+        placeholder="Mot de passe"
+      />
+
+      <app-button
+        (clicked)="register()"
+        [label]="loading() ? 'Création...' : 'Créer mon compte'"
+      />
+    </form>
+  }
+
+  @if (error()) {
+    <div class="flex items-center gap-2 mt-4 text-red-500 text-sm">
+      <lucide-angular [img]="CircleAlertIcon" [size]="18"></lucide-angular>
+      {{ error() }}
+    </div>
+  }
+</main>

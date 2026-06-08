@@ -1,0 +1,17 @@
+<div class="content px-4 pt-8 space-y-4">
+  <h1 class="text-3xl font-bold">
+    @if (auth.currentUser$ | async; as user) {
+      Bonjour <span class="username">{{ user.username }}</span> !
+    }
+  </h1>
+
+  <p class="text-lg">Bienvenue sur votre espace personnel.</p>
+
+  <app-button
+    (clicked)="logout()"
+    [icon]="LogoutIcon"
+    iconPosition="left"
+    label="Se déconnecter"
+    [ghost]="true"
+  />
+</div>
