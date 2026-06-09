@@ -151,4 +151,12 @@ export class HeaderComponent {
     this.localStorageService.removeItem('likes');
     this.update();
   }
+
+  navigateToDashboard() {
+    this.router.navigate(['/dashboard']);
+  }
+
+  navigateToLogin() {
+    this.router.navigate(['/login']);
+  }
 }
