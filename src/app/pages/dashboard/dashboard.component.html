@@ -1,22 +1,49 @@
-<div class="content px-4 pt-8 space-y-4">
-  <h1 class="text-3xl font-bold">
-    @if (auth.currentUser$ | async; as user) {
-      Bonjour <span class="username">{{ user.username }}</span> !
+<div class="content px-4 pt-8 space-y-6">
+  <div class="space-y-4">
+    <h1 class="text-3xl font-bold">
+      @if (auth.currentUser$ | async; as user) {
+        Bonjour <span class="username">{{ user.username }}</span> !
+      }
+    </h1>
+
+    <p class="text-lg">Bienvenue sur votre espace personnel.</p>
+
+    <app-button
+      (clicked)="logout()"
+      [icon]="LogoutIcon"
+      iconPosition="left"
+      label="Se déconnecter"
+      [ghost]="true"
+    />
+  </div>
+
+  <div class="space-y-4">
+    <h2 class="text-2xl font-bold">Vos annonces favorites</h2>
+
+    @if (!loading) {
+      <div class="grid grid-cols-1 lg:grid-cols-3 sm:grid-cols-2 gap-4">
+        @if (likes.length > 0) {
+          @for (item of likes; track item.id) {
+            <app-card [announcement]="item" />
+          }
+        } @else {
+          <p>Vous n'avez aucune annonce en favoris</p>
+        }
+      </div>
+    } @else {
+      <app-cards-list-loader />
     }
-  </h1>
 
-  <p class="text-lg">Bienvenue sur votre espace personnel.</p>
-
-  <app-button
-    (clicked)="logout()"
-    [icon]="LogoutIcon"
-    iconPosition="left"
-    label="Se déconnecter"
-    [ghost]="true"
-  />
-
-  <div class="flex items-center gap-2 bg-yellow-100 text-yellow-800 p-4 mt-6">
-    <lucide-angular [img]="HammerIcon" [size]="22" /> Encore un peu de patience,
-    votre espace personnel est en construction.
+    @if (likes.length > 0) {
+      <div class="w-fit mx-auto md:mx-[inherit]">
+        <app-button
+          (click)="removeAll()"
+          label="Tout supprimer"
+          [icon]="Trash"
+          iconPosition="left"
+          [disabled]="loadingRemoveAllLikes"
+        />
+      </div>
+    }
   </div>
 </div>

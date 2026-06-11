@@ -1,25 +1,37 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { Announcement } from '../home/home.component';
 import { PicturesComponent } from '../../components/pictures/pictures.component';
-import { BedDouble, DoorClosed, Grid2X2, Hammer, Heart, LucideAngularModule, MapPinned } from 'lucide-angular';
-import { LocalStorageServiceService } from '../../services/local-storage-service.service';
-import { AnnouncementLoaderComponent } from "../../components/announcement-loader/announcement-loader.component";
+import {
+  BedDouble,
+  DoorClosed,
+  Grid2X2,
+  Hammer,
+  Heart,
+  LucideAngularModule,
+  MapPinned,
+} from 'lucide-angular';
+import { AnnouncementLoaderComponent } from '../../components/announcement-loader/announcement-loader.component';
+import { LikesService } from '../../services/likes.service';
 
 @Component({
   selector: 'app-announcement',
-  imports: [PicturesComponent, LucideAngularModule, AnnouncementLoaderComponent],
+  imports: [
+    PicturesComponent,
+    LucideAngularModule,
+    AnnouncementLoaderComponent,
+  ],
   templateUrl: './announcement.component.html',
-  styleUrl: './announcement.component.scss'
+  styleUrl: './announcement.component.scss',
 })
 export class AnnouncementComponent {
-  data: Announcement | null = null
-  loading: boolean = false
-  ceil = Math.ceil
-  likesList: {id: number, time: number}[] = []
-  priceFormated: string | null = null
-  
+  data: Announcement | null = null;
+  loading: boolean = false;
+  ceil = Math.ceil;
+  likesList: string[] = [];
+  priceFormated: string | null = null;
+
   readonly LikeIcon = Heart;
   readonly DoorIcon = DoorClosed;
   readonly BedIcon = BedDouble;
@@ -29,98 +41,91 @@ export class AnnouncementComponent {
 
   dpeList = [
     {
-      letter: "A",
-      color: "bg-dpe-a"
+      letter: 'A',
+      color: 'bg-dpe-a',
     },
     {
-      letter: "B",
-      color: "bg-dpe-b"
+      letter: 'B',
+      color: 'bg-dpe-b',
     },
     {
-      letter: "C",
-      color: "bg-dpe-c"
+      letter: 'C',
+      color: 'bg-dpe-c',
     },
     {
-      letter: "D",
-      color: "bg-dpe-d"
+      letter: 'D',
+      color: 'bg-dpe-d',
     },
     {
-      letter: "E",
-      color: "bg-dpe-e"
+      letter: 'E',
+      color: 'bg-dpe-e',
     },
     {
-      letter: "F",
-      color: "bg-dpe-f"
+      letter: 'F',
+      color: 'bg-dpe-f',
     },
     {
-      letter: "G",
-      color: "bg-dpe-g"
-    }
-  ]
+      letter: 'G',
+      color: 'bg-dpe-g',
+    },
+  ];
 
   gesList = [
     {
-      letter: "A",
-      color: "bg-ges-a"
+      letter: 'A',
+      color: 'bg-ges-a',
     },
     {
-      letter: "B",
-      color: "bg-ges-b"
+      letter: 'B',
+      color: 'bg-ges-b',
     },
     {
-      letter: "C",
-      color: "bg-ges-c"
+      letter: 'C',
+      color: 'bg-ges-c',
     },
     {
-      letter: "D",
-      color: "bg-ges-d"
+      letter: 'D',
+      color: 'bg-ges-d',
     },
     {
-      letter: "E",
-      color: "bg-ges-e"
+      letter: 'E',
+      color: 'bg-ges-e',
     },
     {
-      letter: "F",
-      color: "bg-ges-f"
+      letter: 'F',
+      color: 'bg-ges-f',
     },
     {
-      letter: "G",
-      color: "bg-ges-g"
-    }
-  ]
+      letter: 'G',
+      color: 'bg-ges-g',
+    },
+  ];
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router, private localStorageService: LocalStorageServiceService) {}
+  constructor(
+    private apiService: ApiService,
+    private route: ActivatedRoute,
+    private likesService: LikesService,
+  ) {}
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (id) {
-        this.loadAnnonce(id);
-      }
-    });
-
-    const storedLikes = this.localStorageService.getItem<{id: number, time: number}[]>("likes");
-    this.likesList = storedLikes ?? [];
-
-    this.localStorageService.storageChanges$.subscribe(change => {
-      if (change.key === "likes") {
-        this.likesList = change.value ?? [];
-      }
+    this.route.paramMap.subscribe((params) => {
+      const documentId = params.get('documentId');
+      if (documentId) this.loadAnnonce(documentId);
     });
   }
 
-  loadAnnonce(id: string) {
-    this.loading = true
-    this.apiService.getAnnouncementById(parseInt(id)).subscribe({
+  loadAnnonce(documentId: string) {
+    this.loading = true;
+    this.apiService.getAnnouncementByDocumentId(documentId).subscribe({
       next: (res) => {
-        this.data = res.data[0]
-        this.priceFormated = this.formatNumberWithSpaces(res.data[0].price)
-        this.loading = false
+        this.data = res.data;
+        this.priceFormated = this.formatNumberWithSpaces(res.data.price);
+        this.loading = false;
       },
       error: (err) => {
-        console.error('Erreur API:', err)
-        this.loading = false
-      }
+        console.error('Erreur API:', err);
+        this.loading = false;
+      },
     });
   }
 
@@ -128,21 +133,13 @@ export class AnnouncementComponent {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
   }
 
-  toggleLike(id: number) {
-    const index = this.likesList.findIndex(item => item.id === id);
-    const date = new Date()
-    if (index !== -1) {
-      this.likesList.splice(index, 1);
-      this.localStorageService.setItem("likes", this.likesList);
-    } else {
-      this.likesList.push({id, time: date.getTime()});
-      this.localStorageService.setItem("likes", this.likesList);
-    }
+  toggleLike(documentId: string) {
+    this.likesService.toggleLike(documentId);
   }
 
-  likeClass(id: number) {
-    return this.likesList.find(item => item.id === id)
-      ? "fill-red-600 stroke-red-600"
-      : "";
+  likeClass(documentId: string) {
+    return this.likesService.isLiked(documentId)
+      ? 'fill-red-600 stroke-red-600'
+      : '';
   }
-} 
+}

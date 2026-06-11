@@ -47,12 +47,16 @@ export class AuthService {
     localStorage.removeItem('jwt');
     this.token.set(null);
     this.currentUserSubject.next(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
   getMe() {
     return this.http
       .get<any>(`${API}/users/me`)
       .pipe(tap((user) => this.currentUserSubject.next(user)));
+  }
+
+  getCurrentUser() {
+    return this.currentUserSubject.getValue();
   }
 }

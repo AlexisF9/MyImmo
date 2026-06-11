@@ -1,11 +1,20 @@
-<main class="w-full">
-  <div class="bg-center bg-cover bg-[url(/login.webp)]">
-    <!--<div class="bg-black/10 h-64"></div>-->
-    <div class="h-64"></div>
-  </div>
+<div class="fixed inset-0 z-50">
+  <div
+    class="fixed inset-0 bg-white/10 backdrop-blur-xs"
+    (click)="closeModal()"
+    aria-label="Fermer"
+  ></div>
+  <div
+    class="bg-white border border-neutral-300 rounded-lg p-6 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[800px]"
+  >
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-2xl">Connectez-vous à votre espace</h2>
+      <button class="cursor-pointer" (click)="closeModal()" aria-label="Fermer">
+        <lucide-angular [img]="CloseIcon"></lucide-angular>
+      </button>
+    </div>
 
-  <div class="content-small w-full px-4 pt-8">
-    <div class="flex border-b border-gray-300 mb-6 max-w-[400px]">
+    <div class="flex border-b border-gray-300 mb-6">
       <button
         [class]="
           `w-[50%] text-center py-4 cursor-pointer hover:bg-primary-10 ${tab() === 'login' ? 'border-b-2 border-primary' : ''}`
@@ -88,4 +97,4 @@
       </div>
     }
   </div>
-</main>
+</div>

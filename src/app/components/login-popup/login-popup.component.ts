@@ -1,4 +1,8 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, signal, inject } from '@angular/core';
+import { Router } from '@angular/router';
+import { ButtonComponent } from '../button/button.component';
+import { CircleAlertIcon, LucideAngularModule, X } from 'lucide-angular';
+import { AuthService } from '../../services/auth.service';
 import {
   FormControl,
   FormGroup,
@@ -6,28 +10,30 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
-import { CircleAlertIcon, LucideAngularModule } from 'lucide-angular';
-import { ButtonComponent } from '../../components/button/button.component';
+import { ModalService } from '../../services/modal.service';
 
 @Component({
-  selector: 'app-auth',
-  standalone: true,
+  selector: 'app-login-popup',
   imports: [
     FormsModule,
     ReactiveFormsModule,
-    LucideAngularModule,
     ButtonComponent,
+    LucideAngularModule,
   ],
-  templateUrl: './auth.component.html',
-  styleUrl: './auth.component.scss',
+  templateUrl: './login-popup.component.html',
+  styleUrl: './login-popup.component.scss',
 })
-export class AuthComponent {
-  readonly CircleAlertIcon = CircleAlertIcon;
+export class LoginPopupComponent {
+  private modalService = inject(ModalService);
 
-  private auth = inject(AuthService);
-  private router = inject(Router);
+  readonly CloseIcon = X;
+
+  constructor(
+    private router: Router,
+    public authService: AuthService,
+  ) {}
+
+  readonly CircleAlertIcon = CircleAlertIcon;
 
   tab = signal<'login' | 'register'>('login');
   loading = signal(false);
@@ -54,7 +60,7 @@ export class AuthComponent {
     }
     this.loading.set(true);
     this.error.set('');
-    this.auth
+    this.authService
       .login(this.authForm.value.email, this.authForm.value.password)
       .subscribe({
         next: () => this.router.navigate(['/']),
@@ -76,7 +82,7 @@ export class AuthComponent {
     }
     this.loading.set(true);
     this.error.set('');
-    this.auth
+    this.authService
       .register(
         this.authForm.value.username,
         this.authForm.value.email,
@@ -89,5 +95,9 @@ export class AuthComponent {
           this.loading.set(false);
         },
       });
+  }
+
+  closeModal() {
+    this.modalService.close();
   }
 }

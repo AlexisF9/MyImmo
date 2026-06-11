@@ -1,83 +1,163 @@
 <div class="content px-4 pt-8">
-    @if (loading) {
-        <app-announcement-loader/>
-    } @else if (data) {
-        <app-pictures [pictures]="data.pictures" />       
-        
-        <div class="flex items-end justify-between gap-2 flex-wrap-reverse pt-8">
-            <div>
-                <h2 class="font-bold">{{ data.category.name }} à {{ data.distribution_type.name === "Acheter" ? "vendre" : "louer" }}</h2>
-                <h3 class="text-xl font-bold pt-2">
-                    {{ priceFormated }} €
-                    @if (data.distribution_type.name === "Acheter") {
-                        <span class="text-sm font-normal">{{ ceil(data.price/data.surface) }} €/m²</span>
-                    } @else {
-                        <span>/mois</span>
-                    }
-                </h3>
-            </div>
-            <button class="border rounded-full p-2 cursor-pointer" aria-label="Aimer l'annonce" (click)="toggleLike(data.id)"><lucide-angular [img]="LikeIcon" [size]="20" [strokeWidth]="1" [class]="likeClass(data.id)"></lucide-angular></button>
-        </div>
-        <ul class="flex flex-col gap-2 md:gap-[0] md:flex-row py-8 my-8 border-t border-b border-neutral-300">
-            <li class="flex items-center gap-2"><lucide-angular [img]="DoorIcon" [size]="20" [strokeWidth]="1"></lucide-angular> <span class="font-bold">{{ data.pieces }}</span> pièces</li>
-            <li class="flex items-center gap-2 md:before:content-['•'] md:before:mr-2 md:before:pl-2"><lucide-angular [img]="BedIcon" [size]="20" [strokeWidth]="1"></lucide-angular> <span class="font-bold">{{ data.rooms }}</span> chambres</li>
-            <li class="flex items-center gap-2 md:before:content-['•'] md:before:mr-2 md:before:pl-2"><lucide-angular [img]="SurfaceIcon" [size]="20" [strokeWidth]="1"></lucide-angular> <span class="font-bold">{{ data.surface }}</span> m²</li>
-        </ul>
-        <div class="pb-8 mb-8 border-b border-neutral-300">
-            <p class="flex items-center gap-2"><lucide-angular [img]="MapIcon" [size]="20" [strokeWidth]="1"></lucide-angular> {{ data.address.city }} ({{ data.address.postale_code }})</p>
-        </div>
-        <div class="pb-8 mb-8 border-b border-neutral-300">
-            <h3 class="text-xl font-bold mb-4">{{ data.name }}</h3>
-            <p>{{ data.description }}</p>
-        </div>
-        <div class="pb-8 mb-8 border-b border-neutral-300">
-            <h3 class="text-xl font-bold mb-4">Informations et caractéristiques</h3>
-            <ul class="flex flex-col gap-2">
-                @for (item of data.characteristics; track $index) {
-                    <li>{{ item.name }}</li>
-                }
+  @if (loading) {
+    <app-announcement-loader />
+  } @else if (data) {
+    <app-pictures [pictures]="data.pictures" />
+
+    <div class="flex items-end justify-between gap-2 flex-wrap-reverse pt-8">
+      <div>
+        <h2 class="font-bold">
+          {{ data.category.name }} à
+          {{ data.distribution_type.name === "Acheter" ? "vendre" : "louer" }}
+        </h2>
+        <h3 class="text-xl font-bold pt-2">
+          {{ priceFormated }} €
+          @if (data.distribution_type.name === "Acheter") {
+            <span class="text-sm font-normal"
+              >{{ ceil(data.price / data.surface) }} €/m²</span
+            >
+          } @else {
+            <span>/mois</span>
+          }
+        </h3>
+      </div>
+      <button
+        class="border rounded-full p-2 cursor-pointer"
+        aria-label="Aimer l'annonce"
+        (click)="toggleLike(data.documentId)"
+      >
+        <lucide-angular
+          [img]="LikeIcon"
+          [size]="20"
+          [strokeWidth]="1"
+          [class]="likeClass(data.documentId)"
+        ></lucide-angular>
+      </button>
+    </div>
+    <ul
+      class="flex flex-col gap-2 md:gap-[0] md:flex-row py-8 my-8 border-t border-b border-neutral-300"
+    >
+      <li class="flex items-center gap-2">
+        <lucide-angular
+          [img]="DoorIcon"
+          [size]="20"
+          [strokeWidth]="1"
+        ></lucide-angular>
+        <span class="font-bold">{{ data.pieces }}</span> pièces
+      </li>
+      <li
+        class="flex items-center gap-2 md:before:content-['•'] md:before:mr-2 md:before:pl-2"
+      >
+        <lucide-angular
+          [img]="BedIcon"
+          [size]="20"
+          [strokeWidth]="1"
+        ></lucide-angular>
+        <span class="font-bold">{{ data.rooms }}</span> chambres
+      </li>
+      <li
+        class="flex items-center gap-2 md:before:content-['•'] md:before:mr-2 md:before:pl-2"
+      >
+        <lucide-angular
+          [img]="SurfaceIcon"
+          [size]="20"
+          [strokeWidth]="1"
+        ></lucide-angular>
+        <span class="font-bold">{{ data.surface }}</span> m²
+      </li>
+    </ul>
+    <div class="pb-8 mb-8 border-b border-neutral-300">
+      <p class="flex items-center gap-2">
+        <lucide-angular
+          [img]="MapIcon"
+          [size]="20"
+          [strokeWidth]="1"
+        ></lucide-angular>
+        {{ data.address.city }} ({{ data.address.postale_code }})
+      </p>
+    </div>
+    <div class="pb-8 mb-8 border-b border-neutral-300">
+      <h3 class="text-xl font-bold mb-4">{{ data.name }}</h3>
+      <p>{{ data.description }}</p>
+    </div>
+    <div class="pb-8 mb-8 border-b border-neutral-300">
+      <h3 class="text-xl font-bold mb-4">Informations et caractéristiques</h3>
+      <ul class="flex flex-col gap-2">
+        @for (item of data.characteristics; track $index) {
+          <li>{{ item.name }}</li>
+        }
+      </ul>
+    </div>
+
+    <div>
+      <h3 class="text-xl font-bold mb-8">Énergie et diagnostics</h3>
+      <div class="flex flex-wrap gap-8">
+        <div class="grow">
+          <h4 class="mb-2 text-sm font-bold">
+            Diagnostic de performance énergétique (DPE)
+          </h4>
+          @if (data.energy_performance) {
+            <ul class="flex items-center gap-1">
+              @for (item of dpeList; track $index) {
+                <li
+                  [class]="
+                    `${item.color} text-lg min-h-3 h-fit grow rounded-full text-center`
+                  "
+                  [ariaLabel]="item.letter"
+                >
+                  {{
+                    item.letter === data.energy_performance.letter
+                      ? item.letter
+                      : null
+                  }}
+                </li>
+              }
             </ul>
+          } @else {
+            <p class="text-sm">Le DPE n'est pas renseigné</p>
+          }
+          @if (data.construction_year) {
+            <p class="flex gap-2 pt-4">
+              <lucide-angular
+                [img]="HammerIcon"
+                [size]="30"
+                [strokeWidth]="1"
+              ></lucide-angular>
+              <span class="flex flex-col">
+                <span class="font-bold">Année de construction</span>
+                {{ data.construction_year }}
+              </span>
+            </p>
+          }
         </div>
-        
-        <div>
-            <h3 class="text-xl font-bold mb-8">Énergie et diagnostics</h3>
-            <div class="flex flex-wrap gap-8">
-                <div class="grow">
-                    <h4 class="mb-2 text-sm font-bold">Diagnostic de performance énergétique (DPE)</h4>
-                    @if (data.energy_performance) {
-                        <ul class="flex items-center gap-1">
-                            @for (item of dpeList; track $index) {
-                                <li [class]="`${item.color} text-lg min-h-3 h-fit grow rounded-full text-center`" [ariaLabel]="item.letter">{{ item.letter === data.energy_performance.letter ? item.letter : null }}</li>
-                            }
-                        </ul>
-                    } @else {
-                        <p class="text-sm">Le DPE n'est pas renseigné</p>
-                    }
-                    @if (data.construction_year) {
-                        <p class="flex gap-2 pt-4">
-                            <lucide-angular [img]="HammerIcon" [size]="30" [strokeWidth]="1"></lucide-angular>
-                            <span class="flex flex-col">
-                                <span class="font-bold">Année de construction</span>
-                                {{ data.construction_year }}
-                            </span>
-                        </p>
-                    }
-                </div>
-                <div class="grow">
-                    <h4 class="mb-2 text-sm font-bold">Indice d'émission de gaz à effet de serre (GES)</h4>
-                    @if (data.gaz_performance) {
-                        <ul class="flex items-center gap-1">
-                            @for (item of gesList; track $index) {
-                                <li [class]="`${item.color} text-lg min-h-3 h-fit grow rounded-full text-center`" [ariaLabel]="item.letter">{{ item.letter === data.gaz_performance.letter ? item.letter : null }}</li>
-                            }
-                        </ul>
-                    } @else {
-                        <p class="text-sm">Le GES n'est pas renseigné</p>
-                    }
-                </div>
-            </div>
+        <div class="grow">
+          <h4 class="mb-2 text-sm font-bold">
+            Indice d'émission de gaz à effet de serre (GES)
+          </h4>
+          @if (data.gaz_performance) {
+            <ul class="flex items-center gap-1">
+              @for (item of gesList; track $index) {
+                <li
+                  [class]="
+                    `${item.color} text-lg min-h-3 h-fit grow rounded-full text-center`
+                  "
+                  [ariaLabel]="item.letter"
+                >
+                  {{
+                    item.letter === data.gaz_performance.letter
+                      ? item.letter
+                      : null
+                  }}
+                </li>
+              }
+            </ul>
+          } @else {
+            <p class="text-sm">Le GES n'est pas renseigné</p>
+          }
         </div>
-    } @else {
-        <p>Une erreur est survenu lors du chargement de l'annonce.</p>
-    }
+      </div>
+    </div>
+  } @else {
+    <p>Une erreur est survenu lors du chargement de l'annonce.</p>
+  }
 </div>

@@ -10,6 +10,7 @@ import { AsyncPipe } from '@angular/common';
 
 export interface Announcement {
   id: number;
+  documentId: string;
   name: string;
   description: string;
   price: number;

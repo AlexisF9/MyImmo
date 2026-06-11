@@ -2,11 +2,10 @@
   <div
     class="absolute inset-x-[0] bg-center bg-cover bg-[url(/background.webp)]"
   >
-    <!--<div class="bg-black/10 h-64"></div>-->
-    <div class="h-64"></div>
+    <div class="h-80"></div>
   </div>
   <div class="content">
-    <h2 class="relative text-2xl pt-24 mb-4">
+    <h2 class="relative text-2xl pt-38 mb-4">
       @if (auth.currentUser$ | async; as user) {
         Bienvenue {{ user.username }} !
       } @else {

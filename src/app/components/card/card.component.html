@@ -1,29 +1,80 @@
-<div class="relative border border-grey rounded-lg overflow-hidden transition duration-300 ease-in-out hover:shadow-lg">
-    <div class="relative">
-        <img class="object-cover aspect-2/1 w-full" [src]="`${announcement().pictures[0].formats.small.url}`" [alt]="announcement().pictures[0].name" />
-        @if (announcement().energy_performance) {
-            <div [class]="`absolute bottom-2 text-sm left-2 w-fit py-1 pl-2 pr-4 bg-dpe-${announcement().energy_performance.letter.toLowerCase()} clip-square-with-triangle`">{{ announcement().energy_performance.letter }}</div>
+<div
+  class="relative border border-grey rounded-lg overflow-hidden transition duration-300 ease-in-out hover:shadow-lg"
+>
+  <div class="relative">
+    <img
+      class="object-cover aspect-2/1 w-full"
+      [src]="`${announcement().pictures[0].formats.small.url}`"
+      [alt]="announcement().pictures[0].name"
+    />
+    @if (announcement().energy_performance) {
+      <div
+        [class]="
+          `absolute bottom-2 text-sm left-2 w-fit py-1 pl-2 pr-4 bg-dpe-${announcement().energy_performance.letter.toLowerCase()} clip-square-with-triangle`
+        "
+      >
+        {{ announcement().energy_performance.letter }}
+      </div>
+    }
+  </div>
+  <div class="flex flex-col p-4">
+    <div class="flex justify-between flex-wrap-reverse gap-2 mb-2">
+      <p class="text-xl font-bold">
+        {{ priceFormated }} €
+        @if (announcement().distribution_type.name === "Acheter") {
+          <span class="text-sm font-normal text-light"
+            >{{
+              ceil(announcement().price / announcement().surface)
+            }}
+            €/m²</span
+          >
+        } @else {
+          <span>/mois</span>
         }
+      </p>
+      <button
+        role="button"
+        type="button"
+        class="relative z-2 cursor-pointer"
+        aria-label="like"
+        title="Bouton like"
+        [disabled]="likesService.isLoading()"
+        (click)="
+          toggleLike(announcement().documentId); $event.stopPropagation()
+        "
+      >
+        <lucide-angular
+          [img]="HeartIcon"
+          [size]="24"
+          [strokeWidth]="1"
+          [class]="likeClass()"
+        ></lucide-angular>
+      </button>
     </div>
-    <div class="flex flex-col p-4">
-        <div class="flex justify-between flex-wrap-reverse gap-2 mb-2">
-            <p class="text-xl font-bold">
-                {{ priceFormated }} €
-                @if (announcement().distribution_type.name === "Acheter") {
-                    <span class="text-sm font-normal text-light">{{ ceil(announcement().price/announcement().surface) }} €/m²</span>
-                } @else {
-                    <span>/mois</span>
-                }
-            </p>
-            <button role="button" type="button" class="relative z-2 cursor-pointer" aria-label="like" title="Bouton like" (click)="toggleLike(announcement().id)"><lucide-angular [img]="HeartIcon" [size]="24" [strokeWidth]="1" [class]="likeClass(announcement().id)"></lucide-angular></button>
-        </div>
-        <p class="font-bold mb-4">{{ announcement().category.name }} à {{ announcement().distribution_type.name === "Acheter" ? 'vendre' : 'louer' }}</p>
-        <ul class="flex mb-2">
-            <li>{{ announcement().pieces }} pièces</li>
-            <li class="before:content-['•'] before:mr-2 before:pl-2">{{ announcement().rooms }} chambres</li>
-            <li class="before:content-['•'] before:mr-2 before:pl-2">{{ announcement().surface }} m²</li>
-        </ul>
-        <p class="text-light">{{ announcement().address.city }} ({{ announcement().address.postale_code }})</p>
-        <button class="absolute inset-0 z-1 cursor-pointer sr-only-focusable" aria-label="Voir plus" [routerLink]="`/annonce/${announcement().id}`"></button>
-    </div>
+    <p class="font-bold mb-4">
+      {{ announcement().category.name }} à
+      {{
+        announcement().distribution_type.name === "Acheter" ? "vendre" : "louer"
+      }}
+    </p>
+    <ul class="flex mb-2">
+      <li>{{ announcement().pieces }} pièces</li>
+      <li class="before:content-['•'] before:mr-2 before:pl-2">
+        {{ announcement().rooms }} chambres
+      </li>
+      <li class="before:content-['•'] before:mr-2 before:pl-2">
+        {{ announcement().surface }} m²
+      </li>
+    </ul>
+    <p class="text-light">
+      {{ announcement().address.city }} ({{
+        announcement().address.postale_code
+      }})
+    </p>
+    <button
+      class="absolute inset-0 z-1 cursor-pointer sr-only-focusable"
+      aria-label="Voir plus"
+      [routerLink]="'/annonce/' + announcement().documentId"
+    ></button>
+  </div>
 </div>
