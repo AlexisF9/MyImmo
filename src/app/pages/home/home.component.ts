@@ -1,4 +1,4 @@
-import { Component, inject, computed } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ApiService } from '../../services/api.service';
 import { CardsListComponent } from '../../components/cards-list/cards-list.component';
 import { SearchComponent } from '../../components/search/search.component';

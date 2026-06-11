@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-cards-list-loader',
   imports: [],
   templateUrl: './cards-list-loader.component.html',
-  styleUrl: './cards-list-loader.component.scss'
+  styleUrl: './cards-list-loader.component.scss',
 })
-export class CardsListLoaderComponent {
-
-}
+export class CardsListLoaderComponent {}

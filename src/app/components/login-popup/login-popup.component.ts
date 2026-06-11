@@ -1,5 +1,4 @@
 import { Component, signal, inject } from '@angular/core';
-import { Router } from '@angular/router';
 import { ButtonComponent } from '../button/button.component';
 import { CircleAlertIcon, LucideAngularModule, X } from 'lucide-angular';
 import { AuthService } from '../../services/auth.service';
@@ -28,10 +27,7 @@ export class LoginPopupComponent {
 
   readonly CloseIcon = X;
 
-  constructor(
-    private router: Router,
-    public authService: AuthService,
-  ) {}
+  constructor(public authService: AuthService) {}
 
   readonly CircleAlertIcon = CircleAlertIcon;
 
@@ -63,7 +59,7 @@ export class LoginPopupComponent {
     this.authService
       .login(this.authForm.value.email, this.authForm.value.password)
       .subscribe({
-        next: () => this.router.navigate(['/']),
+        next: () => console.log('Connecté'),
         error: (e) => {
           this.error.set('Identifiants incorrects');
           this.loading.set(false);
@@ -89,7 +85,7 @@ export class LoginPopupComponent {
         this.authForm.value.password,
       )
       .subscribe({
-        next: () => this.router.navigate(['/']),
+        next: () => console.log('Connecté'),
         error: (e) => {
           this.error.set("Erreur lors de l'inscription");
           this.loading.set(false);

@@ -4,8 +4,6 @@ import { Component } from '@angular/core';
   selector: 'app-announcement-loader',
   imports: [],
   templateUrl: './announcement-loader.component.html',
-  styleUrl: './announcement-loader.component.scss'
+  styleUrl: './announcement-loader.component.scss',
 })
-export class AnnouncementLoaderComponent {
-
-}
+export class AnnouncementLoaderComponent {}

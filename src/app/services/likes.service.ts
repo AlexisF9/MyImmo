@@ -2,12 +2,13 @@ import { Injectable, inject, signal } from '@angular/core';
 import { ApiService } from './api.service';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
+import { ModalService } from './modal.service';
 
 @Injectable({ providedIn: 'root' })
 export class LikesService {
   private apiService = inject(ApiService);
   private authService = inject(AuthService);
-  private router = inject(Router);
+  private modalService = inject(ModalService);
 
   isLoading = signal<boolean>(false);
   likesList = signal<string[]>([]);
@@ -55,7 +56,7 @@ export class LikesService {
           },
         });
       },
-      error: () => this.router.navigate(['/login']),
+      error: () => this.modalService.open(),
     });
   }
 
