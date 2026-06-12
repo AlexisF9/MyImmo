@@ -1,16 +1,24 @@
-<div class="fixed inset-0 z-50">
+<div
+  [class]="
+    `${openModal() ? 'pointer-events-auto opacity-100' : 'opacity-0 pointer-events-none'} transition duration-300 ease-in-out fixed inset-0 z-50`
+  "
+>
   <div
-    class="fixed inset-0 bg-black/30 backdrop-blur-xs"
+    class="fixed inset-0 bg-black/20"
     (click)="closeModal()"
     aria-label="Fermer"
   ></div>
   <div
-    class="bg-white rounded-lg p-6 fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[800px]"
+    class="bg-white p-6 rounded-lg fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[800px]"
   >
-    <div class="flex items-center justify-between mb-6">
-      <h2 class="text-2xl">Connectez-vous à votre espace</h2>
-      <button class="cursor-pointer" (click)="closeModal()" aria-label="Fermer">
-        <lucide-angular [img]="CloseIcon"></lucide-angular>
+    <div class="flex items-center justify-between gap-2 pb-2">
+      <p class="text-xl">Connectez-vous à votre espace</p>
+      <button (click)="closeModal()" class="cursor-pointer" aria-label="Fermer">
+        <lucide-angular
+          [img]="CloseIcon"
+          [size]="30"
+          [strokeWidth]="1"
+        ></lucide-angular>
       </button>
     </div>
 

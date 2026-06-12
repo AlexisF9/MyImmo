@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
 import { ButtonComponent } from '../button/button.component';
 import {
+  CircleUserRound,
   Heart,
   House,
   LogInIcon,
@@ -34,6 +35,7 @@ export class HeaderComponent {
   readonly CloseIcon = X;
   readonly LogInIcon = LogInIcon;
   readonly HouseIcon = House;
+  readonly AccountIcon = CircleUserRound;
 
   data: Announcement[] | null = null;
   openLikesList: boolean = false;

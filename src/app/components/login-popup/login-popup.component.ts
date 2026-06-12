@@ -1,4 +1,4 @@
-import { Component, signal, inject } from '@angular/core';
+import { Component, signal, inject, input } from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
 import { CircleAlertIcon, LucideAngularModule, X } from 'lucide-angular';
 import { AuthService } from '../../services/auth.service';
@@ -24,12 +24,12 @@ import { ModalService } from '../../services/modal.service';
 })
 export class LoginPopupComponent {
   private modalService = inject(ModalService);
-
+  readonly CircleAlertIcon = CircleAlertIcon;
   readonly CloseIcon = X;
 
-  constructor(public authService: AuthService) {}
+  openModal = input<boolean>(false);
 
-  readonly CircleAlertIcon = CircleAlertIcon;
+  constructor(public authService: AuthService) {}
 
   tab = signal<'login' | 'register'>('login');
   loading = signal(false);

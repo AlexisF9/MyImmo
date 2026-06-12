@@ -34,6 +34,14 @@ export class LikesService {
       next: (user) => {
         this.isLoading.set(true);
         const isLiked = this.likesList().includes(documentId);
+
+        // Optimistic update
+        this.likesList.update((list) =>
+          isLiked
+            ? list.filter((id) => id !== documentId)
+            : [...list, documentId],
+        );
+
         const action$ = isLiked
           ? this.apiService.removeAdvertisementFromUser(
               documentId,
@@ -43,16 +51,14 @@ export class LikesService {
 
         action$.subscribe({
           next: () => {
-            this.likesList.update((list) =>
-              isLiked
-                ? list.filter((id) => id !== documentId)
-                : [...list, documentId],
-            );
             this.isLoading.set(false);
           },
           error: (err) => {
             console.error('Erreur:', JSON.stringify(err.error));
             this.isLoading.set(false);
+            this.likesList.update((list) =>
+              list.filter((id) => id !== documentId),
+            );
           },
         });
       },

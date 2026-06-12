@@ -27,12 +27,18 @@ export class AppComponent implements OnInit {
   constructor(public auth: AuthService) {}
 
   ngOnInit() {
+    let likesLoaded = false;
+
     this.auth.currentUser$.subscribe((user) => {
       if (user) {
-        this.likesService.loadLikes();
+        if (!likesLoaded) {
+          this.likesService.loadLikes();
+          likesLoaded = true;
+        }
         this.modalService.close();
       } else {
         this.likesService.likesList.set([]);
+        likesLoaded = false;
       }
     });
 

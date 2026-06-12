@@ -1,6 +1,7 @@
 <app-header />
 <router-outlet />
 <app-footer />
-@if (!auth.isLoggedIn() && modalService.isOpen()) {
-  <app-login-popup />
+
+@if (!auth.isLoggedIn()) {
+  <app-login-popup [openModal]="modalService.isOpen()" />
 }

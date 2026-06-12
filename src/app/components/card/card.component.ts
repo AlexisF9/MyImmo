@@ -12,7 +12,6 @@ import { LikesService } from '../../services/likes.service';
 })
 export class CardComponent {
   likesService = inject(LikesService);
-
   announcement = input.required<Announcement>();
   ceil = Math.ceil;
   readonly HeartIcon = Heart;
